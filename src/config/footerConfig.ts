@@ -56,12 +56,12 @@ export const footerConfig = {
     links: [
       {
         url: 'https://instagram.com/octo',
-        icon: 'instagram',
+        icon: 'instagram' as const,
         label: 'Siga-nos no Instagram'
       },
       {
         url: 'https://linkedin.com/company/octo',
-        icon: 'linkedin',
+        icon: 'linkedin' as const,
         label: 'Siga-nos no LinkedIn'
       }
     ]
