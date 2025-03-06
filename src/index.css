@@ -10,27 +10,39 @@
   }
 }
 
+.animate-float {
+  will-change: transform;
+}
+
 @keyframes float {
   0% {
-    transform: translateY(0) scale(1.1);
+    transform: translate3d(0, 0, 0) scale(1.1);
   }
   50% {
-    transform: translateY(-10px) scale(1.1);
+    transform: translate3d(0, -10px, 0) scale(1.1);
   }
   100% {
-    transform: translateY(0) scale(1.1);
+    transform: translate3d(0, 0, 0) scale(1.1);
   }
+}
+
+.animate-slide-in {
+  will-change: transform, opacity;
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translate3d(0, 10px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
+}
+
+.animate-fade-in {
+  will-change: opacity;
 }
 
 @keyframes fadeIn {
