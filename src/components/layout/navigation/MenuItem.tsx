@@ -1,4 +1,4 @@
-import React, { useState, useCallback, type AnchorHTMLAttributes } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '../../../utils/cn';
 import '../styles/animations.css';

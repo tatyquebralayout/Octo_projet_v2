@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Briefcase, Heart, Scale, Building } from 'lucide-react';
 import NewsAndEvents from '../components/sections/NewsAndEvents';
 import Engagement from '../components/sections/Engagement';
+import { cn } from '../utils/cn';
 
 const Home = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -44,7 +45,7 @@ const Home = () => {
   }, [imagesLoaded]);
 
   const LoadingPlaceholder = () => (
-    <div className="absolute right-0 w-[600px] h-[600px] bg-purple-200 animate-pulse rounded-lg"></div>
+    <div className="absolute inset-0 bg-purple-200/50 animate-pulse rounded-lg"></div>
   );
 
   const programs = [
@@ -77,29 +78,32 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="min-h-[calc(100vh-80px)] bg-[#972ae6] relative overflow-hidden">
+      <section className="h-[563px] bg-[#972ae6] relative overflow-hidden">
         <div className="container mx-auto px-6 h-full">
-          <div className="flex items-center h-full py-20">
+          <div className="flex items-center justify-between h-full">
             {/* Left Content */}
-            <div className="w-[490px] flex flex-col justify-center space-y-8 animate-fade-in">
-              <h1 className="text-[56px] font-bold text-white leading-[1.2]">
+            <div className="w-[520px] flex flex-col gap-6">
+              <h1 className="text-[44px] font-bold text-white leading-[1.2]">
                 Aqui, cada tentáculo nos conecta a um mundo mais acessível e humano
               </h1>
-              <p className="text-xl text-white/70 font-light leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.
+              <p className="text-lg text-white/90 leading-relaxed max-w-[460px]">
+                Somos uma organização dedicada a capacitar pessoas com deficiências ocultas e neurodivergentes, promovendo inclusão social, cultural e profissional.
               </p>
-              <div className="pt-4">
-                <button className="px-8 py-4 rounded-full border-2 border-white text-white text-lg font-medium 
-                  hover:bg-white hover:text-[#972ae6] transition-all duration-300 
-                  transform hover:-translate-y-1 active:translate-y-0
-                  shadow-lg hover:shadow-xl active:shadow-md">
+              <div className="mt-2">
+                <Link 
+                  to="/octo-faz"
+                  className="inline-flex items-center px-8 py-3 rounded-full bg-white text-[#972ae6] text-base font-semibold
+                    hover:bg-[#e8b624] hover:text-white transition-all duration-300 
+                    transform hover:-translate-y-1 active:translate-y-0
+                    shadow-lg hover:shadow-xl active:shadow-md"
+                >
                   Conheça nossos projetos
-                </button>
+                </Link>
               </div>
             </div>
 
-            {/* Right Image with Parallax */}
-            <div className="flex-1 flex justify-end items-center relative">
+            {/* Right Image */}
+            <div className="relative w-[480px] h-[480px] flex items-center justify-center">
               {!imagesLoaded.every(Boolean) && <LoadingPlaceholder />}
               {images.map((img, index) => (
                 <img
@@ -107,11 +111,11 @@ const Home = () => {
                   src={img}
                   alt={`OCTO Hero ${index + 1}`}
                   loading={index === 0 ? "eager" : "lazy"}
-                  className={`
-                    absolute right-0 w-[600px] h-auto object-contain
-                    transition-opacity duration-1000 ease-in-out
-                    ${currentImage === index && imagesLoaded[index] ? 'opacity-100' : 'opacity-0'}
-                  `}
+                  className={cn(
+                    "absolute w-full h-full object-contain",
+                    "transition-opacity duration-1000 ease-in-out",
+                    currentImage === index && imagesLoaded[index] ? 'opacity-100' : 'opacity-0'
+                  )}
                 />
               ))}
             </div>

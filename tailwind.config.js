@@ -48,6 +48,17 @@ export default {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
       },
+      fontSize: {
+        'display': ['2.75rem', { lineHeight: '1.2', fontWeight: '700' }],
+        'h1': ['1.875rem', { lineHeight: '1.25', fontWeight: '700' }],
+        'h2': ['1.5rem', { lineHeight: '1.25', fontWeight: '700' }],
+        'h3': ['1.25rem', { lineHeight: '1.25', fontWeight: '700' }],
+        'h4': ['1.125rem', { lineHeight: '1.25', fontWeight: '700' }],
+        'body-large': ['1.125rem', { lineHeight: '1.75', fontWeight: '400' }],
+        'body': ['1rem', { lineHeight: '1.5', fontWeight: '400' }],
+        'body-small': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
+        'caption': ['0.75rem', { lineHeight: '1.5', fontWeight: '400' }],
+      },
       boxShadow: {
         'md3-1': '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
         'md3-2': '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',

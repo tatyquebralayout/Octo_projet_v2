@@ -16,7 +16,7 @@ const FooterColumn: React.FC<FooterColumnProps> = ({
   return (
     <div className={`footer-column ${className}`}>
       <h3 
-        className="text-[10px] font-bold mb-2" 
+        className="text-h4 text-white/90 mb-4" 
         id={titleId}
       >
         {title}

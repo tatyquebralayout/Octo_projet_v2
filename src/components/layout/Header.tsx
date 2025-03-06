@@ -129,7 +129,6 @@ const Header: React.FC = () => {
                               href={subItem.href}
                               onClick={closeMenu}
                               aria-label={subItem.name}
-                              role="menuitem"
                               className="ripple text-gray-700 hover:text-[#972ae6]"
                             />
                           ))}
@@ -214,7 +213,6 @@ const Header: React.FC = () => {
                             href={subItem.href}
                             onClick={closeMenu}
                             aria-label={subItem.name}
-                            role="menuitem"
                             className="ripple text-gray-700 hover:text-[#972ae6]"
                           />
                         ))}

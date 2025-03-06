@@ -16,7 +16,7 @@ const FooterLogo: React.FC<FooterLogoProps> = ({ logoUrl, altText }) => {
       <img 
         src={logoUrl} 
         alt={altText} 
-        className="h-3 w-auto"
+        className="h-6 w-auto"
         loading="lazy"
       />
     </Link>

@@ -3,145 +3,271 @@
 @layer base {
   /* Typography Scale */
   .text-display {
-    @apply text-[44px] font-bold leading-[1.2] text-gray-900;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: rgb(17, 24, 39);
   }
 
   .text-h1 {
-    @apply text-[30px] font-bold leading-[1.25] text-gray-900;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: rgb(17, 24, 39);
   }
 
   .text-h2 {
-    @apply text-[24px] font-bold leading-[1.25] text-gray-900;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: rgb(17, 24, 39);
   }
 
   .text-h3 {
-    @apply text-[20px] font-bold leading-[1.25] text-gray-900;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: rgb(17, 24, 39);
   }
 
   .text-h4 {
-    @apply text-[18px] font-bold leading-[1.25] text-gray-900;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: rgb(17, 24, 39);
   }
 
   .text-body-large {
-    @apply text-[18px] leading-[1.75] text-gray-700;
+    font-size: 18px;
+    line-height: 1.75;
+    color: rgb(55, 65, 81);
   }
 
   .text-body {
-    @apply text-[16px] leading-[1.5] text-gray-700;
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgb(55, 65, 81);
   }
 
   .text-body-small {
-    @apply text-[14px] leading-[1.5] text-gray-600;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgb(75, 85, 99);
   }
 
   .text-caption {
-    @apply text-[12px] leading-[1.5] text-gray-500;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgb(107, 114, 128);
   }
 
   /* Links */
   .text-link {
-    @apply text-primary-400 hover:text-primary-500 transition-colors duration-200;
+    color: rgb(151, 42, 230);
+    transition: color 200ms;
+  }
+
+  .text-link:hover {
+    color: rgb(232, 182, 36);
   }
 
   /* Emphasis */
   .text-emphasis {
-    @apply font-medium text-gray-900;
+    font-weight: 500;
+    color: rgb(17, 24, 39);
   }
 
   /* Muted */
   .text-muted {
-    @apply text-gray-500;
+    color: rgb(107, 114, 128);
   }
 }
 
 @layer components {
   /* Cards */
   .card-primary {
-    @apply bg-white rounded-3xl p-12 md3-elevation-1 transition-all duration-300;
+    background-color: white;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    transition: all 300ms;
   }
 
   .card-secondary {
-    @apply bg-white rounded-2xl p-6 md3-elevation-1 hover:md3-elevation-2 
-      transition-all duration-300;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    transition: all 300ms;
+  }
+
+  .card-secondary:hover {
+    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
   }
 
   .card-accent {
-    @apply bg-primary rounded-3xl p-12 text-white md3-elevation-1;
+    background-color: rgb(151, 42, 230);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    color: white;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
   }
 
   /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center px-8 py-4 bg-primary text-white rounded-full
-      hover:bg-accent hover:text-white transition-all duration-300 font-medium
-      md3-elevation-1 hover:md3-elevation-2 transform hover:-translate-y-1;
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgb(151, 42, 230);
+    color: white;
+    border-radius: 9999px;
+    font-weight: 500;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    transition: all 300ms;
+    transform: translateY(0);
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(232, 182, 36);
+    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    transform: translateY(-4px);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center px-8 py-4 bg-white text-primary rounded-full
-      hover:bg-accent hover:text-white transition-all duration-300 font-medium
-      md3-elevation-1 hover:md3-elevation-2 transform hover:-translate-y-1;
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    color: rgb(151, 42, 230);
+    border-radius: 9999px;
+    font-weight: 500;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    transition: all 300ms;
+    transform: translateY(0);
+  }
+
+  .btn-secondary:hover {
+    background-color: rgb(232, 182, 36);
+    color: white;
+    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    transform: translateY(-4px);
   }
 
   .btn-outline {
-    @apply inline-flex items-center px-8 py-4 border-2 border-white text-white rounded-full
-      hover:bg-white hover:text-primary transition-all duration-300 font-medium
-      transform hover:-translate-y-1;
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    border: 2px solid white;
+    color: white;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: all 300ms;
+    transform: translateY(0);
+  }
+
+  .btn-outline:hover {
+    background-color: white;
+    color: rgb(151, 42, 230);
+    transform: translateY(-4px);
   }
 
   /* Icons */
   .icon-container {
-    @apply w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center
-      group-hover:bg-accent transition-colors;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    background-color: rgba(151, 42, 230, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 300ms;
+  }
+
+  .group:hover .icon-container {
+    background-color: rgb(232, 182, 36);
   }
 
   .icon {
-    @apply w-5 h-5 text-primary group-hover:text-white transition-colors;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: rgb(151, 42, 230);
+    transition: color 300ms;
+  }
+
+  .group:hover .icon {
+    color: white;
   }
 
   /* Sections */
   .section-hero {
-    @apply relative min-h-[80vh] flex items-center overflow-hidden bg-primary;
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: rgb(151, 42, 230);
   }
 
   .section-content {
-    @apply py-24;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
   }
 
   /* Container */
   .container-narrow {
-    @apply max-w-4xl mx-auto;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   /* Links */
   .link-primary {
-    @apply text-primary hover:text-accent transition-colors;
+    color: rgb(151, 42, 230);
+    transition: color 200ms;
+  }
+
+  .link-primary:hover {
+    color: rgb(232, 182, 36);
   }
 
   .link-white {
-    @apply text-white hover:text-accent transition-colors;
+    color: white;
+    transition: color 200ms;
+  }
+
+  .link-white:hover {
+    color: rgb(232, 182, 36);
   }
 }
 
 @layer utilities {
   /* Colors */
   .bg-primary {
-    @apply bg-[#972ae6];
+    background-color: rgb(151, 42, 230);
   }
 
   .bg-accent {
-    @apply bg-[#e8b624];
+    background-color: rgb(232, 182, 36);
   }
 
   .text-primary {
-    @apply text-[#972ae6];
+    color: rgb(151, 42, 230);
   }
 
   .text-accent {
-    @apply text-[#e8b624];
+    color: rgb(232, 182, 36);
   }
 
   .text-primary-light {
-    @apply text-[#972ae6]/70;
+    color: rgba(151, 42, 230, 0.7);
   }
 
   /* Elevations (Material Design 3) */
@@ -162,15 +288,19 @@
 
   /* Transitions */
   .transition-standard {
-    @apply transition-all duration-300;
+    transition: all 300ms;
   }
 
   /* Hover Effects */
   .hover-lift {
-    @apply transform hover:-translate-y-1;
+    transform: translateY(0);
   }
 
-  .hover-accent {
-    @apply hover:text-accent;
+  .hover-lift:hover {
+    transform: translateY(-0.25rem);
+  }
+
+  .hover-accent:hover {
+    color: rgb(232, 182, 36);
   }
 }

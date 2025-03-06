@@ -13,12 +13,12 @@ interface FooterNavProps {
 
 const FooterNav: React.FC<FooterNavProps> = ({ items, ariaLabelledby }) => {
   return (
-    <ul className="space-y-1" aria-labelledby={ariaLabelledby}>
+    <ul className="space-y-2" aria-labelledby={ariaLabelledby}>
       {items.map((item) => (
         <li key={item.to}>
           <Link 
             to={item.to} 
-            className="text-[9px] text-white/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-white rounded-md inline-block"
+            className="text-body-small text-white/80 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white rounded-md inline-block"
           >
             {item.label}
           </Link>

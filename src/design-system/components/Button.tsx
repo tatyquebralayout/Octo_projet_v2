@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { cn } from '../../utils/cn';
-import { colors, typography, spacing, transitions } from '../foundations/tokens';
+import { colors, typography, spacing } from '../foundations/tokens';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'text';
 export type ButtonSize = 'sm' | 'md' | 'lg';

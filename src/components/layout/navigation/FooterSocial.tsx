@@ -15,9 +15,9 @@ const FooterSocial: React.FC<FooterSocialProps> = ({ links }) => {
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'instagram':
-        return <Instagram className="w-2.5 h-2.5" aria-hidden="true" />;
+        return <Instagram className="w-5 h-5" aria-hidden="true" />;
       case 'linkedin':
-        return <Linkedin className="w-2.5 h-2.5" aria-hidden="true" />;
+        return <Linkedin className="w-5 h-5" aria-hidden="true" />;
       default:
         return null;
     }
@@ -25,7 +25,7 @@ const FooterSocial: React.FC<FooterSocialProps> = ({ links }) => {
 
   return (
     <div 
-      className="flex gap-2"
+      className="flex gap-4"
       aria-label="Redes sociais"
     >
       {links.map((link) => (
@@ -34,7 +34,7 @@ const FooterSocial: React.FC<FooterSocialProps> = ({ links }) => {
           href={link.url} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="p-1 rounded-full bg-white/10 hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+          className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
           aria-label={link.label}
         >
           {getIcon(link.icon)}

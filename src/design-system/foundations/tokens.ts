@@ -107,13 +107,14 @@ export const typography = {
   
   // Tamanhos de fonte
   fontSize: {
-    xs: '0.75rem',    // 12px
-    sm: '0.875rem',   // 14px
-    base: '1rem',     // 16px
-    lg: '1.125rem',   // 18px
-    xl: '1.25rem',    // 20px
-    '2xl': '1.5rem',  // 24px
-    '3xl': '1.875rem' // 30px
+    xs: '0.75rem',     // 12px - Caption
+    sm: '0.875rem',    // 14px - Body Small
+    base: '1rem',      // 16px - Body
+    lg: '1.125rem',    // 18px - Body Large
+    xl: '1.25rem',     // 20px - H3
+    '2xl': '1.5rem',   // 24px - H2
+    '3xl': '1.875rem', // 30px - H1
+    '4xl': '2.75rem'   // 44px - Display
   },
   
   // Espessuras de fonte
@@ -126,9 +127,9 @@ export const typography = {
   // Alturas de linha
   lineHeight: {
     none: 1,
-    tight: 1.25,
-    normal: 1.5,
-    relaxed: 1.75
+    tight: 1.25,    // Display, H1-H4
+    normal: 1.5,    // Body text
+    relaxed: 1.75   // Body large
   },
   
   // Espaçamento entre letras
@@ -140,6 +141,55 @@ export const typography = {
     wider: '0.05em',
     widest: '0.1em',
   },
+
+  // Variantes de texto
+  variants: {
+    display: {
+      fontSize: '2.75rem',
+      fontWeight: 700,
+      lineHeight: 1.2
+    },
+    h1: {
+      fontSize: '1.875rem',
+      fontWeight: 700,
+      lineHeight: 1.25
+    },
+    h2: {
+      fontSize: '1.5rem',
+      fontWeight: 700,
+      lineHeight: 1.25
+    },
+    h3: {
+      fontSize: '1.25rem',
+      fontWeight: 700,
+      lineHeight: 1.25
+    },
+    h4: {
+      fontSize: '1.125rem',
+      fontWeight: 700,
+      lineHeight: 1.25
+    },
+    bodyLarge: {
+      fontSize: '1.125rem',
+      fontWeight: 400,
+      lineHeight: 1.75
+    },
+    body: {
+      fontSize: '1rem',
+      fontWeight: 400,
+      lineHeight: 1.5
+    },
+    bodySmall: {
+      fontSize: '0.875rem',
+      fontWeight: 400,
+      lineHeight: 1.5
+    },
+    caption: {
+      fontSize: '0.75rem',
+      fontWeight: 400,
+      lineHeight: 1.5
+    }
+  }
 };
 
 export const spacing = {

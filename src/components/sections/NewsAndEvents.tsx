@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ArrowRight, Download, Calendar, Palette, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -126,22 +126,22 @@ const NewsAndEvents = () => {
               {/* Content */}
               <div className="p-6">
                 {/* Tag */}
-                <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 ${item.color} ${item.tagColor}`}>
+                <span className={`inline-block px-4 py-1.5 rounded-full text-body-small font-bold mb-4 ${item.color} ${item.tagColor}`}>
                   {item.tag}
                 </span>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold text-[#972ae6] mb-3 group-hover:text-[#e8b624] transition-colors">
+                <h3 className="text-h3 text-[#972ae6] mb-3 group-hover:text-[#e8b624] transition-colors">
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-[#972ae6]/70 mb-6 line-clamp-3">
+                <p className="text-body text-[#972ae6]/70 mb-6 line-clamp-3">
                   {item.description}
                 </p>
 
                 {/* Action */}
-                <div className="inline-flex items-center px-6 py-2 rounded-full bg-[#e8b624] text-white font-bold
+                <div className="inline-flex items-center px-6 py-2 rounded-full bg-[#e8b624] text-white text-body-small font-bold
                   group-hover:bg-[#972ae6] transition-all duration-300 
                   transform group-hover:-translate-y-1 active:translate-y-0
                   shadow-md group-hover:shadow-lg active:shadow-sm">

@@ -1,6 +1,5 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
-import { colors, typography, spacing } from '../foundations/tokens';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -26,7 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
         <label
           className={cn(
             'block mb-1',
-            'text-sm font-medium',
+            'text-body-small font-medium',
             'text-gray-700',
             disabled && 'text-gray-400'
           )}
@@ -50,7 +49,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
           className={cn(
             'w-full px-3 py-2 rounded-lg',
             'border transition-all duration-200',
-            'text-base font-normal',
+            'text-body font-normal',
             'focus:outline-none focus:ring-2',
             'focus:ring-primary-400 focus:border-primary-400',
             'disabled:bg-gray-100 disabled:cursor-not-allowed',
@@ -76,7 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 
       {(error || helper) && (
         <p className={cn(
-          'mt-1 text-sm',
+          'mt-1 text-caption',
           error ? 'text-error' : 'text-gray-500'
         )}>
           {error || helper}

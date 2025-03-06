@@ -7,7 +7,6 @@ interface SubMenuItemProps {
   href: string;
   onClick?: () => void;
   'aria-label'?: string;
-  role?: 'menuitem' | 'none';
   className?: string;
 }
 
@@ -22,7 +21,6 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
   href,
   onClick,
   'aria-label': ariaLabel,
-  role = 'menuitem',
   className
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -58,7 +56,7 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
   }, [onClick]);
 
   return (
-    <li role="none">
+    <li>
       <Link
         to={href}
         onClick={onClick}
@@ -77,7 +75,6 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
-        role={role}
         aria-label={ariaLabel || name}
       >
         <span className="relative">
