@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Routes, Route, createRoutesFromElements, createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { NotFound } from './components/NotFound';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Loading from './components/Loading';
@@ -29,6 +30,7 @@ const Contato = React.lazy(() => import('./pages/Contato'));
 // Configuração das rotas
 const routes = createRoutesFromElements(
   <Route
+    errorElement={<NotFound />}
     element={
       <MenuProvider>
         <div className="min-h-screen flex flex-col">
@@ -60,6 +62,7 @@ const routes = createRoutesFromElements(
                 <Route path="/noticias" element={<Noticias />} />
                 <Route path="/cartilhas" element={<Cartilhas />} />
                 <Route path="/contato" element={<Contato />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
           </main>
