@@ -37,29 +37,127 @@
 
 ## Próximas Tarefas Prioritárias
 
-1. **Implementação de Testes**
-   - Configurar Jest e React Testing Library
-   - Criar testes unitários para componentes principais
-   - Implementar testes E2E com Cypress
-   - Configurar CI/CD para testes automatizados
+1. **Schema Markup e SEO**
+   - Implementar schema markup no index.html:
+     - Organization (informações da empresa)
+     - WebSite (estrutura do site)
+     - Service (serviços oferecidos)
+     - LocalBusiness (informações de contato e localização)
+   - Implementar schema markup específico para cada página:
+     - Páginas de serviços
+     - Páginas institucionais
+     - Blog e notícias
+     - Cartilhas e recursos
 
-2. **Melhorias de SEO**
-   - Implementar Schema.org markup
-   - Otimizar meta tags por página
-   - Melhorar estrutura de dados para crawlers
-   - Implementar OpenGraph tags
+2. **Documentação de Componentes**
+   - Criar/atualizar documentação dos componentes base:
+     - NotFound.tsx (tratamento de 404)
+     - ErrorBoundary.tsx (tratamento de erros)
+     - Loading.tsx (feedback de carregamento)
+   - Documentar componentes de layout:
+     - Header
+     - Footer
+     - Navigation
+     - Layout containers
+   - Documentar componentes de UI:
+     - Buttons
+     - Cards
+     - Forms
+     - Modals
+   - Documentar componentes de seções:
+     - Hero sections
+     - Feature sections
+     - Contact sections
+     - Content sections
 
-3. **Otimização de Assets**
-   - Migrar imagens para CDN próprio
-   - Implementar otimização automática de imagens
-   - Configurar lazy loading eficiente
-   - Melhorar performance de carregamento
+3. **Testes de Integração**
+   - Expandir cobertura de testes existentes:
+     - Header.test.tsx (já implementado)
+   - Implementar novos testes:
+     - Fluxo de navegação:
+       - Rotas principais
+       - Navegação entre páginas
+       - Breadcrumbs
+     - Interações de usuário:
+       - Formulários
+       - Menus
+       - Modais
+     - Carregamento de páginas:
+       - Lazy loading
+       - Suspense
+       - Fallbacks
+     - Tratamento de erros:
+       - Boundary errors
+       - 404 pages
+       - Network errors
 
-4. **Documentação**
-   - Criar documentação técnica
-   - Documentar componentes e hooks
-   - Estabelecer guias de estilo
-   - Documentar padrões de desenvolvimento
+4. **Resolução de Warnings**
+   - TypeScript errors:
+     - ✅ Melhorada tipagem de props em MenuItem e SubMenuItem
+     - ✅ Implementadas interfaces com extensões corretas
+     - ✅ Adicionados tipos específicos para atributos ARIA
+     - ✅ Instalado e configurado jest-axe e seus tipos
+     - ⚠️ Pendente:
+       - Configurar tipos personalizados do Jest
+       - Revisar tipagem em outros componentes
+
+   - React hooks warnings:
+     - ✅ Otimizado useMenu com memoização
+     - ✅ Corrigidos arrays de dependências
+     - ✅ Implementados useCallback para handlers
+     - ✅ Adicionado useMemo para valores computados
+     - ⚠️ Pendente:
+       - Revisar outros hooks customizados
+       - Implementar testes para hooks
+       - Documentar padrões de uso dos hooks
+
+   - Accessibility warnings:
+     - ✅ Adicionados ARIA labels apropriados
+     - ✅ Implementada navegação por teclado
+     - ✅ Corrigidos roles e atributos ARIA
+     - ✅ Configurado ESLint com jsx-a11y
+     - ✅ Configuradas regras personalizadas para roles ARIA
+     - ✅ Ajustada hierarquia de roles no menu
+     - ⚠️ Pendente:
+       - Resolver warnings restantes de acessibilidade
+       - Implementar testes E2E de acessibilidade
+       - Realizar auditoria com axe-core
+       - Documentar padrões de acessibilidade
+
+   **Próximos Passos**:
+   1. Correções de Acessibilidade:
+      - ✅ Refatorar estrutura do menu para seguir hierarquia ARIA correta
+      - ✅ Implementar roles e atributos conforme especificação WAI-ARIA
+      - ⚠️ Pendente:
+        - Revisar e corrigir warnings restantes de acessibilidade
+        - Adicionar testes específicos para cada regra de acessibilidade
+        - Implementar navegação por teclado avançada
+        - Melhorar feedback visual para usuários de teclado
+
+   2. Melhorias de Código:
+      - ✅ Configurar ESLint com regras personalizadas
+      - ✅ Ajustar estrutura de componentes para acessibilidade
+      - ⚠️ Pendente:
+        - Revisar e otimizar outros hooks customizados
+        - Implementar testes para todos os hooks
+        - Documentar padrões e boas práticas
+        - Criar guia de desenvolvimento
+
+   3. Testes e Qualidade:
+      - ✅ Configurar ambiente de testes com jest-axe
+      - ⚠️ Pendente:
+        - Implementar testes E2E com Cypress
+        - Realizar auditoria completa de acessibilidade
+        - Documentar diretrizes e padrões
+        - Adicionar testes de regressão visual
+
+   4. Documentação:
+      - ⚠️ Pendente:
+        - Criar guia de acessibilidade
+        - Documentar padrões de componentes
+        - Estabelecer checklist de acessibilidade
+        - Criar templates para novos componentes
+        - Documentar hierarquia ARIA e roles
 
 ## Componentes e Status
 

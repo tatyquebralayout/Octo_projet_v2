@@ -46,12 +46,13 @@
 
 /* Feedback Visual */
 .menu-item-focus {
-  @apply ring-2 ring-[#972ae6] ring-offset-2;
+  outline: 2px solid #972ae6;
+  outline-offset: 2px;
   transition: all 150ms ease-in-out;
 }
 
 .menu-item-active {
-  @apply bg-[#972ae6]/10;
+  background-color: rgba(151, 42, 230, 0.1);
   transition: background-color 150ms ease-in-out;
 }
 

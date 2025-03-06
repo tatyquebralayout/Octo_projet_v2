@@ -3,11 +3,12 @@ import { CSSTransition } from 'react-transition-group';
 import { MenuItem } from './navigation/MenuItem';
 import { SubMenuItem } from './navigation/SubMenuItem';
 import { SocialIcons } from './navigation/SocialIcons';
-import { useMenuContext } from '../../contexts/MenuContext';
+import { useMenuContext } from '../../hooks/useMenuContext';
 import { useClickOutside } from '../../hooks/useClickOutside';
 import { menuItems } from '../../config/menuItems';
 import { MenuButton } from './navigation/MenuButton';
 import './styles/animations.css';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
@@ -33,28 +34,20 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md" role="banner">
-      <div className="container mx-auto px-6">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex items-center">
-            <a 
-              href="/" 
-              className="flex items-center"
-              aria-label="OCTO - Página Inicial"
-            >
-              <img 
-                src="https://iili.io/2pYE6Xe.png" 
-                alt="OCTO Logo" 
-                className="h-8 w-auto"
-              />
-            </a>
-          </div>
-          
-          {/* Desktop Navigation */}
+    <header className="bg-white shadow-sm" role="banner">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <Link 
+            to="/" 
+            className="flex items-center space-x-2"
+            aria-label="Ir para página inicial"
+          >
+            <img src="/logo.svg" alt="OCTO Logo" className="h-8" />
+          </Link>
+
           <nav 
-            className="hidden lg:flex items-center space-x-8" 
-            role="navigation" 
+            className="hidden lg:flex items-center space-x-8"
+            role="navigation"
             aria-label="Menu principal"
           >
             <ul className="flex items-center space-x-8" role="menubar">
@@ -71,6 +64,9 @@ const Header: React.FC = () => {
                     href={item.href}
                     hasSubmenu={!!item.submenu}
                     isSubmenuOpen={isSubmenuOpen(item.name)}
+                    role="menuitem"
+                    aria-haspopup={!!item.submenu}
+                    aria-expanded={isSubmenuOpen(item.name)}
                   />
                   
                   {item.submenu && (
@@ -87,6 +83,7 @@ const Header: React.FC = () => {
                         role="menu"
                         aria-orientation="vertical"
                         aria-label={`Submenu ${item.name}`}
+                        tabIndex={-1}
                       >
                         {item.submenu.map((subItem) => (
                           <SubMenuItem
@@ -94,6 +91,8 @@ const Header: React.FC = () => {
                             name={subItem.name}
                             href={subItem.href}
                             onClick={closeMenu}
+                            aria-label={subItem.name}
+                            role="menuitem"
                           />
                         ))}
                       </ul>
@@ -106,14 +105,15 @@ const Header: React.FC = () => {
             <SocialIcons />
           </nav>
 
-          {/* Mobile Menu Button */}
           <MenuButton 
             isOpen={isMenuOpen}
             onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
           />
         </div>
 
-        {/* Mobile Navigation */}
         <CSSTransition
           in={isMenuOpen}
           timeout={200}
@@ -137,39 +137,12 @@ const Header: React.FC = () => {
                     hasSubmenu={!!item.submenu}
                     isSubmenuOpen={isSubmenuOpen(item.name)}
                     onClick={() => !item.submenu && closeMenu()}
+                    role="menuitem"
+                    aria-haspopup={!!item.submenu}
+                    aria-expanded={isSubmenuOpen(item.name)}
                   />
-                  {item.submenu && (
-                    <CSSTransition
-                      in={isSubmenuOpen(item.name)}
-                      timeout={150}
-                      classNames="submenu"
-                      unmountOnExit
-                      nodeRef={submenuRefs.current[item.name]}
-                    >
-                      <ul 
-                        ref={submenuRefs.current[item.name]}
-                        className="ml-4 flex flex-col space-y-2 mt-1"
-                        role="menu"
-                        aria-orientation="vertical"
-                        aria-label={`Submenu ${item.name}`}
-                      >
-                        {item.submenu.map((subItem) => (
-                          <SubMenuItem
-                            key={subItem.name}
-                            name={subItem.name}
-                            href={subItem.href}
-                            onClick={closeMenu}
-                          />
-                        ))}
-                      </ul>
-                    </CSSTransition>
-                  )}
                 </li>
               ))}
-              
-              <li className="pt-4 mt-4" role="none">
-                <SocialIcons />
-              </li>
             </ul>
           </nav>
         </CSSTransition>

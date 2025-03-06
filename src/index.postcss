@@ -12,22 +12,26 @@
 
 .animate-float {
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes float {
   0% {
-    transform: translate3d(0, 0, 0) scale(1.1);
+    transform: translate3d(0, 0, 0) scale3d(1.1, 1.1, 1);
   }
   50% {
-    transform: translate3d(0, -10px, 0) scale(1.1);
+    transform: translate3d(0, -10px, 0) scale3d(1.1, 1.1, 1);
   }
   100% {
-    transform: translate3d(0, 0, 0) scale(1.1);
+    transform: translate3d(0, 0, 0) scale3d(1.1, 1.1, 1);
   }
 }
 
 .animate-slide-in {
   will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes slideIn {

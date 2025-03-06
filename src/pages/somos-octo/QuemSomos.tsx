@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
 import JoinUs from '@/components/sections/JoinUs';
@@ -142,6 +142,8 @@ const QuemSomos = () => {
                     href={member.lattes}
                     target="_blank"
                     rel="noopener noreferrer"
+                    title={`Currículo Lattes de ${member.name}`}
+                    aria-label={`Currículo Lattes de ${member.name}`}
                     className="p-2 rounded-full bg-[#972ae6]/10 group-hover:bg-[#e8b624] transition-colors"
                   >
                     <BookOpen className="w-5 h-5 text-[#972ae6] group-hover:text-white transition-colors" />

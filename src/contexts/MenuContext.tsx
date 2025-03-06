@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, ReactNode } from 'react';
 import { useMenu } from '../hooks/useMenu';
 import { useSubmenu } from '../hooks/useSubmenu';
 
@@ -12,7 +12,7 @@ interface MenuContextType {
   isSubmenuOpen: (menuName: string) => boolean;
 }
 
-const MenuContext = createContext<MenuContextType | undefined>(undefined);
+export const MenuContext = createContext<MenuContextType | undefined>(undefined);
 
 export const MenuProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { isMenuOpen, toggleMenu, closeMenu } = useMenu();
@@ -33,12 +33,4 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       {children}
     </MenuContext.Provider>
   );
-};
-
-export const useMenuContext = () => {
-  const context = useContext(MenuContext);
-  if (context === undefined) {
-    throw new Error('useMenuContext must be used within a MenuProvider');
-  }
-  return context;
 }; 

@@ -2,7 +2,7 @@ import React, { useState, useCallback, type AnchorHTMLAttributes } from 'react';
 import { ChevronDown } from 'lucide-react';
 import '../styles/animations.css';
 
-interface MenuItemProps {
+interface MenuItemProps extends React.HTMLAttributes<HTMLAnchorElement> {
   name: string;
   href: string;
   hasSubmenu?: boolean;
@@ -10,6 +10,9 @@ interface MenuItemProps {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onClick?: () => void;
+  'aria-haspopup'?: boolean;
+  'aria-expanded'?: boolean;
+  role?: string;
 }
 
 export const MenuItem: React.FC<MenuItemProps> = ({
@@ -19,7 +22,11 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   isSubmenuOpen,
   onMouseEnter,
   onMouseLeave,
-  onClick
+  onClick,
+  role = 'menuitem',
+  'aria-haspopup': ariaHaspopup,
+  'aria-expanded': ariaExpanded,
+  ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -28,6 +35,18 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   const handleBlur = useCallback(() => setIsFocused(false), []);
   const handleMouseDown = useCallback(() => setIsPressed(true), []);
   const handleMouseUp = useCallback(() => setIsPressed(false), []);
+
+  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
+    if (hasSubmenu) {
+      if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        onClick?.();
+      }
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onClick?.();
+    }
+  }, [hasSubmenu, onClick]);
 
   const linkProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
     href,
@@ -47,10 +66,12 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     onBlur: handleBlur,
     onMouseDown: handleMouseDown,
     onMouseUp: handleMouseUp,
-    role: hasSubmenu ? 'button' : undefined,
-    'aria-expanded': hasSubmenu ? isSubmenuOpen : undefined,
-    'aria-haspopup': hasSubmenu ? 'menu' : undefined,
-    tabIndex: 0
+    onKeyDown: handleKeyDown,
+    role,
+    'aria-haspopup': hasSubmenu ? 'menu' : ariaHaspopup,
+    'aria-expanded': hasSubmenu ? isSubmenuOpen : ariaExpanded,
+    tabIndex: 0,
+    ...props
   };
 
   return (
