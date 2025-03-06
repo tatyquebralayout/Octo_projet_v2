@@ -3,39 +3,54 @@
 @layer base {
   /* Typography Scale */
   .text-display {
-    @apply text-[56px] font-bold leading-[1.2];
+    @apply text-[44px] font-bold leading-[1.2] text-gray-900;
   }
 
   .text-h1 {
-    @apply text-4xl font-bold;
+    @apply text-[30px] font-bold leading-[1.25] text-gray-900;
   }
 
   .text-h2 {
-    @apply text-3xl font-bold;
+    @apply text-[24px] font-bold leading-[1.25] text-gray-900;
   }
 
   .text-h3 {
-    @apply text-2xl font-bold;
+    @apply text-[20px] font-bold leading-[1.25] text-gray-900;
   }
 
   .text-h4 {
-    @apply text-xl font-bold;
+    @apply text-[18px] font-bold leading-[1.25] text-gray-900;
   }
 
   .text-body-large {
-    @apply text-xl leading-relaxed;
+    @apply text-[18px] leading-[1.75] text-gray-700;
   }
 
   .text-body {
-    @apply text-lg leading-relaxed;
+    @apply text-[16px] leading-[1.5] text-gray-700;
   }
 
   .text-body-small {
-    @apply text-base leading-relaxed;
+    @apply text-[14px] leading-[1.5] text-gray-600;
   }
 
   .text-caption {
-    @apply text-sm;
+    @apply text-[12px] leading-[1.5] text-gray-500;
+  }
+
+  /* Links */
+  .text-link {
+    @apply text-primary-400 hover:text-primary-500 transition-colors duration-200;
+  }
+
+  /* Emphasis */
+  .text-emphasis {
+    @apply font-medium text-gray-900;
+  }
+
+  /* Muted */
+  .text-muted {
+    @apply text-gray-500;
   }
 }
 
