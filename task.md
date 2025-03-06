@@ -15,6 +15,35 @@
 - ✅ Resolvido erro do PostCSS com `@tailwind`
 - ✅ Corrigida ordem dos imports CSS
 
+### Sistema Tipográfico
+- ✅ Implementado novo sistema de tipografia:
+  - ✅ Definidas classes para hierarquia de texto (display, h1-h4)
+  - ✅ Padronizados tamanhos de fonte (44px a 12px)
+  - ✅ Implementados estilos para corpo de texto (body-large, body, body-small)
+  - ✅ Adicionadas classes utilitárias (text-link, text-emphasis, text-muted)
+  - ✅ Configurados line-heights apropriados
+  - ✅ Definidas cores de texto padronizadas
+- ✅ Atualizada tipografia nos componentes:
+  - ✅ Footer e seus subcomponentes
+  - ✅ NewsAndEvents
+  - ✅ Input e formulários
+  - ✅ Páginas individuais
+
+### Melhorias no Menu
+- ✅ Corrigido comportamento do submenu:
+  - ✅ Adicionada área de tolerância para navegação
+  - ✅ Implementado delay no fechamento do submenu
+  - ✅ Melhorada interação entre menu e submenu
+  - ✅ Corrigido z-index para sobreposição correta
+- ✅ Melhorada acessibilidade:
+  - ✅ Atributos ARIA atualizados
+  - ✅ Navegação por teclado aprimorada
+  - ✅ Feedback visual mais claro
+- ✅ Otimizações de performance:
+  - ✅ Implementada limpeza de timeouts
+  - ✅ Melhorada gestão de estado
+  - ✅ Reduzido número de re-renders
+
 ## Problemas Pendentes
 
 ### Páginas Incompletas
@@ -37,7 +66,33 @@
 
 ## Próximas Tarefas Prioritárias
 
-1. **Schema Markup e SEO**
+1. **Melhorias de Interação**
+   - Implementar feedback visual mais rico:
+     - Animações suaves para transições
+     - Estados de hover mais elaborados
+     - Indicadores de loading
+   - Melhorar responsividade:
+     - Ajustar breakpoints
+     - Otimizar layout mobile
+     - Melhorar gestos touch
+   - Aprimorar acessibilidade:
+     - Implementar skip links
+     - Melhorar navegação por teclado
+     - Adicionar estados de foco
+
+2. **Documentação do Sistema Tipográfico**
+   - Criar guia de uso da tipografia:
+     - Exemplos de uso de cada classe
+     - Diretrizes de hierarquia visual
+     - Boas práticas de combinação
+   - Documentar tokens de tipografia:
+     - Tamanhos de fonte
+     - Line-heights
+     - Pesos de fonte
+     - Cores de texto
+   - Criar componentes de exemplo no Storybook
+
+3. **Schema Markup e SEO**
    - Implementar schema markup no index.html:
      - Organization (informações da empresa)
      - WebSite (estrutura do site)
@@ -49,28 +104,7 @@
      - Blog e notícias
      - Cartilhas e recursos
 
-2. **Documentação de Componentes**
-   - Criar/atualizar documentação dos componentes base:
-     - NotFound.tsx (tratamento de 404)
-     - ErrorBoundary.tsx (tratamento de erros)
-     - Loading.tsx (feedback de carregamento)
-   - Documentar componentes de layout:
-     - Header
-     - Footer
-     - Navigation
-     - Layout containers
-   - Documentar componentes de UI:
-     - Buttons
-     - Cards
-     - Forms
-     - Modals
-   - Documentar componentes de seções:
-     - Hero sections
-     - Feature sections
-     - Contact sections
-     - Content sections
-
-3. **Testes de Integração**
+4. **Testes de Integração**
    - Expandir cobertura de testes existentes:
      - Header.test.tsx (já implementado)
    - Implementar novos testes:
@@ -91,73 +125,72 @@
        - 404 pages
        - Network errors
 
-4. **Resolução de Warnings**
-   - TypeScript errors:
-     - ✅ Melhorada tipagem de props em MenuItem e SubMenuItem
-     - ✅ Implementadas interfaces com extensões corretas
-     - ✅ Adicionados tipos específicos para atributos ARIA
-     - ✅ Instalado e configurado jest-axe e seus tipos
-     - ✅ Configurados tipos personalizados do Jest
-     - ⚠️ Pendente:
-       - Revisar tipagem em outros componentes
+## Design System (✅ Atualizado)
 
-   - React hooks warnings:
-     - ✅ Otimizado useMenu com memoização
-     - ✅ Corrigidos arrays de dependências
-     - ✅ Implementados useCallback para handlers
-     - ✅ Adicionado useMemo para valores computados
-     - ⚠️ Pendente:
-       - Revisar outros hooks customizados
-       - Implementar testes para hooks
-       - Documentar padrões de uso dos hooks
+### Tipografia
+- ✅ Hierarquia de Títulos:
+  - Display (44px) - Títulos principais
+  - H1 (30px) - Títulos de seção
+  - H2 (24px) - Subtítulos
+  - H3 (20px) - Títulos menores
+  - H4 (18px) - Títulos de componentes
 
-   - Accessibility warnings:
-     - ✅ Adicionados ARIA labels apropriados
-     - ✅ Implementada navegação por teclado
-     - ✅ Corrigidos roles e atributos ARIA
-     - ✅ Configurado ESLint com jsx-a11y
-     - ✅ Configuradas regras personalizadas para roles ARIA
-     - ✅ Ajustada hierarquia de roles no menu
-     - ⚠️ Pendente:
-       - Resolver warnings restantes de acessibilidade
-       - Implementar testes E2E de acessibilidade
-       - Realizar auditoria com axe-core
-       - Documentar padrões de acessibilidade
+- ✅ Textos de Corpo:
+  - Body Large (18px) - Textos de destaque
+  - Body (16px) - Texto padrão
+  - Body Small (14px) - Textos secundários
+  - Caption (12px) - Legendas
 
-   **Próximos Passos**:
-   1. Correções de Acessibilidade:
-      - ✅ Refatorar estrutura do menu para seguir hierarquia ARIA correta
-      - ✅ Implementar roles e atributos conforme especificação WAI-ARIA
-      - ⚠️ Pendente:
-        - Revisar e corrigir warnings restantes de acessibilidade
-        - Adicionar testes específicos para cada regra de acessibilidade
-        - Implementar navegação por teclado avançada
-        - Melhorar feedback visual para usuários de teclado
+- ✅ Características:
+  - Font Family: Poppins
+  - Pesos: Regular (400), Medium (500), Bold (700)
+  - Line Heights:
+    - Títulos: 1.25
+    - Display: 1.2
+    - Body: 1.5
+    - Body Large: 1.75
 
-   2. Melhorias de Código:
-      - ✅ Configurar ESLint com regras personalizadas
-      - ✅ Ajustar estrutura de componentes para acessibilidade
-      - ⚠️ Pendente:
-        - Revisar e otimizar outros hooks customizados
-        - Implementar testes para todos os hooks
-        - Documentar padrões e boas práticas
-        - Criar guia de desenvolvimento
+- ✅ Cores de Texto:
+  - Títulos: text-gray-900
+  - Corpo: text-gray-700
+  - Secundário: text-gray-600
+  - Caption: text-gray-500
 
-   3. Testes e Qualidade:
-      - ✅ Configurar ambiente de testes com jest-axe
-      - ⚠️ Pendente:
-        - Implementar testes E2E com Cypress
-        - Realizar auditoria completa de acessibilidade
-        - Documentar diretrizes e padrões
-        - Adicionar testes de regressão visual
+### Próximos Passos do Design System
 
-   4. Documentação:
-      - ⚠️ Pendente:
-        - Criar guia de acessibilidade
-        - Documentar padrões de componentes
-        - Estabelecer checklist de acessibilidade
-        - Criar templates para novos componentes
-        - Documentar hierarquia ARIA e roles
+1. **Componentes Adicionais**
+   - [ ] Implementar Avatar
+   - [ ] Criar Badge
+   - [ ] Desenvolver Modal
+   - [ ] Adicionar Tooltip
+   - [ ] Criar Dropdown
+   - [ ] Implementar Tabs
+   - [ ] Desenvolver Alert
+   - [ ] Criar ProgressBar
+
+2. **Documentação**
+   - [ ] Criar Storybook para documentação interativa
+   - [ ] Adicionar exemplos de uso
+   - [ ] Documentar props de cada componente
+   - [ ] Criar guia de contribuição
+
+3. **Testes**
+   - [ ] Implementar testes unitários
+   - [ ] Adicionar testes de acessibilidade
+   - [ ] Criar testes de integração
+   - [ ] Configurar testes visuais
+
+4. **Acessibilidade**
+   - [ ] Revisar contraste de cores
+   - [ ] Implementar temas (claro/escuro)
+   - [ ] Melhorar suporte a screen readers
+   - [ ] Adicionar skip links
+
+5. **Performance**
+   - [ ] Otimizar bundle size
+   - [ ] Implementar lazy loading
+   - [ ] Melhorar tree shaking
+   - [ ] Otimizar CSS
 
 ## Componentes e Status
 
