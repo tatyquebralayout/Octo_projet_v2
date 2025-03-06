@@ -14,6 +14,7 @@
 - ✅ Implementada correta utilização do `outline`
 - ✅ Resolvido erro do PostCSS com `@tailwind`
 - ✅ Corrigida ordem dos imports CSS
+- ✅ Substituídos @apply por CSS padrão no design system
 
 ### Sistema Tipográfico
 - ✅ Implementado novo sistema de tipografia:
@@ -43,8 +44,22 @@
   - ✅ Implementada limpeza de timeouts
   - ✅ Melhorada gestão de estado
   - ✅ Reduzido número de re-renders
+- ✅ Correções de TypeScript:
+  - ✅ Removidas importações não utilizadas
+  - ✅ Corrigida estrutura de props dos componentes
+  - ✅ Ajustada tipagem dos atributos ARIA
 
 ## Problemas Pendentes
+
+### Acessibilidade do Menu
+- Resolver warnings de ARIA roles no MenuItem:
+  - Implementar roles válidos para menu e submenu
+  - Corrigir valores dos atributos aria-haspopup e aria-expanded
+  - Melhorar estrutura semântica dos componentes
+- Melhorar navegação por teclado:
+  - Implementar foco circular no menu
+  - Adicionar atalhos de teclado
+  - Melhorar feedback visual do foco
 
 ### Páginas Incompletas
 - Várias páginas estão em estágio inicial de desenvolvimento
@@ -66,7 +81,17 @@
 
 ## Próximas Tarefas Prioritárias
 
-1. **Melhorias de Interação**
+1. **Correções de Acessibilidade**
+   - Resolver warnings de ARIA no menu:
+     - Implementar roles corretos
+     - Corrigir atributos ARIA
+     - Melhorar semântica HTML
+   - Melhorar navegação por teclado:
+     - Implementar foco circular
+     - Adicionar atalhos
+     - Melhorar feedback visual
+
+2. **Melhorias de Interação**
    - Implementar feedback visual mais rico:
      - Animações suaves para transições
      - Estados de hover mais elaborados
@@ -80,7 +105,7 @@
      - Melhorar navegação por teclado
      - Adicionar estados de foco
 
-2. **Documentação do Sistema Tipográfico**
+3. **Documentação do Sistema Tipográfico**
    - Criar guia de uso da tipografia:
      - Exemplos de uso de cada classe
      - Diretrizes de hierarquia visual
@@ -92,7 +117,7 @@
      - Cores de texto
    - Criar componentes de exemplo no Storybook
 
-3. **Schema Markup e SEO**
+4. **Schema Markup e SEO**
    - Implementar schema markup no index.html:
      - Organization (informações da empresa)
      - WebSite (estrutura do site)
@@ -104,7 +129,7 @@
      - Blog e notícias
      - Cartilhas e recursos
 
-4. **Testes de Integração**
+5. **Testes de Integração**
    - Expandir cobertura de testes existentes:
      - Header.test.tsx (já implementado)
    - Implementar novos testes:
