@@ -11,6 +11,7 @@ import './styles/animations.css';
 
 const Header: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
+  const submenuRefs = useRef<Record<string, React.RefObject<HTMLUListElement>>>({});
   const {
     isMenuOpen,
     toggleMenu,
@@ -22,7 +23,14 @@ const Header: React.FC = () => {
 
   useClickOutside(menuRef, closeMenu);
 
-  const memoizedMenuItems = useMemo(() => menuItems, []);
+  const memoizedMenuItems = useMemo(() => {
+    menuItems.forEach(item => {
+      if (item.submenu) {
+        submenuRefs.current[item.name] = React.createRef<HTMLUListElement>();
+      }
+    });
+    return menuItems;
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md" role="banner">
@@ -65,28 +73,32 @@ const Header: React.FC = () => {
                     isSubmenuOpen={isSubmenuOpen(item.name)}
                   />
                   
-                  <CSSTransition
-                    in={item.submenu && isSubmenuOpen(item.name)}
-                    timeout={150}
-                    classNames="submenu"
-                    unmountOnExit
-                  >
-                    <ul 
-                      className="absolute left-0 mt-0 w-64 bg-white border border-gray-100 rounded-lg shadow-lg py-2"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-label={`Submenu ${item.name}`}
+                  {item.submenu && (
+                    <CSSTransition
+                      in={isSubmenuOpen(item.name)}
+                      timeout={150}
+                      classNames="submenu"
+                      unmountOnExit
+                      nodeRef={submenuRefs.current[item.name]}
                     >
-                      {item.submenu?.map((subItem) => (
-                        <SubMenuItem
-                          key={subItem.name}
-                          name={subItem.name}
-                          href={subItem.href}
-                          onClick={closeMenu}
-                        />
-                      ))}
-                    </ul>
-                  </CSSTransition>
+                      <ul 
+                        ref={submenuRefs.current[item.name]}
+                        className="absolute left-0 mt-0 w-64 bg-white border border-gray-100 rounded-lg shadow-lg py-2"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-label={`Submenu ${item.name}`}
+                      >
+                        {item.submenu.map((subItem) => (
+                          <SubMenuItem
+                            key={subItem.name}
+                            name={subItem.name}
+                            href={subItem.href}
+                            onClick={closeMenu}
+                          />
+                        ))}
+                      </ul>
+                    </CSSTransition>
+                  )}
                 </li>
               ))}
             </ul>
@@ -126,28 +138,32 @@ const Header: React.FC = () => {
                     isSubmenuOpen={isSubmenuOpen(item.name)}
                     onClick={() => !item.submenu && closeMenu()}
                   />
-                  <CSSTransition
-                    in={item.submenu && isSubmenuOpen(item.name)}
-                    timeout={150}
-                    classNames="submenu"
-                    unmountOnExit
-                  >
-                    <ul 
-                      className="ml-4 flex flex-col space-y-2 mt-1"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-label={`Submenu ${item.name}`}
+                  {item.submenu && (
+                    <CSSTransition
+                      in={isSubmenuOpen(item.name)}
+                      timeout={150}
+                      classNames="submenu"
+                      unmountOnExit
+                      nodeRef={submenuRefs.current[item.name]}
                     >
-                      {item.submenu?.map((subItem) => (
-                        <SubMenuItem
-                          key={subItem.name}
-                          name={subItem.name}
-                          href={subItem.href}
-                          onClick={closeMenu}
-                        />
-                      ))}
-                    </ul>
-                  </CSSTransition>
+                      <ul 
+                        ref={submenuRefs.current[item.name]}
+                        className="ml-4 flex flex-col space-y-2 mt-1"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-label={`Submenu ${item.name}`}
+                      >
+                        {item.submenu.map((subItem) => (
+                          <SubMenuItem
+                            key={subItem.name}
+                            name={subItem.name}
+                            href={subItem.href}
+                            onClick={closeMenu}
+                          />
+                        ))}
+                      </ul>
+                    </CSSTransition>
+                  )}
                 </li>
               ))}
               
