@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { cn } from '../../utils/cn';
+import { colors, typography, spacing, transitions } from '../foundations/tokens';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'text';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 // Props base que compartilham todos os tipos de botão
@@ -49,6 +50,67 @@ function isInternalLink(props: ButtonComponentProps): props is LinkButtonProps {
   return 'href' in props && props.external !== true;
 }
 
+const variantStyles = {
+  primary: `
+    bg-[${colors.primary[400]}]
+    text-white
+    hover:bg-[${colors.primary[500]}]
+    active:bg-[${colors.primary[600]}]
+    disabled:bg-[${colors.primary[200]}]
+    focus:ring-2
+    focus:ring-[${colors.primary[400]}]
+    focus:ring-offset-2
+  `,
+  secondary: `
+    bg-[${colors.accent[400]}]
+    text-[${colors.gray[900]}]
+    hover:bg-[${colors.accent[500]}]
+    active:bg-[${colors.accent[600]}]
+    disabled:bg-[${colors.accent[200]}]
+    focus:ring-2
+    focus:ring-[${colors.accent[400]}]
+    focus:ring-offset-2
+  `,
+  outline: `
+    border
+    border-[${colors.primary[400]}]
+    text-[${colors.primary[400]}]
+    hover:bg-[${colors.primary[50]}]
+    active:bg-[${colors.primary[100]}]
+    disabled:border-[${colors.primary[200]}]
+    disabled:text-[${colors.primary[200]}]
+    focus:ring-2
+    focus:ring-[${colors.primary[400]}]
+    focus:ring-offset-2
+  `,
+  text: `
+    text-[${colors.primary[400]}]
+    hover:bg-[${colors.primary[50]}]
+    active:bg-[${colors.primary[100]}]
+    disabled:text-[${colors.primary[200]}]
+    focus:ring-2
+    focus:ring-[${colors.primary[400]}]
+  `
+} as const;
+
+const sizeStyles = {
+  sm: `
+    px-[${spacing[2]}]
+    py-[${spacing[1]}]
+    text-[${typography.fontSize.sm}]
+  `,
+  md: `
+    px-[${spacing[4]}]
+    py-[${spacing[2]}]
+    text-[${typography.fontSize.base}]
+  `,
+  lg: `
+    px-[${spacing[6]}]
+    py-[${spacing[3]}]
+    text-[${typography.fontSize.lg}]
+  `
+};
+
 export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonComponentProps>((props, ref) => {
   const {
     children,
@@ -81,19 +143,10 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
   );
 
   // Classes específicas para cada variante
-  const variantClasses = {
-    primary: 'bg-primary-400 text-white hover:bg-primary-500 focus:ring-primary-400',
-    secondary: 'bg-secondary-400 text-white hover:bg-secondary-500 focus:ring-secondary-400',
-    outline: 'bg-transparent border border-primary-400 text-primary-400 hover:bg-primary-50 focus:ring-primary-400',
-    ghost: 'bg-transparent text-primary-400 hover:bg-primary-50 focus:ring-primary-400',
-  }[variant];
+  const variantClasses = variantStyles[variant];
 
   // Classes específicas para cada tamanho
-  const sizeClasses = {
-    sm: 'text-sm px-3 py-1 gap-1',
-    md: 'text-base px-4 py-2 gap-2',
-    lg: 'text-lg px-6 py-3 gap-2',
-  }[size];
+  const sizeClasses = sizeStyles[size];
 
   // Combinando todas as classes
   const allClasses = cn(baseClasses, variantClasses, sizeClasses, className);

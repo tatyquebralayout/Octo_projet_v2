@@ -1,58 +1,81 @@
 import React from 'react';
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
+import { colors, spacing, shadows } from '../foundations/tokens';
 
-export type CardVariant = 'primary' | 'secondary' | 'accent';
+export type CardVariant = 'elevated' | 'outlined' | 'filled';
 export type CardSize = 'sm' | 'md' | 'lg';
+export type CardPadding = 'compact' | 'normal' | 'spacious';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
   variant?: CardVariant;
   size?: CardSize;
-  elevation?: 1 | 2 | 3;
-  withHoverEffect?: boolean;
+  padding?: CardPadding;
+  interactive?: boolean;
+  elevation?: keyof typeof shadows;
 }
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ children, variant = 'primary', size = 'md', elevation = 1, withHoverEffect = false, className = '', ...props }, ref) => {
-    // Classes base para todos os cards
-    const baseClasses = cn(
-      'rounded-xl overflow-hidden transition-all duration-300',
-      {
-        'transform hover:-translate-y-1 hover:md3-elevation-2': withHoverEffect,
-      }
-    );
+const variantStyles = {
+  elevated: cn(
+    'bg-white',
+    'shadow-md hover:shadow-lg',
+    'transition-shadow duration-200'
+  ),
+  outlined: cn(
+    'bg-white',
+    'border border-gray-200'
+  ),
+  filled: cn(
+    'bg-gray-50'
+  )
+} as const;
 
-    // Classes específicas para cada variante
-    const variantClasses = {
-      primary: 'bg-white border border-gray-200',
-      secondary: 'bg-gray-50 border border-gray-200',
-      accent: 'bg-primary-50 border border-primary-100',
-    }[variant];
+const sizeStyles = {
+  sm: cn('max-w-sm'),
+  md: cn('max-w-md'),
+  lg: cn('max-w-lg')
+} as const;
 
-    // Classes para elevação
-    const elevationClasses = {
-      1: 'md3-elevation-1',
-      2: 'md3-elevation-2',
-      3: 'md3-elevation-3',
-    }[elevation];
+const paddingStyles = {
+  compact: cn('p-2'),
+  normal: cn('p-4'),
+  spacious: cn('p-6')
+} as const;
 
-    // Classes para tamanho
-    const sizeClasses = {
-      sm: 'p-3',
-      md: 'p-4',
-      lg: 'p-6',
-    }[size];
+export const Card = React.forwardRef<HTMLDivElement, CardProps>(({
+  variant = 'elevated',
+  size,
+  padding = 'normal',
+  interactive = false,
+  elevation,
+  children,
+  className = '',
+  ...props
+}, ref) => {
+  const baseStyles = cn(
+    'rounded-lg',
+    'transition-all duration-200',
+    {
+      'cursor-pointer hover:transform hover:scale-[1.02]': interactive,
+    }
+  );
 
-    // Combinando todas as classes
-    const allClasses = cn(baseClasses, variantClasses, elevationClasses, sizeClasses, className);
-
-    return (
-      <div ref={ref} className={allClasses} {...props}>
-        {children}
-      </div>
-    );
-  }
-);
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        baseStyles,
+        variantStyles[variant],
+        size && sizeStyles[size],
+        paddingStyles[padding],
+        elevation && `shadow-${elevation}`,
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+});
 
 Card.displayName = 'Card';
 

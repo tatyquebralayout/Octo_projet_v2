@@ -6,16 +6,16 @@
 export const colors = {
   // Cores principais
   primary: {
-    50: '#f2e5ff',
-    100: '#d9b3ff',
-    200: '#c080ff',
-    300: '#a64dff',
-    400: '#972ae6', // Cor principal da marca (identificada no skip link)
-    500: '#8c27d1',
-    600: '#7b22ba',
-    700: '#6a1ea3',
-    800: '#59198c',
-    900: '#481575',
+    50: '#f5e6fe',
+    100: '#e6ccfd',
+    200: '#d199fc',
+    300: '#b866fa',
+    400: '#972ae6', // Main brand color
+    500: '#7a21b8',
+    600: '#5c198a',
+    700: '#3e115c',
+    800: '#20082e',
+    900: '#100417'
   },
   
   // Cores secundárias
@@ -34,16 +34,16 @@ export const colors = {
   
   // Cores de acentuação
   accent: {
-    50: '#fffae5',
-    100: '#fff2b3',
-    200: '#ffea80',
-    300: '#ffe14d',
-    400: '#ffd91a',
-    500: '#e6c300',
-    600: '#cca800',
-    700: '#b38e00',
-    800: '#997400',
-    900: '#805a00',
+    50: '#fef9e6',
+    100: '#fdf3cc',
+    200: '#fbe799',
+    300: '#f9db66',
+    400: '#e8b624', // Secondary brand color
+    500: '#ba921d',
+    600: '#8b6e16',
+    700: '#5d490e',
+    800: '#2e2507',
+    900: '#171203'
   },
   
   // Tons de cinza para texto e fundos
@@ -57,14 +57,30 @@ export const colors = {
     600: '#4b5563',
     700: '#374151',
     800: '#1f2937',
-    900: '#111827',
+    900: '#111827'
   },
   
   // Cores semânticas
-  success: '#10b981',
-  warning: '#f59e0b',
-  error: '#ef4444',
-  info: '#3b82f6',
+  success: {
+    light: '#86efac',
+    main: '#22c55e',
+    dark: '#15803d'
+  },
+  warning: {
+    light: '#fde68a',
+    main: '#f59e0b',
+    dark: '#b45309'
+  },
+  error: {
+    light: '#fca5a5',
+    main: '#ef4444',
+    dark: '#b91c1c'
+  },
+  info: {
+    light: '#93c5fd',
+    main: '#3b82f6',
+    dark: '#1d4ed8'
+  },
   
   // Cores de fundo e texto
   background: {
@@ -85,7 +101,8 @@ export const colors = {
 export const typography = {
   // Família de fontes
   fontFamily: {
-    base: "'Poppins', sans-serif",
+    sans: ['Poppins', 'sans-serif'],
+    mono: ['JetBrains Mono', 'monospace']
   },
   
   // Tamanhos de fonte
@@ -96,28 +113,22 @@ export const typography = {
     lg: '1.125rem',   // 18px
     xl: '1.25rem',    // 20px
     '2xl': '1.5rem',  // 24px
-    '3xl': '1.875rem', // 30px
-    '4xl': '2.25rem', // 36px
-    '5xl': '3rem',    // 48px
+    '3xl': '1.875rem' // 30px
   },
   
   // Espessuras de fonte
   fontWeight: {
-    light: 300,
-    normal: 400,
+    regular: 400,
     medium: 500,
-    semibold: 600,
-    bold: 700,
+    bold: 700
   },
   
   // Alturas de linha
   lineHeight: {
     none: 1,
     tight: 1.25,
-    snug: 1.375,
     normal: 1.5,
-    relaxed: 1.625,
-    loose: 2,
+    relaxed: 1.75
   },
   
   // Espaçamento entre letras
@@ -133,39 +144,14 @@ export const typography = {
 
 export const spacing = {
   0: '0',
-  0.5: '0.125rem', // 2px
-  1: '0.25rem',    // 4px
-  1.5: '0.375rem', // 6px
-  2: '0.5rem',     // 8px
-  2.5: '0.625rem', // 10px
-  3: '0.75rem',    // 12px
-  3.5: '0.875rem', // 14px
-  4: '1rem',       // 16px
-  5: '1.25rem',    // 20px
-  6: '1.5rem',     // 24px
-  7: '1.75rem',    // 28px
-  8: '2rem',       // 32px
-  9: '2.25rem',    // 36px
-  10: '2.5rem',    // 40px
-  11: '2.75rem',   // 44px
-  12: '3rem',      // 48px
-  14: '3.5rem',    // 56px
-  16: '4rem',      // 64px
-  20: '5rem',      // 80px
-  24: '6rem',      // 96px
-  28: '7rem',      // 112px
-  32: '8rem',      // 128px
-  36: '9rem',      // 144px
-  40: '10rem',     // 160px
-  44: '11rem',     // 176px
-  48: '12rem',     // 192px
-  52: '13rem',     // 208px
-  56: '14rem',     // 224px
-  60: '15rem',     // 240px
-  64: '16rem',     // 256px
-  72: '18rem',     // 288px
-  80: '20rem',     // 320px
-  96: '24rem',     // 384px
+  1: '0.25rem',  // 4px
+  2: '0.5rem',   // 8px
+  3: '0.75rem',  // 12px
+  4: '1rem',     // 16px
+  6: '1.5rem',   // 24px
+  8: '2rem',     // 32px
+  12: '3rem',    // 48px
+  16: '4rem'     // 64px
 };
 
 export const elevation = {
@@ -178,13 +164,12 @@ export const elevation = {
 export const borderRadius = {
   none: '0',
   sm: '0.125rem',   // 2px
-  DEFAULT: '0.25rem', // 4px
+  default: '0.25rem', // 4px
   md: '0.375rem',   // 6px
   lg: '0.5rem',     // 8px
   xl: '0.75rem',    // 12px
   '2xl': '1rem',    // 16px
-  '3xl': '1.5rem',  // 24px
-  full: '9999px',   // Circular
+  full: '9999px'
 };
 
 export const animation = {
@@ -230,12 +215,11 @@ export const components = {
 
 // Para uso em Media Queries
 export const breakpoints = {
-  xs: '480px',
   sm: '640px',
   md: '768px',
   lg: '1024px',
   xl: '1280px',
-  '2xl': '1536px',
+  '2xl': '1536px'
 };
 
 // Design tokens para acessibilidade
@@ -244,6 +228,28 @@ export const a11y = {
   focusRingOffset: '2px',
   focusRingColor: colors.primary[400],
   focusVisibleOnly: true,
+};
+
+export const shadows = {
+  none: 'none',
+  sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+  md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+  lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+  xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)'
+};
+
+export const transitions = {
+  duration: {
+    fast: '150ms',
+    normal: '200ms',
+    slow: '300ms'
+  },
+  timing: {
+    default: 'ease-in-out',
+    linear: 'linear',
+    in: 'ease-in',
+    out: 'ease-out'
+  }
 };
 
 // Exportação do Design System completo
@@ -257,6 +263,8 @@ const designSystem = {
   components,
   breakpoints,
   a11y,
+  shadows,
+  transitions,
 };
 
 export default designSystem; 

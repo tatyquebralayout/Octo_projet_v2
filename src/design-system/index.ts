@@ -1,8 +1,13 @@
-// Re-exporta todos os componentes
-export * from './components';
-
-// Re-exporta todos os tokens e fundamentos
+// Foundations
 export * from './foundations/tokens';
+
+// Components
+export * from './components/Button';
+export * from './components/Card';
+export * from './components/Input';
+
+// Utils
+export * from './utils/hooks';
 
 // Re-exporta utilitários
 export { cn } from './utils/cn';

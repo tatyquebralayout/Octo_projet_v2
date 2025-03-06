@@ -42,8 +42,13 @@ export default tseslint.config(
       'jsx-a11y/aria-role': ['error', {
         allowedRoles: {
           a: ['menuitem'],
-          li: ['none']
+          li: ['none', 'presentation']
         }
+      }],
+      'jsx-a11y/no-redundant-roles': ['error', {
+        ul: ['list'],
+        ol: ['list'],
+        li: ['listitem']
       }],
       'jsx-a11y/elements-content': 'off'
     },

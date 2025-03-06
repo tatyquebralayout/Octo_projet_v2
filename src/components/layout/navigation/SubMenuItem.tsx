@@ -5,15 +5,20 @@ interface SubMenuItemProps {
   href: string;
   onClick?: () => void;
   'aria-label'?: string;
-  role?: 'menuitem';
+  role?: 'menuitem' | 'none';
 }
 
+// Este componente deve ser usado dentro do componente SubMenu
+// Exemplo de uso:
+// <SubMenu aria-label="Submenu">
+//   <SubMenuItem name="Item 1" href="#" />
+//   <SubMenuItem name="Item 2" href="#" />
+// </SubMenu>
 export const SubMenuItem: React.FC<SubMenuItemProps> = ({
   name,
   href,
   onClick,
-  'aria-label': ariaLabel,
-  role
+  'aria-label': ariaLabel
 }) => {
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -22,14 +27,16 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
     }
   }, [onClick]);
 
+  // Utilizando a semântica padrão do <li> para melhor compatibilidade com leitores de tela
+  // O elemento pai <ul> já fornece o contexto necessário para a estrutura da lista
   return (
-    <li role="none">
+    <li>
       <a
         href={href}
         className="block px-4 py-2 text-sm font-bold text-[#972ae6] hover:bg-gray-50 hover:text-[#e8b624] focus:outline-none focus:ring-2 focus:ring-[#972ae6] focus:bg-gray-50"
         onClick={onClick}
         onKeyDown={handleKeyDown}
-        role={role}
+        role="menuitem"
         aria-label={ariaLabel || name}
         tabIndex={-1}
       >

@@ -16,4 +16,45 @@ const axe = configureAxe({
   }
 });
 
-export { axe }; 
+export { axe };
+
+// Tipos personalizados para o Jest
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      // Matchers personalizados para acessibilidade
+      toHaveNoViolations(): R;
+      toBeAccessible(): R;
+      
+      // Matchers personalizados para elementos DOM
+      toHaveStyle(style: Record<string, any>): R;
+      toBeVisible(): R;
+      toBeInTheDocument(): R;
+      toHaveClass(className: string): R;
+      toHaveAttribute(attr: string, value?: string): R;
+      toHaveTextContent(text: string | RegExp): R;
+      
+      // Matchers personalizados para roles ARIA
+      toHaveRole(role: string): R;
+      toHaveDescription(text: string | RegExp): R;
+    }
+  }
+}
+
+// Configurações globais para testes
+beforeAll(() => {
+  // Silenciar warnings do console durante os testes
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  
+  // Mock do ResizeObserver
+  global.ResizeObserver = class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+});
+
+// Limpar todos os mocks após cada teste
+afterEach(() => {
+  jest.clearAllMocks();
+}); 
