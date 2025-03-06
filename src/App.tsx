@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Routes, Route, createRoutesFromElements, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { NotFound } from './components/NotFound';
 import Header from './components/layout/Header';
@@ -27,60 +27,56 @@ const Noticias = React.lazy(() => import('./pages/Noticias'));
 const Cartilhas = React.lazy(() => import('./pages/Cartilhas'));
 const Contato = React.lazy(() => import('./pages/Contato'));
 
-// Configuração das rotas
-const routes = createRoutesFromElements(
-  <Route
-    errorElement={<NotFound />}
-    element={
-      <MenuProvider>
-        <div className="min-h-screen flex flex-col">
-          <a 
-            href="#main-content" 
-            className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
-          >
-            Pular para o conteúdo principal
-          </a>
-          <Header />
-          <main id="main-content" className="flex-grow pt-20" role="main">
-            <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/somos-octo" element={<SomosOcto />} />
-                <Route path="/somos-octo/quem-somos" element={<QuemSomos />} />
-                <Route path="/somos-octo/deficiencias-ocultas" element={<DeficienciasOcultas />} />
-                <Route path="/somos-octo/neurodivergencias" element={<Neurodivergencias />} />
-                <Route path="/somos-octo/diversidade" element={<Diversidade />} />
-                <Route path="/octo-faz" element={<OctoFaz />} />
-                <Route path="/octo-faz/capacita-pcd" element={<CapacitaPcd />} />
-                <Route path="/octo-faz/cuida-pcd" element={<CuidaPcd />} />
-                <Route path="/octo-faz/orienta-pcd" element={<OrientaPcd />} />
-                <Route path="/octo-faz/capacita-empresas" element={<CapacitaEmpresas />} />
-                <Route path="/octo-faz/octo-cultura" element={<OctoCultura />} />
-                <Route path="/octo-com-voce" element={<OctoComVoce />} />
-                <Route path="/octo-com-voce/coluna" element={<ColunaOcto />} />
-                <Route path="/octo-com-voce/selo" element={<SeloOcto />} />
-                <Route path="/noticias" element={<Noticias />} />
-                <Route path="/cartilhas" element={<Cartilhas />} />
-                <Route path="/contato" element={<Contato />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
-        </div>
-      </MenuProvider>
-    }
-  />
+// Layout principal
+const Layout = () => (
+  <MenuProvider>
+    <div className="min-h-screen flex flex-col">
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
+      >
+        Pular para o conteúdo principal
+      </a>
+      <Header />
+      <main id="main-content" className="flex-grow pt-20" role="main">
+        <Suspense fallback={<Loading />}>
+          <Outlet />
+        </Suspense>
+      </main>
+      <Footer />
+    </div>
+  </MenuProvider>
 );
 
-// Configuração do router com flags futuras
-const router = createBrowserRouter(routes, {
-  future: {
-    // @ts-expect-error - Flags futuras do React Router v7 ainda não tipadas
-    v7_startTransition: true,
-    v7_relativeSplatPath: true
+// Configuração das rotas
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <NotFound />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "somos-octo", element: <SomosOcto /> },
+      { path: "somos-octo/quem-somos", element: <QuemSomos /> },
+      { path: "somos-octo/deficiencias-ocultas", element: <DeficienciasOcultas /> },
+      { path: "somos-octo/neurodivergencias", element: <Neurodivergencias /> },
+      { path: "somos-octo/diversidade", element: <Diversidade /> },
+      { path: "octo-faz", element: <OctoFaz /> },
+      { path: "octo-faz/capacita-pcd", element: <CapacitaPcd /> },
+      { path: "octo-faz/cuida-pcd", element: <CuidaPcd /> },
+      { path: "octo-faz/orienta-pcd", element: <OrientaPcd /> },
+      { path: "octo-faz/capacita-empresas", element: <CapacitaEmpresas /> },
+      { path: "octo-faz/octo-cultura", element: <OctoCultura /> },
+      { path: "octo-com-voce", element: <OctoComVoce /> },
+      { path: "octo-com-voce/coluna", element: <ColunaOcto /> },
+      { path: "octo-com-voce/selo", element: <SeloOcto /> },
+      { path: "noticias", element: <Noticias /> },
+      { path: "cartilhas", element: <Cartilhas /> },
+      { path: "contato", element: <Contato /> },
+      { path: "*", element: <NotFound /> }
+    ]
   }
-});
+]);
 
 function App() {
   return (
