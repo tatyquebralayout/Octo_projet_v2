@@ -1,4 +1,3 @@
-import React from 'react';
 import { footerConfig } from '../../config/footerConfig';
 import FooterColumn from './navigation/FooterColumn';
 import FooterNav from './navigation/FooterNav';
