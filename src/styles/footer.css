@@ -1,0 +1,80 @@
+/* Variáveis do Footer */
+:root {
+  --footer-bg: #972ae6;
+  --footer-text: #ffffff;
+  --footer-text-muted: rgba(255, 255, 255, 0.8);
+  --footer-border: rgba(255, 255, 255, 0.1);
+  --footer-hover-bg: rgba(255, 255, 255, 0.2);
+  
+  /* Tamanhos de fonte */
+  --footer-title-size: 10px;
+  --footer-text-size: 9px;
+  --footer-copyright-size: 8px;
+  
+  /* Espaçamentos */
+  --footer-padding-y: 2rem;
+  --footer-padding-x: 1.5rem;
+  --footer-gap: 1.5rem;
+}
+
+/* Classes do Footer */
+.footer {
+  @apply bg-[var(--footer-bg)] text-[var(--footer-text)] py-[var(--footer-padding-y)];
+}
+
+.footer-container {
+  @apply container mx-auto px-[var(--footer-padding-x)];
+}
+
+.footer-grid {
+  @apply grid grid-cols-1 md:grid-cols-4 gap-[var(--footer-gap)];
+}
+
+.footer-column {
+  @apply flex flex-col gap-4;
+}
+
+.footer-title {
+  @apply text-[var(--footer-title-size)] font-bold mb-2;
+}
+
+.footer-text {
+  @apply text-[var(--footer-text-size)] text-[var(--footer-text-muted)];
+}
+
+.footer-link {
+  @apply text-[var(--footer-text-size)] text-[var(--footer-text-muted)] 
+         hover:text-[var(--footer-text)] transition-colors duration-200
+         focus:outline-none focus:ring-2 focus:ring-white rounded-md inline-block;
+}
+
+.footer-social {
+  @apply p-1 rounded-full bg-[var(--footer-hover-bg)] 
+         hover:bg-[var(--footer-hover-bg)] transition-colors
+         focus:outline-none focus:ring-2 focus:ring-white;
+}
+
+.footer-bottom {
+  @apply mt-6 flex flex-col md:flex-row items-center justify-between 
+         border-t border-[var(--footer-border)] pt-4 gap-4;
+}
+
+.footer-copyright {
+  @apply text-[var(--footer-copyright-size)] text-[var(--footer-text-muted)];
+}
+
+/* Animações */
+.footer-link, .footer-social {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .footer-grid {
+    @apply gap-6;
+  }
+  
+  .footer-bottom {
+    @apply flex-col text-center;
+  }
+} 

@@ -1,0 +1,90 @@
+/* Animações do Menu */
+.menu-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.menu-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+}
+
+.menu-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+}
+
+/* Animações do Submenu */
+.submenu-enter {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+.submenu-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.submenu-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.submenu-exit-active {
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+/* Feedback Visual */
+.menu-item-focus {
+  @apply ring-2 ring-[#972ae6] ring-offset-2;
+  transition: all 150ms ease-in-out;
+}
+
+.menu-item-active {
+  @apply bg-[#972ae6]/10;
+  transition: background-color 150ms ease-in-out;
+}
+
+/* Animação do Ícone do Menu */
+.menu-icon {
+  transition: transform 200ms ease-in-out;
+}
+
+.menu-icon-open {
+  transform: rotate(180deg);
+}
+
+/* Efeito de Ripple para Feedback Tátil */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(151, 42, 230, 0.2);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  transform-origin: center;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+} 
