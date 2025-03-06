@@ -2,51 +2,56 @@
 
 @layer base {
   /* Typography Scale */
+  .text-display,
+  .text-h1,
+  .text-h2,
+  .text-h3,
+  .text-h4 {
+    font-weight: 700;
+    color: rgb(17, 24, 39);
+  }
+
   .text-display {
     font-size: 44px;
-    font-weight: 700;
     line-height: 1.2;
-    color: rgb(17, 24, 39);
   }
 
   .text-h1 {
     font-size: 30px;
-    font-weight: 700;
     line-height: 1.25;
-    color: rgb(17, 24, 39);
   }
 
   .text-h2 {
     font-size: 24px;
-    font-weight: 700;
     line-height: 1.25;
-    color: rgb(17, 24, 39);
   }
 
   .text-h3 {
     font-size: 20px;
-    font-weight: 700;
     line-height: 1.25;
-    color: rgb(17, 24, 39);
   }
 
   .text-h4 {
     font-size: 18px;
-    font-weight: 700;
     line-height: 1.25;
-    color: rgb(17, 24, 39);
+  }
+
+  /* Body Text */
+  .text-body-large,
+  .text-body,
+  .text-body-small,
+  .text-caption {
+    color: rgb(55, 65, 81);
   }
 
   .text-body-large {
     font-size: 18px;
     line-height: 1.75;
-    color: rgb(55, 65, 81);
   }
 
   .text-body {
     font-size: 16px;
     line-height: 1.5;
-    color: rgb(55, 65, 81);
   }
 
   .text-body-small {
@@ -63,244 +68,136 @@
 
   /* Links */
   .text-link {
-    color: rgb(151, 42, 230);
-    transition: color 200ms;
-  }
-
-  .text-link:hover {
-    color: rgb(232, 182, 36);
+    @apply text-primary hover:text-accent transition-colors duration-200;
   }
 
   /* Emphasis */
   .text-emphasis {
-    font-weight: 500;
-    color: rgb(17, 24, 39);
+    @apply font-medium text-gray-900;
   }
 
   /* Muted */
   .text-muted {
-    color: rgb(107, 114, 128);
+    @apply text-gray-500;
   }
 }
 
 @layer components {
   /* Cards */
+  .card {
+    @apply bg-white rounded-lg shadow-md transition-all duration-300;
+  }
+
   .card-primary {
-    background-color: white;
-    border-radius: 1.5rem;
-    padding: 3rem;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-    transition: all 300ms;
+    @apply card p-12 rounded-2xl shadow-lg;
   }
 
   .card-secondary {
-    background-color: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-    transition: all 300ms;
-  }
-
-  .card-secondary:hover {
-    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    @apply card p-6 rounded-lg hover:shadow-lg;
   }
 
   .card-accent {
-    background-color: rgb(151, 42, 230);
-    border-radius: 1.5rem;
-    padding: 3rem;
-    color: white;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    @apply card p-12 rounded-2xl bg-primary text-white;
   }
 
   /* Buttons */
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: rgb(151, 42, 230);
-    color: white;
-    border-radius: 9999px;
-    font-weight: 500;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-    transition: all 300ms;
-    transform: translateY(0);
+  .btn {
+    @apply inline-flex items-center px-8 py-3 rounded-full font-medium shadow-md 
+    transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0;
   }
 
-  .btn-primary:hover {
-    background-color: rgb(232, 182, 36);
-    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-    transform: translateY(-4px);
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-accent hover:shadow-lg;
   }
 
   .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: white;
-    color: rgb(151, 42, 230);
-    border-radius: 9999px;
-    font-weight: 500;
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-    transition: all 300ms;
-    transform: translateY(0);
-  }
-
-  .btn-secondary:hover {
-    background-color: rgb(232, 182, 36);
-    color: white;
-    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-    transform: translateY(-4px);
+    @apply btn bg-white text-primary hover:bg-accent hover:text-white hover:shadow-lg;
   }
 
   .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    border: 2px solid white;
-    color: white;
-    border-radius: 9999px;
-    font-weight: 500;
-    transition: all 300ms;
-    transform: translateY(0);
-  }
-
-  .btn-outline:hover {
-    background-color: white;
-    color: rgb(151, 42, 230);
-    transform: translateY(-4px);
+    @apply btn border-2 border-white text-white hover:bg-white hover:text-primary;
   }
 
   /* Icons */
   .icon-container {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.75rem;
-    background-color: rgba(151, 42, 230, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 300ms;
-  }
-
-  .group:hover .icon-container {
-    background-color: rgb(232, 182, 36);
+    @apply w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center 
+    transition-colors duration-300 group-hover:bg-accent;
   }
 
   .icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    color: rgb(151, 42, 230);
-    transition: color 300ms;
-  }
-
-  .group:hover .icon {
-    color: white;
+    @apply w-5 h-5 text-primary transition-colors duration-300 group-hover:text-white;
   }
 
   /* Sections */
   .section-hero {
-    position: relative;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    background-color: rgb(151, 42, 230);
+    @apply relative min-h-[80vh] flex items-center overflow-hidden bg-primary;
   }
 
   .section-content {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    @apply py-24;
   }
 
   /* Container */
   .container-narrow {
-    max-width: 56rem;
-    margin-left: auto;
-    margin-right: auto;
+    @apply max-w-3xl mx-auto;
   }
 
   /* Links */
   .link-primary {
-    color: rgb(151, 42, 230);
-    transition: color 200ms;
-  }
-
-  .link-primary:hover {
-    color: rgb(232, 182, 36);
+    @apply text-primary hover:text-accent transition-colors duration-200;
   }
 
   .link-white {
-    color: white;
-    transition: color 200ms;
-  }
-
-  .link-white:hover {
-    color: rgb(232, 182, 36);
+    @apply text-white hover:text-accent transition-colors duration-200;
   }
 }
 
 @layer utilities {
   /* Colors */
   .bg-primary {
-    background-color: rgb(151, 42, 230);
+    @apply bg-[#972ae6];
   }
 
   .bg-accent {
-    background-color: rgb(232, 182, 36);
+    @apply bg-[#e8b624];
   }
 
   .text-primary {
-    color: rgb(151, 42, 230);
+    @apply text-[#972ae6];
   }
 
   .text-accent {
-    color: rgb(232, 182, 36);
+    @apply text-[#e8b624];
   }
 
   .text-primary-light {
-    color: rgba(151, 42, 230, 0.7);
+    @apply text-[#972ae6]/70;
   }
 
   /* Elevations (Material Design 3) */
   .md3-elevation-1 {
-    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    @apply shadow-md;
   }
 
   .md3-elevation-2 {
-    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
-                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    @apply shadow-lg;
   }
 
   .md3-elevation-3 {
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.30),
-                0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    @apply shadow-xl;
   }
 
   /* Transitions */
   .transition-standard {
-    transition: all 300ms;
+    @apply transition-all duration-300;
   }
 
   /* Hover Effects */
   .hover-lift {
-    transform: translateY(0);
+    @apply transform hover:-translate-y-1;
   }
 
-  .hover-lift:hover {
-    transform: translateY(-0.25rem);
-  }
-
-  .hover-accent:hover {
-    color: rgb(232, 182, 36);
+  .hover-accent {
+    @apply hover:text-accent;
   }
 }

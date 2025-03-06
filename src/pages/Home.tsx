@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, Heart, Scale, Building } from 'lucide-react';
 import NewsAndEvents from '../components/sections/NewsAndEvents';
 import Engagement from '../components/sections/Engagement';
 import { cn } from '../utils/cn';
+import { useIntersectionObserver } from '../design-system/utils/hooks';
+import { Icon } from '../components/ui/Icon';
 
 const Home = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([false, false, false]);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const isHeroVisible = useIntersectionObserver(heroRef, { threshold: 0.1 });
   
   const images = [
     "https://iili.io/2pa5hRn.png",
@@ -17,6 +20,8 @@ const Home = () => {
   ];
 
   useEffect(() => {
+    if (!isHeroVisible) return;
+
     const preloadImages = () => {
       images.forEach((src, index) => {
         const img = new Image();
@@ -32,7 +37,7 @@ const Home = () => {
     };
 
     preloadImages();
-  }, []);
+  }, [isHeroVisible]);
 
   useEffect(() => {
     if (!imagesLoaded.every(Boolean)) return;
@@ -50,25 +55,25 @@ const Home = () => {
 
   const programs = [
     {
-      icon: <Briefcase className="w-6 h-6" />,
+      icon: <Icon name="Briefcase" className="w-6 h-6" />,
       title: "Capacita PcD",
       description: "Capacitamos pessoas com deficiência e neurodivergentes para o mercado de trabalho.",
       link: "/octo-faz/capacita-pcd"
     },
     {
-      icon: <Heart className="w-6 h-6" />,
+      icon: <Icon name="Heart" className="w-6 h-6" />,
       title: "Cuida PcD",
       description: "Indicamos profissionais de saúde e psicoterapia acessíveis.",
       link: "/octo-faz/cuida-pcd"
     },
     {
-      icon: <Scale className="w-6 h-6" />,
+      icon: <Icon name="Scale" className="w-6 h-6" />,
       title: "Orienta PcD",
       description: "Oferecemos orientação jurídica para garantir seus direitos.",
       link: "/octo-faz/orienta-pcd"
     },
     {
-      icon: <Building className="w-6 h-6" />,
+      icon: <Icon name="Building" className="w-6 h-6" />,
       title: "Capacita Empresas",
       description: "Assessoramos empresas na implementação de práticas inclusivas.",
       link: "/octo-faz/capacita-empresas"
@@ -78,7 +83,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="h-[563px] bg-[#972ae6] relative overflow-hidden">
+      <section ref={heroRef} className="h-[563px] bg-[#972ae6] relative overflow-hidden">
         <div className="container mx-auto px-6 h-full">
           <div className="flex items-center justify-between h-full">
             {/* Left Content */}
@@ -111,6 +116,8 @@ const Home = () => {
                   src={img}
                   alt={`OCTO Hero ${index + 1}`}
                   loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "low"}
+                  decoding="async"
                   className={cn(
                     "absolute w-full h-full object-contain",
                     "transition-opacity duration-1000 ease-in-out",

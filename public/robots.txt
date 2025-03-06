@@ -1,7 +1,31 @@
+# Regras globais para todos os robôs
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /private/
+Disallow: /temp/
+Disallow: /*.json$
+Disallow: /*?*
 
+# Regras específicas para Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Regras específicas para Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Regras específicas para imagens
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /public/images/
+Disallow: /temp/
+
+# Sitemap
 Sitemap: https://octo.com.br/sitemap.xml
+
+# Host
+Host: https://octo.com.br
