@@ -4,6 +4,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Loading from './components/Loading';
+import { MenuProvider } from './contexts/MenuContext';
 
 // Lazy loading dos componentes de página
 const Home = React.lazy(() => import('./pages/Home'));
@@ -29,40 +30,42 @@ function App() {
   return (
     <ErrorBoundary>
       <Router>
-        <div className="min-h-screen flex flex-col">
-          <a 
-            href="#main-content" 
-            className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
-          >
-            Pular para o conteúdo principal
-          </a>
-          <Header />
-          <main id="main-content" className="flex-grow pt-20" role="main">
-            <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/somos-octo" element={<SomosOcto />} />
-                <Route path="/somos-octo/quem-somos" element={<QuemSomos />} />
-                <Route path="/somos-octo/deficiencias-ocultas" element={<DeficienciasOcultas />} />
-                <Route path="/somos-octo/neurodivergencias" element={<Neurodivergencias />} />
-                <Route path="/somos-octo/diversidade" element={<Diversidade />} />
-                <Route path="/octo-faz" element={<OctoFaz />} />
-                <Route path="/octo-faz/capacita-pcd" element={<CapacitaPcd />} />
-                <Route path="/octo-faz/cuida-pcd" element={<CuidaPcd />} />
-                <Route path="/octo-faz/orienta-pcd" element={<OrientaPcd />} />
-                <Route path="/octo-faz/capacita-empresas" element={<CapacitaEmpresas />} />
-                <Route path="/octo-faz/octo-cultura" element={<OctoCultura />} />
-                <Route path="/octo-com-voce" element={<OctoComVoce />} />
-                <Route path="/octo-com-voce/coluna" element={<ColunaOcto />} />
-                <Route path="/octo-com-voce/selo" element={<SeloOcto />} />
-                <Route path="/noticias" element={<Noticias />} />
-                <Route path="/cartilhas" element={<Cartilhas />} />
-                <Route path="/contato" element={<Contato />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
-        </div>
+        <MenuProvider>
+          <div className="min-h-screen flex flex-col">
+            <a 
+              href="#main-content" 
+              className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
+            >
+              Pular para o conteúdo principal
+            </a>
+            <Header />
+            <main id="main-content" className="flex-grow pt-20" role="main">
+              <Suspense fallback={<Loading />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/somos-octo" element={<SomosOcto />} />
+                  <Route path="/somos-octo/quem-somos" element={<QuemSomos />} />
+                  <Route path="/somos-octo/deficiencias-ocultas" element={<DeficienciasOcultas />} />
+                  <Route path="/somos-octo/neurodivergencias" element={<Neurodivergencias />} />
+                  <Route path="/somos-octo/diversidade" element={<Diversidade />} />
+                  <Route path="/octo-faz" element={<OctoFaz />} />
+                  <Route path="/octo-faz/capacita-pcd" element={<CapacitaPcd />} />
+                  <Route path="/octo-faz/cuida-pcd" element={<CuidaPcd />} />
+                  <Route path="/octo-faz/orienta-pcd" element={<OrientaPcd />} />
+                  <Route path="/octo-faz/capacita-empresas" element={<CapacitaEmpresas />} />
+                  <Route path="/octo-faz/octo-cultura" element={<OctoCultura />} />
+                  <Route path="/octo-com-voce" element={<OctoComVoce />} />
+                  <Route path="/octo-com-voce/coluna" element={<ColunaOcto />} />
+                  <Route path="/octo-com-voce/selo" element={<SeloOcto />} />
+                  <Route path="/noticias" element={<Noticias />} />
+                  <Route path="/cartilhas" element={<Cartilhas />} />
+                  <Route path="/contato" element={<Contato />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+          </div>
+        </MenuProvider>
       </Router>
     </ErrorBoundary>
   );
