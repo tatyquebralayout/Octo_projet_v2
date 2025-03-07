@@ -1,0 +1,5 @@
+[33mcommit 557f97f269013ac7d515ebd2c710982125666ad2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Tatiana Barros <coluninja@gmail.com>
+Date:   Fri Mar 7 20:22:11 2025 -0300
+
+    fix: corrige problemas de CSS e PostCSS no design system

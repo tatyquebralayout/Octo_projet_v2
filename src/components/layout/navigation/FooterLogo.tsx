@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import OptimizedImage from '../../ui/OptimizedImage';
 
 interface FooterLogoProps {
   logoUrl: string;
@@ -13,11 +14,12 @@ const FooterLogo: React.FC<FooterLogoProps> = ({ logoUrl, altText }) => {
       aria-label="OCTO - Página Inicial"
       className="focus:outline-none focus:ring-2 focus:ring-white rounded-md"
     >
-      <img 
+      <OptimizedImage 
         src={logoUrl} 
         alt={altText} 
         className="h-6 w-auto"
-        loading="lazy"
+        width={120}
+        height={24}
       />
     </Link>
   );

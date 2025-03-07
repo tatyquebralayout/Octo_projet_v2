@@ -1,201 +1,109 @@
-# OCTO Design System
+# Design System OCTO - Versão Unificada
 
-## Visão Geral
-O Design System da OCTO foi criado para manter consistência visual e funcional em toda a aplicação, seguindo princípios de acessibilidade e usabilidade.
+Este é o design system unificado do projeto OCTO, que fornece uma fonte única da verdade para todos os estilos, componentes e tokens visuais da aplicação.
 
 ## Estrutura
 
 ```
 design-system/
-├── foundations/      # Elementos fundamentais
-│   ├── colors/      # Sistema de cores
-│   ├── typography/  # Tipografia
-│   ├── spacing/     # Espaçamentos
-│   └── breakpoints/ # Pontos de quebra
-├── components/      # Componentes base
-│   ├── Button/     # Botões
-│   ├── Card/       # Cards
-│   └── Input/      # Campos de entrada
-├── patterns/       # Padrões de design
-│   ├── forms/      # Formulários
-│   └── navigation/ # Navegação
-└── utils/          # Utilitários
-    ├── animations/ # Animações
-    └── hooks/      # Hooks customizados
+├── tokens/
+│   ├── design-tokens.js  # Tokens centralizados em JavaScript (fonte única da verdade)
+│   └── css-variables.css # Variáveis CSS derivadas dos tokens JS
+├── components/
+│   └── ...               # Componentes React estilizados (a serem desenvolvidos)
+├── foundations/
+│   └── ...               # Componentes fundamentais (a serem desenvolvidos)
+├── patterns/
+│   └── ...               # Padrões de design reutilizáveis (a serem desenvolvidos)
+└── index.css             # Reset CSS e estilos globais
 ```
 
-## Fundamentos
+## Princípios de Design
 
-### Cores
-- **Primárias**
-  - Purple: #972ae6 (Identidade principal)
-  - Yellow: #e8b624 (Destaque)
-  
-- **Neutras**
-  - White: #ffffff
-  - Gray-50: #f9fafb
-  - Gray-100: #f3f4f6
-  - Gray-800: #1f2937
+1. **Consistência**: Todos os estilos derivam de uma única fonte da verdade (tokens)
+2. **Acessibilidade**: Componentes seguem as diretrizes WCAG 2.1 AA
+3. **Responsividade**: Design adaptável a todos os tamanhos de tela
+4. **Performance**: Otimizado para carregamento rápido e renderização eficiente
+5. **Extensibilidade**: Fácil de estender e personalizar
 
-### Tipografia
-- **Família**: Poppins
-- **Pesos**
-  - Regular: 400
-  - Medium: 500
-  - Bold: 700
+## Sistema de Tokens
 
-- **Tamanhos**
-  - xs: 0.75rem (12px)
-  - sm: 0.875rem (14px)
-  - base: 1rem (16px)
-  - lg: 1.125rem (18px)
-  - xl: 1.25rem (20px)
-  - 2xl: 1.5rem (24px)
+Nosso sistema usa JavaScript como fonte única da verdade para os tokens de design, que são então usados por:
 
-### Espaçamentos
-- 0: 0px
-- 1: 0.25rem (4px)
-- 2: 0.5rem (8px)
-- 4: 1rem (16px)
-- 8: 2rem (32px)
-- 16: 4rem (64px)
+1. **Tailwind CSS** - Para classes utilitárias e personalizações
+2. **CSS Variables** - Para componentes legacy e estilos personalizados
+3. **Componentes React** - Para estilos integrados aos componentes
 
-### Breakpoints
-- sm: 640px
-- md: 768px
-- lg: 1024px
-- xl: 1280px
-- 2xl: 1536px
+### Como Usar
 
-## Componentes
-
-### Button
-```tsx
-<Button 
-  variant="primary" // primary, secondary, outline, text
-  size="md" // sm, md, lg
-  disabled={false}
-  loading={false}
->
-  Texto do Botão
-</Button>
+#### Usando classes Tailwind (Recomendado)
+```jsx
+<button className="bg-primary-400 text-white px-4 py-2 rounded-md">
+  Botão
+</button>
 ```
 
-### Card
-```tsx
-<Card
-  variant="elevated" // elevated, outlined, filled
-  padding="normal" // compact, normal, spacious
-  interactive={false}
->
-  Conteúdo do Card
-</Card>
-```
-
-### Input
-```tsx
-<Input
-  type="text"
-  label="Nome"
-  placeholder="Digite seu nome"
-  error="Mensagem de erro"
-  helper="Texto de ajuda"
-/>
-```
-
-## Padrões
-
-### Forms
-- Validação em tempo real
-- Feedback visual de erros
-- Mensagens de ajuda
-- Estados de loading
-- Acessibilidade WCAG 2.1
-
-### Navigation
-- Menus responsivos
-- Breadcrumbs
-- Links com estados visuais
-- Suporte a keyboard navigation
-
-## Acessibilidade
-
-### Contraste
-- Texto normal: 4.5:1
-- Texto grande: 3:1
-- Elementos interativos: 3:1
-
-### Interação
-- Focus visible em todos elementos interativos
-- Skip links para navegação
-- ARIA labels e roles
-- Suporte a screen readers
-
-## Animações
-
-### Transições
-- Duração: 150ms - 300ms
-- Timing: ease-in-out
-- Redução de movimento via prefers-reduced-motion
-
-### Estados
-- Hover
-- Focus
-- Active
-- Disabled
-- Loading
-
-## Responsividade
-
-### Grid System
-- Container máximo: 1280px
-- Colunas: 12
-- Gutters: 1rem (16px)
-- Margens: 1rem (16px) < md, 2rem (32px) >= md
-
-### Layouts
-- Mobile First
-- Flexbox
-- CSS Grid
-- Container Queries
-
-## Utilização
-
-```tsx
-import { Button, Card } from '@design-system/components';
-import { useTheme } from '@design-system/hooks';
-import { spacing, colors } from '@design-system/foundations';
-
-// Exemplo de uso
-function MyComponent() {
-  return (
-    <Card variant="elevated" padding="normal">
-      <Button variant="primary" size="md">
-        Ação Principal
-      </Button>
-    </Card>
-  );
+#### Usando variáveis CSS (para casos específicos)
+```css
+.meu-componente {
+  color: var(--color-primary);
+  padding: var(--spacing-md);
 }
 ```
 
-## Boas Práticas
+#### Aplicando estilos de componentes predefinidos
+```jsx
+<button className="btn btn-primary">
+  Botão Primary
+</button>
+```
 
-1. **Consistência**
-   - Use componentes do design system
-   - Mantenha padrões visuais
-   - Siga as diretrizes de espaçamento
+## Temas
 
-2. **Acessibilidade**
-   - Implemente ARIA roles
-   - Mantenha contraste adequado
-   - Suporte navegação por teclado
+O design system suporta tema claro e escuro através do atributo `data-theme`:
 
-3. **Performance**
-   - Lazy load de componentes grandes
-   - Otimize imagens
-   - Minimize bundle size
+```html
+<html data-theme="dark">
+  <!-- Conteúdo com tema escuro -->
+</html>
+```
 
-4. **Manutenção**
-   - Documente alterações
-   - Mantenha versionamento
-   - Atualize tokens globalmente
+## Documentação Completa
+
+Para visualizar todos os componentes e suas variações, consulte a documentação no Storybook:
+
+```bash
+npm run storybook
+```
+
+## Manutenção e Contribuição
+
+### Modificando Tokens
+
+Quando precisar modificar ou adicionar novos tokens:
+
+1. Edite o arquivo `tokens/design-tokens.js`
+2. Execute `npm run build:design-system` para gerar os assets
+
+### Adicionando Componentes
+
+Para adicionar novos componentes:
+
+1. Crie o componente React em `components/`
+2. Documente o componente no Storybook
+3. Adicione testes visuais para o componente
+
+### Regras de Estilo
+
+- Use classes Tailwind sempre que possível
+- Evite criar estilos CSS personalizados, exceto quando estritamente necessário
+- Para componentes complexos, use Styled Components com os tokens
+- Siga as convenções de nomenclatura BEM para classes personalizadas
+
+## Testes
+
+Todos os componentes do design system devem ter:
+
+- Testes unitários com Jest
+- Testes visuais com Storybook/Chromatic
+- Testes de acessibilidade

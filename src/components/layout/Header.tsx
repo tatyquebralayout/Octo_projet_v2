@@ -11,6 +11,7 @@ import logo from '../../assets/icons/logo.svg';
 import './styles/animations.css';
 import { Link } from 'react-router-dom';
 import { cn } from '../../utils/cn';
+import OptimizedImage from '../ui/OptimizedImage';
 
 const Header: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
@@ -66,7 +67,14 @@ const Header: React.FC = () => {
             className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-[#972ae6] rounded-md"
             aria-label="Ir para página inicial"
           >
-            <img src={logo} alt="OCTO Logo" className="h-6 md:h-8 w-auto" />
+            <OptimizedImage 
+              src={logo} 
+              alt="OCTO Logo" 
+              className="h-6 md:h-8 w-auto" 
+              width={160}
+              height={32}
+              priority={true}
+            />
           </Link>
 
           {/* Menu Desktop */}

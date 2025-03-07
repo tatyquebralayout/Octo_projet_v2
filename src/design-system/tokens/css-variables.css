@@ -1,0 +1,111 @@
+/**
+ * CSS Variables do Design System OCTO
+ * Estas variáveis são geradas a partir dos tokens em design-tokens.js
+ * Use classes do Tailwind quando possível, e estas variáveis apenas quando necessário
+ */
+
+:root {
+  /* Cores Primárias */
+  --color-primary: theme('colors.primary.400');
+  --color-primary-light: theme('colors.primary.300');
+  --color-primary-dark: theme('colors.primary.600');
+  
+  /* Cores de Destaque */
+  --color-accent: theme('colors.accent.400');
+  --color-accent-light: theme('colors.accent.300');
+  --color-accent-dark: theme('colors.accent.600');
+  
+  /* Cores de Background */
+  --bg-primary: theme('colors.white');
+  --bg-secondary: theme('colors.gray.50');
+  --bg-tertiary: theme('colors.gray.100');
+  
+  /* Cores de Texto */
+  --text-primary: theme('colors.gray.800');
+  --text-secondary: theme('colors.gray.600');
+  --text-tertiary: theme('colors.gray.500');
+  --text-on-primary: theme('colors.white');
+  --text-on-accent: theme('colors.black');
+  
+  /* Tipografia */
+  --font-family-base: theme('fontFamily.sans');
+  
+  --font-size-display: theme('fontSize.display[0]');
+  --font-size-h1: theme('fontSize.h1[0]');
+  --font-size-h2: theme('fontSize.h2[0]');
+  --font-size-h3: theme('fontSize.h3[0]');
+  --font-size-h4: theme('fontSize.h4[0]');
+  --font-size-body-large: theme('fontSize.body-large[0]');
+  --font-size-body: theme('fontSize.body[0]');
+  --font-size-body-small: theme('fontSize.body-small[0]');
+  --font-size-caption: theme('fontSize.caption[0]');
+  
+  --line-height-display: theme('fontSize.display[1].lineHeight');
+  --line-height-heading: theme('fontSize.h1[1].lineHeight');
+  --line-height-body: theme('fontSize.body[1].lineHeight');
+  --line-height-body-large: theme('fontSize.body-large[1].lineHeight');
+  
+  /* Espaçamento */
+  --spacing-xs: theme('spacing.xs');
+  --spacing-sm: theme('spacing.sm');
+  --spacing-md: theme('spacing.md');
+  --spacing-lg: theme('spacing.lg');
+  --spacing-xl: theme('spacing.xl');
+  --spacing-2xl: theme('spacing.2xl');
+  --spacing-3xl: theme('spacing.3xl');
+  
+  /* Bordas */
+  --border-radius-sm: theme('borderRadius.sm');
+  --border-radius-md: theme('borderRadius.md');
+  --border-radius-lg: theme('borderRadius.lg');
+  --border-radius-pill: theme('borderRadius.pill');
+  --border-width: 1px;
+  --border-width-thick: 2px;
+  --border-color: theme('colors.gray.200');
+  
+  /* Sombras */
+  --shadow-sm: theme('boxShadow.sm');
+  --shadow-md: theme('boxShadow.md');
+  --shadow-lg: theme('boxShadow.lg');
+  --shadow-focus: theme('boxShadow.focus');
+  
+  /* Transições */
+  --transition-fast: theme('transitionDuration.fast') + ' ' + theme('transitionTimingFunction.ease-in-out');
+  --transition-normal: theme('transitionDuration.normal') + ' ' + theme('transitionTimingFunction.ease-in-out');
+  --transition-slow: theme('transitionDuration.slow') + ' ' + theme('transitionTimingFunction.ease-in-out');
+  
+  /* Z-index */
+  --z-index-dropdown: theme('zIndex.dropdown');
+  --z-index-sticky: theme('zIndex.sticky');
+  --z-index-fixed: theme('zIndex.fixed');
+  --z-index-modal-backdrop: theme('zIndex.modalBackdrop');
+  --z-index-modal: theme('zIndex.modal');
+  --z-index-popover: theme('zIndex.popover');
+  --z-index-tooltip: theme('zIndex.tooltip');
+}
+
+/* Tema Escuro */
+[data-theme="dark"] {
+  --color-primary: theme('colors.primary.300');
+  --color-primary-light: theme('colors.primary.200');
+  --color-primary-dark: theme('colors.primary.500');
+  
+  --color-accent: theme('colors.accent.300');
+  --color-accent-light: theme('colors.accent.200');
+  --color-accent-dark: theme('colors.accent.500');
+  
+  --bg-primary: theme('colors.gray.900');
+  --bg-secondary: theme('colors.gray.800');
+  --bg-tertiary: theme('colors.gray.700');
+  
+  --text-primary: theme('colors.white');
+  --text-secondary: theme('colors.gray.200');
+  --text-tertiary: theme('colors.gray.300');
+  
+  --border-color: theme('colors.gray.600');
+  
+  --shadow-sm: '0 1px 2px rgba(255, 255, 255, 0.05)';
+  --shadow-md: '0 4px 6px rgba(255, 255, 255, 0.1)';
+  --shadow-lg: '0 10px 15px rgba(255, 255, 255, 0.1)';
+  --shadow-focus: '0 0 0 3px rgba(179, 85, 255, 0.4)';
+} 

@@ -28,6 +28,9 @@
   - Botões padronizados
   - Ícones com lazy loading
   - Containers e seções
+- ✅ Resolvidas dependências circulares no CSS
+- ✅ Corrigida ordem das importações CSS
+- ✅ Configuração otimizada do PostCSS para @apply
 
 ### Componentes de Layout
 #### Header.tsx
@@ -96,19 +99,31 @@
      - Conteúdo aprofundado
      - Recursos interativos
 
-2. **Otimização de Recursos**
+2. **Unificar e Consolidar Design System**
+   - [x] Resolver duplicação de tokens entre arquivos
+   - [x] Implementar estratégia única para aplicação de estilos
+   - [ ] Criar documentação visual com Storybook
+   - [ ] Implementar testes visuais para componentes UI
+
+3. **Melhorar Performance**
+   - [x] Otimizar carregamento de imagens com width/height e lazy loading
+   - [x] Implementar estratégia de cache para assets estáticos
+   - [x] Otimizar bundle splitting para reduzir tamanho inicial
+   - [x] Implementar métricas de Core Web Vitals
+
+4. **Otimização de Recursos**
    - [ ] Migrar imagens para CDN próprio
    - [ ] Implementar WebP com fallbacks
    - [ ] Sistema de compressão automática
    - [ ] Pipeline de otimização
 
-3. **Acessibilidade**
+5. **Acessibilidade**
    - [ ] Auditoria WCAG 2.1 AA
    - [ ] Skip links
    - [ ] Landmarks semânticos
    - [ ] Testes com leitores de tela
 
-4. **SEO Avançado**
+6. **SEO Avançado**
    - [ ] Schema.org específico:
      - Serviços (Service)
      - Artigos (Article)
@@ -118,7 +133,7 @@
    - [ ] Tags canônicas
    - [ ] Rich snippets
 
-5. **Performance**
+7. **Performance**
    - [ ] Service worker e cache
    - [ ] Otimização de fontes
    - [ ] Preload estratégico

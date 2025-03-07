@@ -34,6 +34,59 @@ export default defineConfig({
             purpose: 'any maskable'
           }
         ]
+      },
+      workbox: {
+        // Estratégias de cache específicas
+        runtimeCaching: [
+          {
+            // Cache de páginas HTML com network-first
+            urlPattern: /^https:\/\/.*\/.*\.html/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-cache',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 // 24 horas
+              }
+            }
+          },
+          {
+            // Cache de imagens com cache-first
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 dias
+              }
+            }
+          },
+          {
+            // Cache de fontes com stale-while-revalidate
+            urlPattern: /\.(?:woff|woff2|ttf|otf|eot)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 60 // 60 dias
+              }
+            }
+          },
+          {
+            // Cache de CSS e JS com stale-while-revalidate
+            urlPattern: /\.(?:js|css)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'static-resources',
+              expiration: {
+                maxEntries: 40,
+                maxAgeSeconds: 60 * 60 * 24 * 7 // 7 dias
+              }
+            }
+          }
+        ]
       }
     })
   ],
@@ -57,10 +110,32 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['lucide-react', 'react-transition-group'],
-          'utils-vendor': ['@sentry/react', 'clsx', 'tailwind-merge']
+        manualChunks: (id) => {
+          // Chunks mais granulares
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor-react';
+            }
+            if (id.includes('react-router')) {
+              return 'vendor-router';
+            }
+            if (id.includes('lucide')) {
+              return 'vendor-icons';
+            }
+            if (id.includes('sentry')) {
+              return 'vendor-monitoring';
+            }
+            return 'vendor';
+          }
+          
+          // Chunks de código da aplicação
+          if (id.includes('/src/pages/')) {
+            const page = id.split('/pages/')[1].split('/')[0];
+            return `page-${page}`;
+          }
+          if (id.includes('/src/components/')) {
+            return 'components';
+          }
         }
       }
     },

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import * as Sentry from "@sentry/react";
 import App from './App.tsx';
 import { registerServiceWorker } from './utils/pwa';
+import { reportWebVitals } from './utils/webVitals';
 import './index.postcss';
 
 // Inicializa o Sentry para monitoramento
@@ -22,8 +23,29 @@ if (import.meta.env.PROD) {
 // Registra o service worker para PWA
 registerServiceWorker();
 
-createRoot(document.getElementById('root')!).render(
+// Renderiza o aplicativo
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = createRoot(rootElement);
+
+root.render(
   <StrictMode>
     <App />
   </StrictMode>
 );
+
+// Monitora métricas de performance
+reportWebVitals(metric => {
+  // Enviar para Analytics em produção
+  if (import.meta.env.PROD) {
+    // Exemplo de envio para Google Analytics (se estiver configurado)
+    // window.gtag('event', name, {
+    //   event_category: 'Web Vitals',
+    //   event_label: id,
+    //   value: Math.round(value * 100) / 100,
+    //   non_interaction: true,
+    // });
+    
+    console.log(`Web Vital: ${metric.name} = ${metric.value}`);
+  }
+});
