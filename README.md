@@ -252,3 +252,155 @@ Ao adicionar novos endpoints ou funcionalidades:
 ## Licença
 
 Este projeto é licenciado sob os termos da licença MIT.
+
+# OCTO - Sistema de Hooks
+
+## Visão Geral
+
+Este projeto implementa um sistema completo de hooks para gerenciar autenticação, perfil de usuário e formulários em uma aplicação React. Os hooks são projetados para serem reutilizáveis, tipados e fáceis de integrar com componentes React.
+
+## Hooks Implementados
+
+### Autenticação
+
+- **useAuthService**: Integra o serviço de API de autenticação com o estado global
+  - Login, logout e registro de usuários
+  - Verificação automática de expiração de token
+  - Atualização automática de token
+  - Tratamento de erros
+
+### Perfil de Usuário
+
+- **useProfile**: Gerencia o perfil do usuário
+  - Carregamento de dados do perfil
+  - Atualização de dados do perfil
+  - Tratamento de erros
+
+### Formulários
+
+- **useForm**: Hook genérico para gerenciar formulários
+  - Validação em tempo real e no envio
+  - Tratamento de erros
+  - Estado de submissão
+  - Tipagem completa
+
+- **useContactForm**: Hook específico para o formulário de contato
+  - Validação específica para campos de contato
+  - Integração com API de contato
+
+## Como Usar
+
+### Autenticação
+
+```tsx
+import { useAuthService } from 'src/hooks';
+
+const LoginComponent = () => {
+  const { login, isLoading, error } = useAuthService();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      // Redirecionar após login bem-sucedido
+    } catch (error) {
+      // Tratar erro
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Campos do formulário */}
+      {isLoading && <p>Carregando...</p>}
+      {error && <p>Erro: {error}</p>}
+    </form>
+  );
+};
+```
+
+### Perfil de Usuário
+
+```tsx
+import { useProfile } from 'src/hooks';
+
+const ProfileComponent = () => {
+  const { profile, loading, error, loadProfile, updateProfile } = useProfile();
+
+  useEffect(() => {
+    loadProfile();
+  }, [loadProfile]);
+
+  const handleUpdate = async (data) => {
+    try {
+      await updateProfile(data);
+      // Feedback de sucesso
+    } catch (error) {
+      // Tratar erro
+    }
+  };
+
+  return (
+    <div>
+      {loading && <p>Carregando...</p>}
+      {error && <p>Erro: {error}</p>}
+      {profile && (
+        <div>
+          <h1>{profile.name}</h1>
+          <p>{profile.email}</p>
+          {/* Outros dados do perfil */}
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
+### Formulário de Contato
+
+```tsx
+import { useContactForm } from 'src/hooks';
+
+const ContactForm = () => {
+  const {
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    handleSubmit
+  } = useContactForm();
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Nome</label>
+        <input
+          id="name"
+          name="name"
+          value={values.name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {touched.name && errors.name && <p>{errors.name}</p>}
+      </div>
+
+      {/* Outros campos do formulário */}
+
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Enviando...' : 'Enviar'}
+      </button>
+    </form>
+  );
+};
+```
+
+## Arquitetura
+
+O sistema de hooks é construído sobre uma arquitetura de serviços de API e estado global:
+
+1. **Serviços de API**: Implementam a comunicação com o backend
+2. **Estado Global**: Gerencia o estado da aplicação usando Context API
+3. **Hooks**: Conectam os serviços de API com o estado global e os componentes
+
+Esta arquitetura permite uma separação clara de responsabilidades e facilita a manutenção e testabilidade do código.

@@ -146,18 +146,36 @@
     - ✅ Integração com ErrorBoundary do React
     - ✅ Configuração para diferentes ambientes (dev, staging, prod)
     - ✅ Hook useErrorHandling para componentes
+13. ✅ Sistema de hooks para autenticação
+    - ✅ Hook useAuthService para integração do serviço de API com o estado global
+    - ✅ Implementação de login, logout e registro com tratamento de erros
+    - ✅ Verificação automática de expiração de token
+    - ✅ Atualização automática de token quando necessário
+    - ✅ Persistência de estado de autenticação
+    - ✅ Tipagem completa com TypeScript
+    - ✅ Integração com o contexto de autenticação
+    - ✅ Arquivo de índice para exportação de hooks
+    - ✅ Hook useProfile para gerenciamento de perfil do usuário
+    - ✅ Métodos para carregar e atualizar dados do perfil
+    - ✅ Hook useForm para gerenciamento de formulários
+    - ✅ Validação em tempo real e no envio
+    - ✅ Tratamento de erros e estado de submissão
+    - ✅ Hook useContactForm para formulário de contato
+    - ✅ Validação específica para campos de contato
+    - ✅ Integração com API de contato
 
 ## Próximas Tarefas Prioritárias para Sprint Atual 🔥
 
 1. Implementar página de Contato.tsx utilizando o sistema de mocks e formulários
-   - Criar formulário com validação utilizando o hook useForm
-   - Integrar com o mock de API para submissão
-   - Implementar feedback visual de sucesso/erro
+   - [x] Criar formulário com validação utilizando o hook useForm
+   - [x] Integrar com o mock de API para submissão
+   - [ ] Implementar feedback visual de sucesso/erro
+   - [ ] Implementar UI do formulário de contato
 
 2. Desenvolver página de Cartilhas.tsx com listagem e filtros
-   - Listar cartilhas com paginação e ordenação
-   - Implementar filtros por categoria e tags
-   - Criar visualização detalhada de cada cartilha
+   - [ ] Listar cartilhas com paginação e ordenação
+   - [ ] Implementar filtros por categoria e tags
+   - [ ] Criar visualização detalhada de cada cartilha
 
 3. Adicionar página de Notícias com integração aos mocks
    - Implementar listagem principal com destaque para notícias recentes
