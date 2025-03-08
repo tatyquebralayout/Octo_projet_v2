@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Briefcase, Video, FileText, Mail, Building, Users, BookOpen, Target } from 'lucide-react';
 import { useDataFetching } from '../../hooks';
@@ -143,20 +143,20 @@ const CapacitaPcd = () => {
                 {resource.icon}
               </div>
             </div>
-            <h3 className="text-h4 text-[#972ae6] mb-4">
+            <h3 className="text-xl font-bold text-[#972ae6] mb-4">
               {resource.title}
             </h3>
-            <p className="text-body text-[#972ae6]/70 mb-6">
+            <p className="text-lg text-[#972ae6]/70 mb-6">
               {resource.description}
             </p>
             {resource.soon ? (
-              <span className="inline-block px-4 py-2 bg-[#e8b624]/10 text-[#e8b624] text-caption font-bold rounded-full">
+              <span className="inline-block px-4 py-2 bg-[#e8b624]/10 text-[#e8b624] text-sm font-bold rounded-full">
                 Em breve
               </span>
             ) : (
               <Link
                 to={resource.link}
-                className="text-link"
+                className="text-[#972ae6] hover:text-[#e8b624] transition-colors font-medium"
               >
                 Acessar material
               </Link>
@@ -177,7 +177,7 @@ const CapacitaPcd = () => {
       return (
         <Error
           title="Não foi possível carregar as vagas"
-          message="Ocorrer um erro ao buscar as vagas disponíveis."
+          message="Ocorreu um erro ao buscar as vagas disponíveis."
           onRetry={refetchVagas}
           variant="card"
           className="my-12"
@@ -188,12 +188,12 @@ const CapacitaPcd = () => {
     if (!vagas || vagas.length === 0) {
       return (
         <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-          <p className="text-body text-[#972ae6]/70 mb-6">
+          <p className="text-lg text-[#972ae6]/70 mb-6">
             Em breve, disponibilizaremos um banco de vagas exclusivo para pessoas com deficiência e neurodivergentes. Fique ligado!
           </p>
           <Link
             to="/contato"
-            className="btn btn-primary"
+            className="inline-block px-8 py-4 bg-[#972ae6] text-white rounded-full font-bold hover:bg-[#e8b624] transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
           >
             Cadastre seu currículo
           </Link>
@@ -206,13 +206,16 @@ const CapacitaPcd = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {vagasData.map((vaga, index) => (
-          <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all">
-            <h3 className="text-h4 text-[#972ae6] mb-2">{vaga.titulo}</h3>
-            <p className="text-caption text-gray-500 mb-4">{vaga.empresa}</p>
-            <p className="text-body-small mb-4">{vaga.descricao}</p>
+          <div 
+            key={index} 
+            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+          >
+            <h3 className="text-xl font-bold text-[#972ae6] mb-2">{vaga.titulo}</h3>
+            <p className="text-sm text-gray-500 mb-4">{vaga.empresa}</p>
+            <p className="text-[#972ae6]/70 mb-4">{vaga.descricao}</p>
             <Link
               to={`/vagas/${vaga.id}`}
-              className="text-link"
+              className="text-[#972ae6] hover:text-[#e8b624] transition-colors font-medium"
             >
               Ver detalhes e se candidatar
             </Link>
@@ -238,10 +241,10 @@ const CapacitaPcd = () => {
         <div className="container mx-auto px-6 h-full relative z-10">
           <div className="flex items-center h-full">
             <div className="max-w-4xl">
-              <h1 className="text-h1 text-white mb-6">
+              <h1 className="text-[56px] font-bold text-white mb-6">
                 Capacita PcD
               </h1>
-              <p className="text-body-large text-white/90 max-w-2xl">
+              <p className="text-xl text-white/90 max-w-2xl">
                 O CAPACITA PcD é o programa da OCTO que ajuda a pessoa com deficiência (oculta ou aparente) e neurodivergente com o mercado de trabalho.
               </p>
             </div>
@@ -266,10 +269,10 @@ const CapacitaPcd = () => {
                     {feature.icon}
                   </div>
                 </div>
-                <h3 className="text-h4 text-[#972ae6] mb-4 group-hover:text-[#e8b624] transition-colors">
+                <h3 className="text-xl font-bold text-[#972ae6] mb-4 group-hover:text-[#e8b624] transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-body text-[#972ae6]/70">
+                <p className="text-lg text-[#972ae6]/70">
                   {feature.description}
                 </p>
               </div>
@@ -283,10 +286,10 @@ const CapacitaPcd = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <Briefcase className="w-16 h-16 text-[#972ae6] mx-auto mb-8" />
-            <h2 className="text-h2 text-[#972ae6] mb-8">
+            <h2 className="text-3xl font-bold text-[#972ae6] mb-8">
               Vagas de Emprego
             </h2>
-            <p className="text-body text-[#972ae6]/70 mb-12">
+            <p className="text-lg text-[#972ae6]/70 mb-12">
               Aqui nessa página você vai encontrar ofertas de vagas de empresas para pessoas com deficiência ou neurodivergências e poderá se candidatar diretamente para elas!
             </p>
             {renderVagas()}
@@ -298,10 +301,10 @@ const CapacitaPcd = () => {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-h2 text-[#972ae6] mb-6">
+            <h2 className="text-3xl font-bold text-[#972ae6] mb-6">
               Recursos e Materiais
             </h2>
-            <p className="text-body-large text-[#972ae6]/70 max-w-3xl mx-auto">
+            <p className="text-xl text-[#972ae6]/70 max-w-3xl mx-auto">
               Preparamos conteúdos especiais para ajudar você em sua jornada profissional.
             </p>
           </div>
@@ -316,10 +319,10 @@ const CapacitaPcd = () => {
           <div className="max-w-4xl mx-auto border-2 border-white rounded-3xl p-12">
             <div className="text-center">
               <Mail className="w-16 h-16 text-white mx-auto mb-8" />
-              <h2 className="text-h2 text-white mb-8">
+              <h2 className="text-3xl font-bold text-white mb-8">
                 Quer uma ajudinha?
               </h2>
-              <p className="text-body-large text-white/90 mb-12">
+              <p className="text-xl text-white/90 mb-12">
                 Entre em contato conosco para receber suporte personalizado em sua jornada profissional.
               </p>
               <a
