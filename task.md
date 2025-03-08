@@ -486,7 +486,7 @@ Este plano visa melhorar a consistência, manutenibilidade e qualidade do códig
 - **Sistema de Tipos Unificado** (35% concluído)
   - [✅] Implementar tipos centralizados para cartilhas/guias
     - [✅] Criar arquivo `src/types/guides.ts` com hierarquia de tipos
-    - [✅] Implementar função utilitária `convertToGuide()` 
+    - [✅] Implementar função utilitária `convertToGuide()`
     - [✅] Atualizar componentes para usar os novos tipos
   - [ ] Implementar tipos centralizados para sistema de API
     - [ ] Criar arquivo `src/types/api.ts` com interfaces base
@@ -565,6 +565,12 @@ Este plano visa melhorar a consistência, manutenibilidade e qualidade do códig
     - [ ] Implementar suporte a cache
     - [ ] Padronizar handling de erros
     - [ ] Suportar paginação de forma consistente
+    - [ ] Corrigir erros de tipagem:
+      - [ ] Atualizar interface CacheOptions para incluir forceRevalidate
+      - [ ] Corrigir uso de métodos inexistentes (clearCache → invalidate)
+      - [ ] Implementar verificação de dados expirados corretamente
+      - [ ] Ajustar assinaturas de métodos do apiService
+      - [ ] Resolver incompatibilidades de tipo nos parâmetros
   - [ ] Criar biblioteca de hooks utilitários padronizados
   - [ ] Documentar convenções para implementação de hooks
 
@@ -1203,6 +1209,12 @@ src/
    - [✅] Oferecer alternativas para animações com movimento intenso
    - [ ] Resolver warnings no console sobre props não utilizadas
    - [ ] Corrigir problemas de foco em elementos interativos
+   - [ ] Corrigir erros de tipagem no hook useDataFetching:
+     - [ ] Atualizar interface CacheOptions para incluir forceRevalidate
+     - [ ] Corrigir uso de métodos inexistentes (clearCache, revalidate)
+     - [ ] Implementar verificação de dados desatualizados com base no expiresAt
+     - [ ] Ajustar chamadas da API para corresponder à assinatura correta
+     - [ ] Resolver incompatibilidades de tipo nos parâmetros
 
 ### Melhorias nos Componentes de Cartilhas 📚
 
