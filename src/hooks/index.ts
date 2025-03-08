@@ -19,4 +19,18 @@ export type {
 } from './useForm';
 
 // Hook de formulário de contato
-export { default as useContactForm } from './useContactForm'; 
+export { default as useContactForm } from './useContactForm';
+
+// Hooks de cache
+export { 
+  useCache, 
+  useCacheWithMutation, 
+  useCacheInfo 
+} from './useCache';
+
+// Hooks de API com cache
+export {
+  useApiCache,
+  useApiCacheWithMutation,
+  useApiPaginatedCache
+} from './useApiCache'; 

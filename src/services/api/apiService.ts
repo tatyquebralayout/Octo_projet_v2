@@ -261,6 +261,39 @@ class ApiService {
       : operation();
   }
   
+  // GET com cache - Obter dados com suporte a cache
+  async getCached<T = any>(
+    url: string, 
+    params?: QueryParams, 
+    cacheOptions?: import('../cache/types').CacheOptions
+  ): Promise<ApiResponse<T>> {
+    // Importar dinamicamente para evitar dependência circular
+    const { cacheManager } = await import('../cache');
+    
+    // Gerar chave de cache baseada na URL e parâmetros
+    const cacheKey = `${url}${params ? ':' + JSON.stringify(params) : ''}`;
+    
+    // Função para buscar dados frescos
+    const fetchFn = async () => {
+      return this.get<T>(url, params);
+    };
+    
+    try {
+      // Buscar do cache ou da API
+      const result = await cacheManager.getOrFetch<ApiResponse<T>>(
+        cacheKey,
+        fetchFn,
+        cacheOptions
+      );
+      
+      return result.data;
+    } catch (error) {
+      // Se falhar, tentar buscar diretamente
+      console.error(`Erro ao buscar dados em cache para ${url}:`, error);
+      return fetchFn();
+    }
+  }
+  
   // POST - Criar dados com suporte a retry
   async post<T = any, D = any>(url: string, data: D, retry = false): Promise<ApiResponse<T>> {
     const operation = async () => {
