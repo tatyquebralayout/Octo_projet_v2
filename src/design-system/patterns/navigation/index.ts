@@ -1,4 +1,4 @@
-import { colors, spacing, typography } from '../../foundations/tokens';
+import { colorPalette, spacing, typographySystem } from '../../tokens';
 
 export const navigationStyles = {
   menu: `
@@ -9,10 +9,10 @@ export const navigationStyles = {
   
   menuItem: `
     relative
-    text-[${typography.fontSize.base}]
-    font-[${typography.fontWeight.medium}]
-    text-[${colors.gray[700]}]
-    hover:text-[${colors.primary[400]}]
+    text-[${typographySystem.fontSize.base}]
+    font-[${typographySystem.fontWeight.medium}]
+    text-[${colorPalette.gray[700]}]
+    hover:text-[${colorPalette.primary[400]}]
     transition-colors
     duration-200
   `,
@@ -34,10 +34,10 @@ export const navigationStyles = {
     w-full
     px-[${spacing[4]}]
     py-[${spacing[2]}]
-    text-[${typography.fontSize.sm}]
-    text-[${colors.gray[700]}]
-    hover:bg-[${colors.gray[50]}]
-    hover:text-[${colors.primary[400]}]
+    text-[${typographySystem.fontSize.sm}]
+    text-[${colorPalette.gray[700]}]
+    hover:bg-[${colorPalette.gray[50]}]
+    hover:text-[${colorPalette.primary[400]}]
     transition-colors
     duration-200
   `,
@@ -46,17 +46,17 @@ export const navigationStyles = {
     flex
     items-center
     gap-[${spacing[2]}]
-    text-[${typography.fontSize.sm}]
-    text-[${colors.gray[500]}]
+    text-[${typographySystem.fontSize.sm}]
+    text-[${colorPalette.gray[500]}]
   `,
   
   breadcrumbItem: `
-    hover:text-[${colors.primary[400]}]
+    hover:text-[${colorPalette.primary[400]}]
     transition-colors
     duration-200
   `,
   
   breadcrumbSeparator: `
-    text-[${colors.gray[400]}]
+    text-[${colorPalette.gray[400]}]
   `
 }; 

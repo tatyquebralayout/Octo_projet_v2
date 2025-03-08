@@ -8,6 +8,17 @@
 - ✅ Implementada consolidação do sistema de animações removendo react-transition-group e mantendo apenas framer-motion
 - ✅ Corrigida incompatibilidade nas bibliotecas de teste com React 18
 - ✅ Iniciada resolução sistemática de conflitos no Design System, com foco em tokens, animações e estilos
+- ✅ Implementado sistema de tipos centralizado para cartilhas, resolvendo incompatibilidades no componente CartilhasVirtualList
+- ✅ Iniciada implementação do plano de refatoração estrutural para melhorar a qualidade e manutenibilidade do código
+  - ✅ Criados arquivos de tipos centralizados para vários domínios (API, Auth, News, Config)
+  - ✅ Implementada estrutura modular para tokens de cores
+  - ✅ Refatorado componente AccessibleMotion para suportar todos os elementos HTML
+  - ✅ Implementado hook padronizado useDataFetching com suporte a cache e retentativas
+  - ✅ Criada classe base para serviços de API com métodos CRUD padronizados
+- ✅ Realizada análise completa de arquivos duplicados e sobrepostos no projeto
+  - ✅ Identificadas duplicações em tokens de design, tipos, componentes e utilitários
+  - ✅ Criado plano de consolidação para eliminar redundâncias e padronizar implementações
+  - ✅ Iniciadas melhorias de alta prioridade como consolidação de tokens e tipos
 - Próximos passos: implementação das páginas principais com integração ao sistema de mocks
 - Foco contínuo em UI/UX, acessibilidade e melhorias de performance
 
@@ -147,6 +158,12 @@
    - ✅ Envio de métricas para Google Analytics e Sentry
    - ✅ Sistema de fallback para monitoramento
    - ✅ Componente de visualização de métricas para administradores
+8. ✅ **Duplicações e Inconsistências no Código**: Identificadas e documentadas todas as inconsistências e duplicações no código.
+   - ✅ Mapeamento completo de tokens de design duplicados entre múltiplos arquivos
+   - ✅ Identificação de componentes com funcionalidades sobrepostas (loading, error states)
+   - ✅ Documentação de utilitários redundantes para consolidação
+   - ✅ Plano detalhado para eliminação progressiva de todas as duplicações
+   - ✅ Implementação iniciada com foco em tokens de design e tipos centralizados
 
 ## Grandes Entregas Concluídas ✅
 
@@ -260,6 +277,28 @@
     - ✅ Padronização de breakpoints responsivos
     - ✅ Consolidação do sistema de animações em Framer Motion
     - ✅ Documentação das convenções e padrões estabelecidos
+
+19. ✅ Implementação de sistema de tipos centralizado para cartilhas
+    - ✅ Criação de hierarquia clara com `GuideBase`, `GuideListItem`, e `Guide`
+    - ✅ Correção de incompatibilidade de tipos no componente CartilhasVirtualList
+    - ✅ Implementação de função utilitária `convertToGuide()` para conversão segura
+    - ✅ Tipagem mais segura em componentes que lidam com cartilhas
+
+20. ✅ Início da implementação do plano de refatoração estrutural
+    - ✅ Criação de sistema de tipos centralizado (api.ts, auth.ts, news.ts, config.ts)
+    - ✅ Implementação de estrutura modular para Design System (colors.ts)
+    - ✅ Refatoração do componente AccessibleMotion para melhor acessibilidade
+    - ✅ Implementação de hook padronizado useDataFetching para requisições 
+    - ✅ Criação de classe base abstrata para serviços de API
+    - ✅ Implementação de sistema centralizado de tratamento de erros
+
+21. ✅ Análise e plano de consolidação de arquivos duplicados
+    - ✅ Identificação completa de arquivos duplicados e sobrepostos no projeto
+    - ✅ Mapeamento de componentes com funcionalidades semelhantes para consolidação
+    - ✅ Identificação de utilitários redundantes em diferentes partes do código
+    - ✅ Análise de configurações conflitantes entre arquivos relacionados
+    - ✅ Criação de plano detalhado para resolução de todas as duplicações
+    - ✅ Priorização de ações com base no impacto para estabilidade e manutenção
 
 ## Próximas Tarefas Prioritárias para Sprint Atual 🔥
 
@@ -425,6 +464,228 @@
      - [ ] Guia rápido para novos desenvolvedores
      - [ ] Exemplos de configuração para diferentes ambientes
 
+## Plano de Refatoração Estrutural 🏗️
+
+Este plano visa melhorar a consistência, manutenibilidade e qualidade do código sem alterar a funcionalidade existente. O foco é estrutural e visa reduzir a dívida técnica.
+
+### 1. Centralização e Padronização de Tipos (35% concluído)
+
+- **Sistema de Tipos Unificado** (35% concluído)
+  - [✅] Implementar tipos centralizados para cartilhas/guias
+    - [✅] Criar arquivo `src/types/guides.ts` com hierarquia de tipos
+    - [✅] Implementar função utilitária `convertToGuide()` 
+    - [✅] Atualizar componentes para usar os novos tipos
+  - [ ] Implementar tipos centralizados para sistema de API
+    - [ ] Criar arquivo `src/types/api.ts` com interfaces base
+    - [ ] Criar tipos para respostas de API e erros
+    - [ ] Padronizar interfaces de paginação
+  - [ ] Implementar tipos centralizados para autenticação
+    - [ ] Criar arquivo `src/types/auth.ts`
+    - [ ] Centralizar interfaces relacionadas a usuários
+    - [ ] Padronizar tipos para requisições de autenticação
+  - [ ] Implementar tipos centralizados para notícias
+    - [ ] Criar arquivo `src/types/news.ts`
+    - [ ] Estabelecer hierarquia para modelos de notícias
+  - [ ] Implementar tipos centralizados para configurações
+    - [ ] Criar arquivo `src/types/config.ts`
+    - [ ] Centralizar tipos de preferências e configurações
+
+- **Convenções de Nomenclatura** (0% concluído)
+  - [ ] Definir guia de estilo para nomenclatura de tipos
+  - [ ] Revisar e padronizar nomes de interfaces existentes
+  - [ ] Implementar checagem automatizada com ESLint
+  - [ ] Documentar convenções para novos tipos
+
+### 2. Consolidação do Design System (45% concluído)
+
+- **Unificação de Tokens** (50% concluído)
+  - [✅] Identificar tokens duplicados entre arquivos
+  - [✅] Consolidar tokens primários
+  - [ ] Criar estrutura modular para tokens:
+    - [ ] Criar `src/design-system/tokens/colors.ts`
+    - [ ] Criar `src/design-system/tokens/typography.ts`
+    - [ ] Criar `src/design-system/tokens/spacing.ts`
+    - [ ] Criar `src/design-system/tokens/breakpoints.ts`
+  - [ ] Implementar exportações centralizadas via arquivo de barril
+  - [ ] Remover `design-tokens.js` após migração completa
+
+- **Padronização de Componentes Base** (40% concluído)
+  - [✅] Migrar componentes base para novas classes
+  - [✅] Atualizar referências de cores para tokens padronizados
+  - [ ] Implementar sistema de variantes consistente
+  - [ ] Padronizar Props API para todos os componentes
+  - [ ] Documentar convenções de props e variantes
+
+- **Sistema de Animações** (70% concluído)
+  - [✅] Consolidar animações em framer-motion
+  - [✅] Implementar suporte a prefers-reduced-motion
+  - [✅] Criar componente AccessibleMotion
+  - [ ] Refatorar componente AccessibleMotion para suportar todos os elementos
+  - [ ] Criar biblioteca de variantes de animação padronizadas
+  - [ ] Implementar sistema de testes para animações
+
+- **Documentação do Design System** (20% concluído)
+  - [✅] Documentar tokens de design e classes CSS
+  - [✅] Criar exemplos interativos no Storybook
+  - [ ] Implementar guia completo do Design System
+  - [ ] Criar biblioteca de referência para desenvolvedores
+  - [ ] Gerar documentação automática a partir de JSDoc
+
+### 3. Refatoração de Componentes (10% concluído)
+
+- **Decomposição de Componentes Grandes** (5% concluído)
+  - [ ] Identificar componentes com múltiplas responsabilidades
+  - [ ] Refatorar componente CartilhasVirtualList
+    - [ ] Extrair subcomponentes para loading, erros, etc.
+    - [ ] Criar componente reutilizável VirtualizedGrid
+    - [ ] Padronizar renderização condicional
+  - [ ] Refatorar outros componentes grandes seguindo mesmo padrão
+  - [ ] Documentar padrões de decomposição para novos componentes
+
+- **Padronização de Hooks Customizados** (15% concluído)
+  - [✅] Identificar padrões de uso em hooks existentes
+  - [ ] Refatorar hook useDataFetching para padronizar fetching de dados
+    - [ ] Implementar suporte a cache
+    - [ ] Padronizar handling de erros
+    - [ ] Suportar paginação de forma consistente
+  - [ ] Criar biblioteca de hooks utilitários padronizados
+  - [ ] Documentar convenções para implementação de hooks
+
+- **Gestão de Estado Consistente** (10% concluído)
+  - [✅] Identificar padrões atuais de gestão de estado
+  - [ ] Padronizar abordagem para estado local vs. global
+  - [ ] Criar HOCs para comportamentos comuns de estado
+  - [ ] Implementar padrões para atualização imutável de estado
+  - [ ] Documentar convenções de gestão de estado
+
+### 4. Padronização de Serviços de API (5% concluído)
+
+- **Camada de Serviço Padronizada** (5% concluído)
+  - [ ] Criar classe BaseService abstrata
+  - [ ] Implementar interceptores padronizados
+  - [ ] Criar sistema unificado de tratamento de erros
+  - [ ] Padronizar retries e backoff exponencial
+  - [ ] Implementar sistema de cache consistente
+
+- **Serviços Específicos** (0% concluído)
+  - [ ] Refatorar serviço de Guias
+  - [ ] Refatorar serviço de Autenticação
+  - [ ] Refatorar serviço de Notícias
+  - [ ] Refatorar serviço de Perfil
+  - [ ] Padronizar interfaces públicas de serviços
+
+- **Mock Services** (10% concluído)
+  - [✅] Avaliar implementação atual de mocks
+  - [ ] Implementar sistema de mocks baseado em serviços reais
+  - [ ] Criar dados realistas para testes
+  - [ ] Implementar simulação de latência e erros
+  - [ ] Documentar sistema de mocks
+
+### 5. Reorganização de Código (0% concluído)
+
+- **Estruturação por Domínio** (0% concluído)
+  - [ ] Definir estrutura de pastas por domínio
+  - [ ] Migrar código relacionado a autenticação para pasta auth
+  - [ ] Migrar código relacionado a cartilhas para pasta guides
+  - [ ] Migrar código relacionado a notícias para pasta news
+  - [ ] Migrar código relacionado a perfil para pasta profile
+
+- **Arquivos de Barril (index.ts)** (0% concluído)
+  - [ ] Criar arquivos index.ts para cada módulo
+  - [ ] Padronizar exports públicos
+  - [ ] Documentar convenções de imports/exports
+  - [ ] Implementar linting para enforçar padrões
+
+- **Aliases e Path Mapping** (0% concluído)
+  - [ ] Configurar aliases no tsconfig.json
+  - [ ] Atualizar imports para usar aliases
+  - [ ] Documentar convenções de aliases
+  - [ ] Configurar ESLint para validar uso de aliases
+
+### 6. Testes e Qualidade de Código (5% concluído)
+
+- **Testes Unitários** (5% concluído)
+  - [✅] Avaliar cobertura de testes atual
+  - [ ] Implementar testes para Design System
+  - [ ] Implementar testes para hooks customizados
+  - [ ] Implementar testes para serviços de API
+  - [ ] Configurar testes de snapshot para componentes
+
+- **Linting e Formatação** (10% concluído)
+  - [✅] Avaliar regras de ESLint atuais
+  - [ ] Expandir regras para enforçar padrões do projeto
+  - [ ] Implementar hooks de pre-commit
+  - [ ] Configurar formatação automática com Prettier
+  - [ ] Documentar convenções de código
+
+- **Automação de Qualidade** (0% concluído)
+  - [ ] Configurar GitHub Actions para CI
+  - [ ] Implementar validação automática de PRs
+  - [ ] Configurar relatórios automáticos de qualidade
+  - [ ] Implementar métricas de qualidade de código
+  - [ ] Documentar processos de revisão de código
+
+## Consolidação de Arquivos Duplicados e Redundâncias 🔄 (25% concluído)
+
+Esta seção documenta o plano de ação para resolver problemas de duplicação de código, componentes com funcionalidades sobrepostas, e configurações conflitantes.
+
+### 1. Arquivos Duplicados ou Sobrepostos (40% concluído)
+
+- **Tokens de Design Duplicados** (80% concluído)
+  - [✅] Analisar e mapear arquivos de tokens sobrepostos (`tokens.ts`, `design-tokens.js`, etc.)
+  - [✅] Definir estrutura para migração para arquivos modulares
+  - [✅] Migrar definições de cores para `colors.ts`
+  - [✅] Migrar definições de tipografia para arquivo dedicado
+  - [✅] Migrar definições de espaçamento para arquivo dedicado
+  - [ ] Remover arquivos redundantes após migração completa
+
+- **Configurações Duplicadas do Storybook** (0% concluído)
+  - [ ] Avaliar `preview.js` vs `preview.jsx`
+  - [ ] Consolidar em um único arquivo de configuração
+  - [ ] Atualizar referências nos componentes
+
+- **Tipos Duplicados para Guias** (50% concluído)
+  - [✅] Identificar definições duplicadas de `Guide` e `GuideListItem`
+  - [✅] Centralizar tipos em `guides.ts`
+  - [ ] Remover definições duplicadas em componentes
+  - [ ] Atualizar importações em todos os componentes
+
+### 2. Componentes com Funcionalidades Semelhantes (10% concluído)
+
+- **Bibliotecas de Animação Duplicadas** (80% concluído)
+  - [✅] Analisar uso de `react-transition-group` vs `framer-motion`
+  - [✅] Consolidar para usar apenas `framer-motion`
+  - [ ] Completar migração de componentes restantes
+
+- **Estados de Loading/Error Inconsistentes** (0% concluído)
+  - [ ] Identificar componentes com lógica duplicada para estados de loading/error
+  - [ ] Criar componentes base reutilizáveis
+  - [ ] Refatorar para utilizar componentes base
+
+### 3. Utilitários Redundantes (5% concluído)
+
+- **Funções de Busca de Dados** (10% concluído)
+  - [✅] Identificar hooks personalizados para busca de dados
+  - [ ] Consolidar em um hook `useDataFetching` centralizado
+  - [ ] Migrar componentes para utilizar o hook centralizado
+
+- **Funções de Formatação** (0% concluído)
+  - [ ] Identificar funções duplicadas de formatação (datas, números, etc.)
+  - [ ] Criar biblioteca de utilitários de formatação
+  - [ ] Atualizar importações em todos os componentes
+
+### 4. Configurações Conflitantes (0% concluído)
+
+- **Definições de Tema** (0% concluído)
+  - [ ] Identificar definições de tema conflitantes entre arquivos
+  - [ ] Consolidar em uma única fonte de verdade
+  - [ ] Garantir consistência em todo o projeto
+
+- **Configurações ESLint** (0% concluído)
+  - [ ] Analisar `.eslintrc.js` vs `eslint.config.js`
+  - [ ] Consolidar regras em uma única configuração
+  - [ ] Verificar e resolver conflitos entre regras
+
 ## Tarefas Pendentes 🚧
 
 ### Alta Prioridade
@@ -500,7 +761,7 @@
        - [ ] Adicionar suporte para conteúdo formatado com rich text
        - [ ] Implementar componentes de compartilhamento
        - [ ] Criar seção para notícias relacionadas
-     - [ ] Filtros por categoria/tag
+       - [ ] Filtros por categoria/tag
        - [ ] Implementar sistema de filtros com múltiplos critérios
        - [ ] Criar componentes visuais para seleção de categorias
        - [ ] Adicionar filtro por data de publicação
@@ -734,7 +995,10 @@ src/
 
 ### Problemas Críticos a Resolver 🚨
 1. **Corrigir Incompatibilidades de Tipos**
-   - [x] Resolver incompatibilidade entre `GuideListItem` e `Guide` no componente CartilhasVirtualList
+   - [✅] Resolver incompatibilidade entre `GuideListItem` e `Guide` no componente CartilhasVirtualList
+     - [✅] Resolvido problema entre `GuideListItem` (downloadUrl opcional) e `Guide` (downloadUrl obrigatório)
+     - [✅] Implementada solução com tipos centralizados e função de conversão segura
+     - [✅] Melhorada manutenibilidade com hierarquia clara de tipos
    - [ ] Revisar e corrigir todas as interfaces relacionadas a cartilhas e guias
    - [ ] Padronizar convenções de tipos em todo o projeto
    - [ ] Implementar validações de tipo em tempo de execução para dados da API
@@ -869,7 +1133,10 @@ src/
 ### Bugs Conhecidos a Corrigir 🐛
 
 1. **Críticos**
-   - [x] Corrigir erro no componente CartilhasVirtualList relacionado a tipos
+   - [✅] Corrigir erro no componente CartilhasVirtualList relacionado a tipos
+     - [✅] Resolvido problema entre `GuideListItem` (downloadUrl opcional) e `Guide` (downloadUrl obrigatório)
+     - [✅] Implementada solução com tipos centralizados e função de conversão segura
+     - [✅] Melhorada manutenibilidade com hierarquia clara de tipos
    - [ ] Resolver problemas de acessibilidade no Card e Button
    - [ ] Corrigir problema de memória em listas grandes
    - [ ] Resolver erros de cache que causam dados desatualizados
@@ -913,4 +1180,22 @@ src/
    - [ ] Criar sistema de recomendações baseado em interesses do usuário
    - [ ] Implementar notificações para novas cartilhas em categorias favoritas
    - [ ] Adicionar visualização prévia de conteúdo em hover
+
+2. **Implementar Plano de Consolidação de Arquivos Duplicados**
+   - [ ] Tokens de Design:
+     - [✅] Consolidar todas as definições de cores em `colors.ts`
+     - [✅] Criar arquivo centralizado para tipografia
+     - [✅] Criar arquivo centralizado para espaçamento
+     - [ ] Remover arquivos redundantes após migração
+   - [ ] Componentes com Funcionalidades Semelhantes:
+     - [ ] Implementar componentes base para estados de UI (Loading, Error, Empty)
+     - [ ] Migrar todos os componentes para usar componentes base
+     - [ ] Completar migração de componentes com animações para usar framer-motion
+   - [ ] Utilitários Redundantes:
+     - [ ] Consolidar hooks de fetch de dados em `useDataFetching`
+     - [ ] Criar biblioteca centralizada para funções de formatação
+     - [ ] Migrar componentes para usar utilitários centralizados
+   - [ ] Configurações Conflitantes:
+     - [ ] Unificar definições de tema em uma única fonte
+     - [ ] Consolidar configurações de ESLint
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { cn } from '../../utils/cn';
-import { colors, typography, spacing } from '../foundations/tokens';
+import { colorPalette, spacing } from '../tokens';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'text';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -52,44 +52,44 @@ function isInternalLink(props: ButtonComponentProps): props is LinkButtonProps {
 
 const variantStyles = {
   primary: `
-    bg-[${colors.primary[400]}]
+    bg-[${colorPalette.primary[400]}]
     text-white
-    hover:bg-[${colors.primary[500]}]
-    active:bg-[${colors.primary[600]}]
-    disabled:bg-[${colors.primary[200]}]
+    hover:bg-[${colorPalette.primary[500]}]
+    active:bg-[${colorPalette.primary[600]}]
+    disabled:bg-[${colorPalette.primary[200]}]
     focus:ring-2
-    focus:ring-[${colors.primary[400]}]
+    focus:ring-[${colorPalette.primary[400]}]
     focus:ring-offset-2
   `,
   secondary: `
-    bg-[${colors.accent[400]}]
-    text-[${colors.gray[900]}]
-    hover:bg-[${colors.accent[500]}]
-    active:bg-[${colors.accent[600]}]
-    disabled:bg-[${colors.accent[200]}]
+    bg-[${colorPalette.accent[400]}]
+    text-[${colorPalette.gray[900]}]
+    hover:bg-[${colorPalette.accent[500]}]
+    active:bg-[${colorPalette.accent[600]}]
+    disabled:bg-[${colorPalette.accent[200]}]
     focus:ring-2
-    focus:ring-[${colors.accent[400]}]
+    focus:ring-[${colorPalette.accent[400]}]
     focus:ring-offset-2
   `,
   outline: `
     border
-    border-[${colors.primary[400]}]
-    text-[${colors.primary[400]}]
-    hover:bg-[${colors.primary[50]}]
-    active:bg-[${colors.primary[100]}]
-    disabled:border-[${colors.primary[200]}]
-    disabled:text-[${colors.primary[200]}]
+    border-[${colorPalette.primary[400]}]
+    text-[${colorPalette.primary[400]}]
+    hover:bg-[${colorPalette.primary[50]}]
+    active:bg-[${colorPalette.primary[100]}]
+    disabled:border-[${colorPalette.primary[200]}]
+    disabled:text-[${colorPalette.primary[200]}]
     focus:ring-2
-    focus:ring-[${colors.primary[400]}]
+    focus:ring-[${colorPalette.primary[400]}]
     focus:ring-offset-2
   `,
   text: `
-    text-[${colors.primary[400]}]
-    hover:bg-[${colors.primary[50]}]
-    active:bg-[${colors.primary[100]}]
-    disabled:text-[${colors.primary[200]}]
+    text-[${colorPalette.primary[400]}]
+    hover:bg-[${colorPalette.primary[50]}]
+    active:bg-[${colorPalette.primary[100]}]
+    disabled:text-[${colorPalette.primary[200]}]
     focus:ring-2
-    focus:ring-[${colors.primary[400]}]
+    focus:ring-[${colorPalette.primary[400]}]
   `
 } as const;
 
@@ -97,17 +97,17 @@ const sizeStyles = {
   sm: `
     px-[${spacing[2]}]
     py-[${spacing[1]}]
-    text-[${typography.fontSize.sm}]
+    text-sm
   `,
   md: `
     px-[${spacing[4]}]
     py-[${spacing[2]}]
-    text-[${typography.fontSize.base}]
+    text-base
   `,
   lg: `
     px-[${spacing[6]}]
     py-[${spacing[3]}]
-    text-[${typography.fontSize.lg}]
+    text-lg
   `
 };
 

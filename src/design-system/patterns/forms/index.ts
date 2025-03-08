@@ -1,4 +1,4 @@
-import { colors, spacing, typography } from '../../foundations/tokens';
+import { colorPalette, semanticColors, spacing, typographySystem } from '../../tokens';
 
 export const formStyles = {
   container: `
@@ -15,21 +15,21 @@ export const formStyles = {
   label: `
     block
     mb-[${spacing[1]}]
-    text-[${typography.fontSize.sm}]
-    font-[${typography.fontWeight.medium}]
-    text-[${colors.gray[700]}]
+    text-[${typographySystem.fontSize.sm}]
+    font-[${typographySystem.fontWeight.medium}]
+    text-[${colorPalette.gray[700]}]
   `,
   
   error: `
     mt-[${spacing[1]}]
-    text-[${typography.fontSize.sm}]
-    text-[${colors.error.main}]
+    text-[${typographySystem.fontSize.sm}]
+    text-[${semanticColors.error.main}]
   `,
   
   helper: `
     mt-[${spacing[1]}]
-    text-[${typography.fontSize.sm}]
-    text-[${colors.gray[500]}]
+    text-[${typographySystem.fontSize.sm}]
+    text-[${colorPalette.gray[500]}]
   `,
   
   actions: `
