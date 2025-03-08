@@ -5,6 +5,7 @@ import Engagement from '../components/sections/Engagement';
 import { cn } from '../utils/cn';
 import { useIntersectionObserver } from '../design-system/utils/hooks';
 import { Icon } from '../components/ui/Icon';
+import { Loading } from '../design-system/components/ui';
 
 const Home = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -14,18 +15,33 @@ const Home = () => {
   const isHeroVisible = useIntersectionObserver(heroRef, { threshold: 0.1 });
   
   const images = [
-    "https://iili.io/2pa5hRn.png",
-    "https://iili.io/2paYBCx.png",
-    "https://iili.io/2paYUue.png"
+    {
+      src: "https://iili.io/2pa5hRn.png",
+      width: 1920,
+      height: 1080,
+      alt: "OCTO Hero 1"
+    },
+    {
+      src: "https://iili.io/2paYBCx.png",
+      width: 1920,
+      height: 1080,
+      alt: "OCTO Hero 2"
+    },
+    {
+      src: "https://iili.io/2paYUue.png",
+      width: 1920,
+      height: 1080,
+      alt: "OCTO Hero 3"
+    }
   ];
 
   useEffect(() => {
     if (!isHeroVisible) return;
 
     const preloadImages = () => {
-      images.forEach((src, index) => {
+      images.forEach((imageData, index) => {
         const img = new Image();
-        img.src = src;
+        img.src = imageData.src;
         img.onload = () => {
           setImagesLoaded(prev => {
             const newState = [...prev];
@@ -48,10 +64,6 @@ const Home = () => {
 
     return () => clearInterval(interval);
   }, [imagesLoaded]);
-
-  const LoadingPlaceholder = () => (
-    <div className="absolute inset-0 bg-purple-200/50 animate-pulse rounded-lg"></div>
-  );
 
   const programs = [
     {
@@ -109,22 +121,39 @@ const Home = () => {
 
             {/* Right Image */}
             <div className="relative w-[480px] h-[480px] flex items-center justify-center">
-              {!imagesLoaded.every(Boolean) && <LoadingPlaceholder />}
-              {images.map((img, index) => (
-                <img
-                  key={img}
-                  src={img}
-                  alt={`OCTO Hero ${index + 1}`}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  fetchPriority={index === 0 ? "high" : "low"}
-                  decoding="async"
-                  className={cn(
-                    "absolute w-full h-full object-contain",
-                    "transition-opacity duration-1000 ease-in-out",
-                    currentImage === index && imagesLoaded[index] ? 'opacity-100' : 'opacity-0'
-                  )}
-                />
-              ))}
+              {/* Hero Carousel */}
+              <div className="relative h-0 pb-[56.25%] overflow-hidden bg-gray-100">
+                {images.map((imageData, index) => (
+                  <div 
+                    key={index}
+                    className={cn(
+                      "absolute inset-0 transition-opacity duration-1000",
+                      currentImage === index ? "opacity-100 z-10" : "opacity-0 z-0"
+                    )}
+                  >
+                    {/* Placeholder durante o carregamento */}
+                    {!imagesLoaded[index] && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-200 animate-pulse">
+                        <span className="sr-only">Carregando imagem {index + 1}</span>
+                      </div>
+                    )}
+                    <img
+                      src={imageData.src}
+                      alt={imageData.alt}
+                      width={imageData.width}
+                      height={imageData.height}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      // @ts-ignore - fetchpriority é um atributo válido mas não está no tipo
+                      fetchpriority={index === 0 ? "high" : "low"}
+                      decoding="async"
+                      className={cn(
+                        "w-full h-full object-cover transition-transform duration-1000 ease-out",
+                        hoveredCard === index && "scale-105"
+                      )}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

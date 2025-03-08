@@ -113,6 +113,16 @@ export default defineConfig({
       }
     })
   ],
+  server: {
+    // Configuração explícita do servidor de desenvolvimento
+    host: 'localhost',
+    port: 5173, // Porta padrão do Vite
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      port: 5173
+    }
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
