@@ -2,7 +2,7 @@
 
 ## Resumo do Progresso Atual
 - Sistema de mocks de API implementado, permitindo desenvolvimento frontend independente do backend
-- 11 grandes entregas concluídas, incluindo sistema de formulários, autenticação e mocks
+- 15 grandes entregas concluídas, incluindo sistema de formulários, autenticação, notificações e utilities
 - Próximos passos: implementação das páginas principais com integração ao sistema de mocks
 - Foco em UI/UX, acessibilidade e melhorias de performance
 
@@ -15,31 +15,36 @@
 - ✅ Melhorada organização das rotas no `App.tsx`
 - ✅ Removida flag `v7_startTransition`
 
-### CSS e Design System
+### Design System
 - ✅ Corrigida propriedade `ring` e utilização do `outline`
 - ✅ Resolvido erro do PostCSS com `@tailwind`
 - ✅ Implementado sistema tipográfico completo:
-  - Classes para hierarquia (display, h1-h4)
+  - Classes para hierarquia (`.text-display`, `.text-h1` a `.text-h4`)
   - Tamanhos padronizados (44px a 12px)
-  - Estilos para corpo de texto
-  - Classes utilitárias
+  - Estilos para corpo de texto (`.text-body`, `.text-body-large`, `.text-body-small`)
+  - Classes utilitárias (`.text-emphasis`, `.text-muted`, `.text-link`)
   - Line-heights apropriados
   - Cores padronizadas
 - ✅ Sistema de cores padronizado:
-  - Cores primárias e de acento
-  - Variações de opacidade
-  - Estados interativos
+  - Cores primárias e de acento usando escalas completas (50-900)
+  - Estados interativos consistentes (light, main, dark)
+  - Cores semânticas para feedback (`.text-success`, `.text-warning`, `.text-error`, `.text-info`)
 - ✅ Componentes base criados:
-  - Cards com variações
-  - Botões padronizados
-  - Ícones com lazy loading
-  - Containers e seções
+  - Cards com variações (`.card`, `.card-primary`, `.card-secondary`, `.card-accent`)
+  - Botões padronizados (`.btn`, `.btn-primary`, `.btn-secondary`, `.btn-outline`)
+  - Ícones com lazy loading (`.icon-container`, `.icon`)
+  - Containers e seções (`.section-hero`, `.section-content`, `.container-narrow`)
 - ✅ Resolvidas dependências circulares no CSS
 - ✅ Corrigida ordem das importações CSS
 - ✅ Configuração otimizada do PostCSS para @apply
 - ✅ Adicionada compatibilidade cross-browser para propriedades CSS
 - ✅ Corrigido conflito de tipos no componente Button
 - ✅ Otimizados imports para remover código não utilizado
+- ✅ Consolidar tokens de design em uma única fonte de verdade (`unified-tokens.ts`)
+- ✅ Eliminar duplicação entre `tokens.ts` e `design-tokens.js`
+- ✅ Padronizar uso de classes CSS (utilitárias vs. componentes)
+- ✅ Estabelecer convenções claras para breakpoints responsivos (`sm`, `md`, `lg`, `xl`, `2xl`)
+- ✅ Remover media queries customizadas em favor de classes Tailwind
 
 ### Componentes de Layout
 #### Header.tsx
@@ -47,7 +52,7 @@
 - ✅ Componentização completa (MenuItem, SubMenuItem, SocialIcons)
 - ✅ Context e estado global implementados
 - ✅ Acessibilidade e ARIA implementados
-- ✅ Animações e transições
+- ✅ Animações e transições (`.transition-standard`, `.hover-lift`)
 - ✅ Suporte a temas
 - ✅ Cache de estado
 
@@ -94,7 +99,7 @@
 - ✅ Atualizados tipos para compatibilidade com Storybook 7+
 - ✅ Implementados stories para componentes básicos (Button)
 
-## Melhorias e adições ✅
+## Grandes Entregas Concluídas ✅
 
 1. ✅ Otimização de carregamento de imagens
 2. ✅ Implementação de estratégias de cache
@@ -121,8 +126,8 @@
    - ✅ Componentes para rotas protegidas e redirecionamento
    - ✅ Tipagem completa com TypeScript e tratamento de erros
 10. ✅ Sistema de formulários com validação
-    - ✅ Componente Form configurável com feedback visual
-    - ✅ Componentes de campo (Input, Select, Textarea, Checkbox)
+    - ✅ Componente Form configurável com feedback visual (`.form-group`, `.form-label`)
+    - ✅ Componentes de campo (`.input-field`, Select, Textarea, Checkbox)
     - ✅ Validação de formulário com mensagens de erro
     - ✅ Tratamento de estado de submissão (loading, success, error)
     - ✅ Funções para transformar dados do formulário para API
@@ -166,9 +171,9 @@
 14. ✅ Sistema de notificações frontend
     - ✅ Implementação de toasts para feedback imediato de ações
     - ✅ Centro de notificações persistente com histórico
-    - ✅ Suporte a diferentes tipos (sucesso, erro, info, warning)
+    - ✅ Suporte a diferentes tipos (`.text-success`, `.text-error`, `.text-info`, `.text-warning`)
     - ✅ Recursos avançados de acessibilidade (ARIA, pausa no hover)
-    - ✅ Animações suaves com Framer Motion
+    - ✅ Animações suaves com Framer Motion (`.transition-standard`)
     - ✅ APIs para adicionar/remover notificações programaticamente
     - ✅ Sistema para mock de notificações durante desenvolvimento
     - ✅ Documentação completa de uso
@@ -193,17 +198,17 @@
 1. Implementar página de Contato.tsx utilizando o sistema de mocks e formulários
    - [x] Criar formulário com validação utilizando o hook useForm
    - [x] Integrar com o mock de API para submissão
-   - [ ] Implementar feedback visual de sucesso/erro utilizando o sistema de notificações
-   - [ ] Implementar UI do formulário de contato
+   - [ ] Implementar feedback visual de sucesso/erro utilizando o sistema de notificações (`.text-success`, `.text-error`)
+   - [ ] Implementar UI do formulário de contato com as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
 
 2. Desenvolver página de Cartilhas.tsx com listagem e filtros
-   - [ ] Listar cartilhas com paginação e ordenação
+   - [ ] Listar cartilhas com paginação e ordenação usando layout responsivo (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`)
    - [ ] Implementar filtros por categoria e tags
-   - [ ] Criar visualização detalhada de cada cartilha
+   - [ ] Criar visualização detalhada de cada cartilha usando `.card-secondary`
    - [ ] Integrar sistema de notificações para feedback de ações
 
 3. Adicionar página de Notícias com integração aos mocks
-   - [ ] Implementar listagem principal com destaque para notícias recentes
+   - [ ] Implementar listagem principal com destaque para notícias recentes (`.card-primary` para destaque, `.card` para demais)
    - [ ] Adicionar paginação e filtros por categoria
    - [ ] Desenvolver página de visualização detalhada de cada notícia
    - [ ] Utilizar notificações para atualizações de conteúdo
@@ -211,7 +216,7 @@
 4. Integrar sistema de notificações com APIs em tempo real
    - [ ] Implementar conexão de websockets para notificações em tempo real
    - [ ] Configurar polling para verificação periódica de novas notificações
-   - [ ] Criar componente de notificação para HeaderBar
+   - [ ] Criar componente de notificação para HeaderBar utilizando `.badge` e `.icon-container`
    - [ ] Adicionar badge indicador no ícone do perfil
 
 5. Melhorar mocks para ambientes de teste e desenvolvimento
@@ -227,53 +232,42 @@
    - [ ] Contato.tsx:
      - [x] Mocks para backend já implementados
      - [x] Estrutura de tipos para formulário criada
-     - [ ] Implementação da UI do formulário
-     - [ ] Validação no frontend
+     - [ ] Implementação da UI do formulário usando as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
+     - [ ] Validação no frontend com feedback visual (`.text-error`)
      - [ ] Integração com sistema de mocks
    - [ ] Cartilhas.tsx:
      - [x] Mocks para listagem e visualização de cartilhas criados
      - [x] Tipos e interfaces definidos
-     - [ ] Sistema de visualização
-     - [ ] Paginação e filtros
+     - [ ] Sistema de visualização usando os componentes `.card` e `.card-secondary`
+     - [ ] Paginação e filtros usando grid responsivo (`md:grid-cols-2 lg:grid-cols-3`)
      - [ ] Integração com sistema de mocks
    - [ ] OctoFaz.tsx e subpáginas:
      - [x] APIs simuladas para carregamento de conteúdo
-     - [ ] Conteúdo real
+     - [ ] Conteúdo real com tipografia padronizada (`.text-h1` a `.text-h4`, `.text-body`)
      - [ ] Integração com sistemas
    - [ ] SomosOcto.tsx e subpáginas:
      - [x] APIs simuladas para carregamento de conteúdo
-     - [ ] Conteúdo aprofundado
-     - [ ] Recursos interativos
+     - [ ] Conteúdo aprofundado usando classes tipográficas padronizadas
+     - [ ] Recursos interativos com animações (`.transition-standard`, `.hover-lift`)
    - [ ] Notícias.tsx:
      - [x] Sistema de mocks para notícias implementado
-     - [ ] Listagem com paginação
-     - [ ] Visualização detalhada
+     - [ ] Listagem com paginação usando layout responsivo
+     - [ ] Visualização detalhada com tipografia padronizada
      - [ ] Filtros por categoria/tag
 
-2. **Unificar e Consolidar Design System**
-   - [x] Resolver duplicação de tokens entre arquivos
-   - [x] Implementar estratégia única para aplicação de estilos
-   - [x] Criar documentação visual com Storybook
-   - [ ] Expandir testes visuais para todos componentes UI
-   - [x] Consolidar tokens de design em uma única fonte de verdade
-   - [x] Eliminar duplicação entre `tokens.ts` e `design-tokens.js`
-   - [x] Padronizar uso de classes CSS (utilitárias vs. componentes)
-   - [x] Estabelecer convenções claras para breakpoints responsivos
-   - [x] Remover media queries customizadas em favor de classes Tailwind
-
-3. **Melhorar Performance**
+2. **Melhorar Performance**
    - [x] Otimizar carregamento de imagens com width/height e lazy loading
    - [x] Implementar estratégia de cache para assets estáticos
    - [x] Otimizar bundle splitting para reduzir tamanho inicial
    - [x] Implementar métricas de Core Web Vitals
 
-4. **Otimização de Recursos**
+3. **Otimização de Recursos**
    - [ ] Migrar imagens para CDN próprio
    - [ ] Implementar WebP com fallbacks
    - [ ] Sistema de compressão automática
    - [ ] Pipeline de otimização
 
-5. **Acessibilidade**
+4. **Acessibilidade**
    - [x] Sistema de notificações com suporte a leitores de tela
    - [x] Atributos ARIA para notificações e toasts
    - [x] Pausas automáticas em hover para deficiências cognitivas
@@ -283,7 +277,7 @@
    - [ ] Testes com leitores de tela
    - [ ] Tabulação por teclado nas interfaces de autenticação
 
-6. **SEO Avançado**
+5. **SEO Avançado**
    - [ ] Schema.org específico:
      - Serviços (Service)
      - Artigos (Article)
@@ -293,7 +287,7 @@
    - [ ] Tags canônicas
    - [ ] Rich snippets
 
-7. **Performance**
+6. **Performance**
    - [ ] Service worker e cache
    - [ ] Otimização de fontes
    - [ ] Preload estratégico
@@ -343,16 +337,21 @@ src/
   │   ├── ui/          # Componentes base
   │   ├── layout/      # Componentes de layout
   │   └── sections/    # Seções da página
+  ├── design-system/
+  │   ├── tokens/      # Tokens unificados
+  │   └── styleguide/  # Guias e documentação
   ├── styles/
-  │   └── design-system.css  # Sistema de design
+  │   └── design-system.css  # Classes de componentes
   ├── utils/
-  │   └── cn.ts       # Utilitários
+  │   └── formatters/  # Utilitários de formatação
   └── pages/          # Páginas da aplicação
 ```
 
 ### Convenções
-- BEM para classes CSS
-- Tailwind para utilitários
-- Material Design 3
+- Classes de componentes para elementos recorrentes (`.btn`, `.card`, `.form-group`)
+- Tailwind para ajustes específicos e layout (`grid`, `flex`, `p-4`, `gap-6`)
+- Mobile-first com breakpoints padronizados (`sm`, `md`, `lg`, `xl`, `2xl`)
+- Material Design 3 para elevação e sombras (`.md3-elevation-1`, `.md3-elevation-2`, `.md3-elevation-3`)
+- Animações padronizadas (`.transition-standard`, `.hover-lift`)
 - Lazy loading otimizado
 
