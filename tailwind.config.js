@@ -4,10 +4,13 @@ const tokens = require('./src/design-system/tokens/design-tokens.js');
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    // Configuração dos breakpoints usando os tokens unificados
+    screens: tokens.breakpoints,
     extend: {
       colors: {
-        // Usando os tokens de cores do design system
+        // Usando os tokens de cores do design system unificado
         primary: tokens.colors.primary,
+        secondary: tokens.colors.secondary,
         accent: tokens.colors.accent,
         gray: tokens.colors.gray,
         success: tokens.colors.state.success,
@@ -23,6 +26,7 @@ export default {
       borderRadius: tokens.borderRadius,
       boxShadow: tokens.shadows,
       zIndex: tokens.zIndex,
+      // Usando as transições definidas nos tokens unificados
       transitionDuration: {
         fast: '150ms',
         normal: '200ms',
@@ -46,11 +50,7 @@ export default {
           to: { opacity: '1' },
         },
       },
-      animation: {
-        float: 'float 3s ease-in-out infinite',
-        slideIn: 'slideIn 0.3s ease-out forwards',
-        fadeIn: 'fadeIn 0.3s ease-out forwards',
-      },
+      animation: tokens.animation,
     },
   },
   // Ativar dark mode baseado em atributo de dados

@@ -255,11 +255,11 @@
    - [x] Implementar estratégia única para aplicação de estilos
    - [x] Criar documentação visual com Storybook
    - [ ] Expandir testes visuais para todos componentes UI
-   - [ ] Consolidar tokens de design em uma única fonte de verdade
-   - [ ] Eliminar duplicação entre `tokens.ts` e `design-tokens.js`
-   - [ ] Padronizar uso de classes CSS (utilitárias vs. componentes)
-   - [ ] Estabelecer convenções claras para breakpoints responsivos
-   - [ ] Remover media queries customizadas em favor de classes Tailwind
+   - [x] Consolidar tokens de design em uma única fonte de verdade
+   - [x] Eliminar duplicação entre `tokens.ts` e `design-tokens.js`
+   - [x] Padronizar uso de classes CSS (utilitárias vs. componentes)
+   - [x] Estabelecer convenções claras para breakpoints responsivos
+   - [x] Remover media queries customizadas em favor de classes Tailwind
 
 3. **Melhorar Performance**
    - [x] Otimizar carregamento de imagens com width/height e lazy loading

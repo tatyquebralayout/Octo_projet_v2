@@ -1,4 +1,8 @@
-/* OCTO Design System */
+/* OCTO Design System - Classes de Componentes
+   Este arquivo define classes reutilizáveis baseadas nos tokens de design.
+   Use estas classes para padrões de UI recorrentes.
+   Para casos específicos, use classes utilitárias do Tailwind.
+*/
 
 @layer base {
   /* Typography Scale */
@@ -7,33 +11,27 @@
   .text-h2,
   .text-h3,
   .text-h4 {
-    font-weight: 700;
-    color: rgb(17, 24, 39);
+    @apply font-bold text-gray-800;
   }
 
   .text-display {
-    font-size: 44px;
-    line-height: 1.2;
+    @apply text-4xl leading-tight;
   }
 
   .text-h1 {
-    font-size: 30px;
-    line-height: 1.25;
+    @apply text-3xl leading-tight;
   }
 
   .text-h2 {
-    font-size: 24px;
-    line-height: 1.25;
+    @apply text-2xl leading-tight;
   }
 
   .text-h3 {
-    font-size: 20px;
-    line-height: 1.25;
+    @apply text-xl leading-tight;
   }
 
   .text-h4 {
-    font-size: 18px;
-    line-height: 1.25;
+    @apply text-lg leading-tight;
   }
 
   /* Body Text */
@@ -41,39 +39,33 @@
   .text-body,
   .text-body-small,
   .text-caption {
-    color: rgb(55, 65, 81);
+    @apply text-gray-700;
   }
 
   .text-body-large {
-    font-size: 18px;
-    line-height: 1.75;
+    @apply text-lg leading-relaxed;
   }
 
   .text-body {
-    font-size: 16px;
-    line-height: 1.5;
+    @apply text-base leading-normal;
   }
 
   .text-body-small {
-    font-size: 14px;
-    line-height: 1.5;
-    color: rgb(75, 85, 99);
+    @apply text-sm leading-normal text-gray-600;
   }
 
   .text-caption {
-    font-size: 12px;
-    line-height: 1.5;
-    color: rgb(107, 114, 128);
+    @apply text-xs leading-normal text-gray-500;
   }
 
   /* Links */
   .text-link {
-    @apply text-primary hover:text-accent transition-colors duration-200;
+    @apply text-primary-400 hover:text-accent-400 transition-colors duration-normal;
   }
 
   /* Emphasis */
   .text-emphasis {
-    @apply font-medium text-gray-900;
+    @apply font-medium text-gray-800;
   }
 
   /* Muted */
@@ -85,111 +77,104 @@
 @layer components {
   /* Cards */
   .card {
-    @apply bg-white rounded-lg shadow-md transition-all duration-300;
+    @apply bg-white rounded-lg shadow-md transition-all duration-normal;
   }
 
   .card-primary {
-    @apply card p-12 rounded-2xl shadow-lg;
+    @apply card p-6 sm:p-8 lg:p-12 rounded-xl shadow-lg;
   }
 
   .card-secondary {
-    @apply card p-6 rounded-lg hover:shadow-lg;
+    @apply card p-4 sm:p-6 rounded-lg hover:shadow-lg;
   }
 
   .card-accent {
-    @apply card p-12 rounded-2xl bg-primary text-white;
+    @apply card p-6 sm:p-8 lg:p-12 rounded-xl bg-primary-400 text-white;
   }
 
   /* Buttons */
   .btn {
-    @apply inline-flex items-center px-8 py-3 rounded-full font-medium shadow-md 
-    transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0;
+    @apply inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full font-medium shadow-md 
+    transition-all duration-normal transform hover:-translate-y-1 active:translate-y-0
+    focus:outline-none focus:ring-2 focus:ring-offset-2;
   }
 
   .btn-primary {
-    @apply btn bg-primary text-white hover:bg-accent hover:shadow-lg;
+    @apply btn bg-primary-400 text-white hover:bg-primary-500 hover:shadow-lg focus:ring-primary-400;
   }
 
   .btn-secondary {
-    @apply btn bg-white text-primary hover:bg-accent hover:text-white hover:shadow-lg;
+    @apply btn bg-white text-primary-400 hover:bg-accent-400 hover:text-white hover:shadow-lg focus:ring-accent-400;
   }
 
   .btn-outline {
-    @apply btn border-2 border-white text-white hover:bg-white hover:text-primary;
+    @apply btn border-2 border-white text-white hover:bg-white hover:text-primary-400 focus:ring-white;
   }
 
   /* Icons */
   .icon-container {
-    @apply w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center 
-    transition-colors duration-300 group-hover:bg-accent;
+    @apply w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center 
+    transition-colors duration-normal group-hover:bg-accent-400;
   }
 
   .icon {
-    @apply w-5 h-5 text-primary transition-colors duration-300 group-hover:text-white;
+    @apply w-5 h-5 text-primary-400 transition-colors duration-normal group-hover:text-white;
   }
 
   /* Sections */
   .section-hero {
-    @apply relative min-h-[80vh] flex items-center overflow-hidden bg-primary;
+    @apply relative min-h-[80vh] flex items-center overflow-hidden bg-primary-400;
   }
 
   .section-content {
-    @apply py-24;
+    @apply py-12 sm:py-16 lg:py-24;
   }
 
   /* Container */
   .container-narrow {
-    @apply max-w-3xl mx-auto;
+    @apply max-w-3xl mx-auto px-4 sm:px-6;
   }
 
   /* Links */
   .link-primary {
-    @apply text-primary hover:text-accent transition-colors duration-200;
+    @apply text-primary-400 hover:text-accent-400 transition-colors duration-normal;
   }
 
   .link-white {
-    @apply text-white hover:text-accent transition-colors duration-200;
+    @apply text-white hover:text-accent-400 transition-colors duration-normal;
+  }
+
+  /* Form Elements */
+  .input-field {
+    @apply block w-full p-2 sm:p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-primary-400;
+  }
+
+  .form-group {
+    @apply mb-4;
+  }
+
+  .form-label {
+    @apply block text-body-small font-medium mb-1;
   }
 }
 
 @layer utilities {
-  /* Colors */
-  .bg-primary {
-    @apply bg-[#972ae6];
-  }
-
-  .bg-accent {
-    @apply bg-[#e8b624];
-  }
-
-  .text-primary {
-    @apply text-[#972ae6];
-  }
-
-  .text-accent {
-    @apply text-[#e8b624];
-  }
-
-  .text-primary-light {
-    @apply text-[#972ae6]/70;
-  }
-
   /* Elevations (Material Design 3) */
   .md3-elevation-1 {
-    @apply shadow-md;
+    @apply shadow-md3-1;
   }
 
   .md3-elevation-2 {
-    @apply shadow-lg;
+    @apply shadow-md3-2;
   }
 
   .md3-elevation-3 {
-    @apply shadow-xl;
+    @apply shadow-md3-3;
   }
 
   /* Transitions */
   .transition-standard {
-    @apply transition-all duration-300;
+    @apply transition-all duration-normal;
   }
 
   /* Hover Effects */
@@ -198,6 +183,6 @@
   }
 
   .hover-accent {
-    @apply hover:text-accent;
+    @apply hover:text-accent-400;
   }
 }
