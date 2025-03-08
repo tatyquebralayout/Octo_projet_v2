@@ -1,5 +1,4 @@
 import { cn } from '../cn';
-import { transitions } from '../../foundations/tokens';
 
 export type AnimationName = 'fadeIn' | 'slideIn' | 'float' | 'pulse' | 'spin';
 export type AnimationDuration = 'fast' | 'normal' | 'slow' | 'custom';
@@ -108,16 +107,13 @@ export function getAnimation(name: AnimationName, options: AnimationOptions = {}
     infinite = false
   } = options;
 
-  const durationValue = duration === 'custom' 
-    ? '200ms'
-    : transitions.duration[duration];
-
-  const timingValue = transitions.timing[timing];
-  
+  // Aplicando a duração e timing nas classes CSS
   return cn(
     animations[name].className,
     delay > 0 && `delay-[${delay}ms]`,
-    infinite && 'infinite'
+    infinite && 'infinite',
+    duration !== 'normal' && `duration-${duration}`,
+    timing !== 'default' && `ease-${timing}`
   );
 }
 

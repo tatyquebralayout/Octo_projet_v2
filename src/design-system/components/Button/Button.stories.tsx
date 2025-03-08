@@ -1,10 +1,13 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
 
-export default {
+const meta = {
   title: 'Design System/Components/Button',
   component: Button,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       options: ['primary', 'secondary', 'outline', 'ghost', 'link'],
@@ -25,19 +28,19 @@ export default {
       },
     },
     fullWidth: {
-      control: { type: 'boolean' },
-      description: 'Se o botão deve ocupar a largura total do container',
+      control: 'boolean',
+      description: 'Se o botão deve ocupar toda a largura disponível',
       table: {
         type: { summary: 'boolean' },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     disabled: {
-      control: { type: 'boolean' },
-      description: 'Se o botão está desabilitado',
+      control: 'boolean',
+      description: 'Estado desabilitado do botão',
       table: {
         type: { summary: 'boolean' },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     leftIcon: {
@@ -50,100 +53,112 @@ export default {
     },
     onClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof Button>;
+} satisfies Meta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  variant: 'primary',
-  children: 'Botão Primário',
+export const Primary: Story = {
+  args: {
+    variant: 'primary',
+    children: 'Botão Primário',
+  }
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  variant: 'secondary',
-  children: 'Botão Secundário',
+export const Secondary: Story = {
+  args: {
+    variant: 'secondary',
+    children: 'Botão Secundário',
+  }
 };
 
-export const Outline = Template.bind({});
-Outline.args = {
-  variant: 'outline',
-  children: 'Botão Outline',
+export const Outline: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Botão Outline',
+  }
 };
 
-export const Ghost = Template.bind({});
-Ghost.args = {
-  variant: 'ghost',
-  children: 'Botão Ghost',
+export const Ghost: Story = {
+  args: {
+    variant: 'ghost',
+    children: 'Botão Ghost',
+  }
 };
 
-export const Link = Template.bind({});
-Link.args = {
-  variant: 'link',
-  children: 'Botão Link',
+export const Link: Story = {
+  args: {
+    variant: 'link',
+    children: 'Botão Link',
+  }
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'sm',
-  children: 'Botão Pequeno',
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    children: 'Botão Pequeno',
+  }
 };
 
-export const Medium = Template.bind({});
-Medium.args = {
-  size: 'md',
-  children: 'Botão Médio',
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    children: 'Botão Médio',
+  }
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  size: 'lg',
-  children: 'Botão Grande',
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    children: 'Botão Grande',
+  }
 };
 
-export const FullWidth = Template.bind({});
-FullWidth.args = {
-  fullWidth: true,
-  children: 'Botão de Largura Total',
+export const FullWidth: Story = {
+  args: {
+    fullWidth: true,
+    children: 'Botão de Largura Total',
+  }
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true,
-  children: 'Botão Desabilitado',
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    children: 'Botão Desabilitado',
+  }
 };
 
-export const WithIcons = Template.bind({});
-WithIcons.args = {
-  leftIcon: <span>←</span>,
-  rightIcon: <span>→</span>,
-  children: 'Com Ícones',
+export const WithIcons: Story = {
+  args: {
+    children: (
+      <>
+        <span>Ícone</span>
+        <span>Texto</span>
+      </>
+    ),
+  }
 };
 
-// História com todas as variantes (visualização em grid)
-export const AllVariants = () => (
-  <div className="grid grid-cols-3 gap-4">
+// História com todas as variantes
+export const AllVariants: Story = {
+  render: () => (
     <div className="flex flex-col space-y-4">
-      <h3 className="text-h3">Primary</h3>
-      <Button variant="primary" size="sm">Small</Button>
-      <Button variant="primary" size="md">Medium</Button>
-      <Button variant="primary" size="lg">Large</Button>
-      <Button variant="primary" disabled>Disabled</Button>
+      <div className="flex space-x-4">
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="link">Link</Button>
+      </div>
+      <div className="flex space-x-4">
+        <Button size="sm">Small</Button>
+        <Button size="md">Medium</Button>
+        <Button size="lg">Large</Button>
+      </div>
+      <div className="flex space-x-4">
+        <Button disabled>Disabled</Button>
+        <Button fullWidth>Full Width</Button>
+      </div>
     </div>
-    <div className="flex flex-col space-y-4">
-      <h3 className="text-h3">Secondary</h3>
-      <Button variant="secondary" size="sm">Small</Button>
-      <Button variant="secondary" size="md">Medium</Button>
-      <Button variant="secondary" size="lg">Large</Button>
-      <Button variant="secondary" disabled>Disabled</Button>
-    </div>
-    <div className="flex flex-col space-y-4">
-      <h3 className="text-h3">Outline</h3>
-      <Button variant="outline" size="sm">Small</Button>
-      <Button variant="outline" size="md">Medium</Button>
-      <Button variant="outline" size="lg">Large</Button>
-      <Button variant="outline" disabled>Disabled</Button>
-    </div>
-  </div>
-); 
+  )
+}; 

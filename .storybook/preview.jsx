@@ -1,7 +1,6 @@
 import React from 'react';
 import '../src/index.postcss';
 
-/** @type { import('@storybook/react').Preview } */
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -11,6 +10,7 @@ const preview = {
         date: /Date$/,
       },
     },
+    layout: 'centered',
     backgrounds: {
       default: 'light',
       values: [
@@ -52,7 +52,6 @@ export const globalTypes = {
         { value: 'light', icon: 'circlehollow', title: 'Light' },
         { value: 'dark', icon: 'circle', title: 'Dark' },
       ],
-      showName: true,
     },
   },
-}; 
+};

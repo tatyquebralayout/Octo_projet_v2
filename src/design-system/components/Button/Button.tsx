@@ -38,7 +38,7 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps 
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>,
     VariantProps<typeof buttonVariants> {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -60,7 +60,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         className={cn(buttonVariants({ variant, size, fullWidth, disabled }), className)}
         ref={ref}
-        disabled={disabled}
+        disabled={disabled === true ? true : undefined}
         {...props}
       >
         {leftIcon && <span className="mr-2">{leftIcon}</span>}
