@@ -145,11 +145,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled || loading}
             required={required}
             className={cn(
-              'block w-full rounded-md border-0 shadow-sm',
-              'focus:ring-2 focus:ring-inset focus:outline-none',
-              hasError 
-                ? 'border-error text-error focus:ring-error/50' 
-                : 'border-gray-300 focus:ring-primary-400/50',
+              'input-field',
+              hasError ? 'border-error text-error focus:ring-error/50' : '',
               disabled && 'bg-gray-100 text-gray-500 cursor-not-allowed',
               sizeClasses[size],
               leftIcon && iconPadding.left[size],

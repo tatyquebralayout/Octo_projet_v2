@@ -71,20 +71,20 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
     disabled = false;
   }
 
-  // Classes base para todos os botões
+  // Classes base usando a classe .btn do Design System
   const baseClasses = cn(
-    'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
+    'btn',
     {
       'w-full': fullWidth,
       'opacity-50 cursor-not-allowed': isLoading || disabled,
     }
   );
 
-  // Classes específicas para cada variante
+  // Classes específicas para cada variante usando as classes do Design System
   const variantClasses = {
-    primary: 'bg-primary-400 text-white hover:bg-primary-500 focus:ring-primary-400',
-    secondary: 'bg-secondary-400 text-white hover:bg-secondary-500 focus:ring-secondary-400',
-    outline: 'bg-transparent border border-primary-400 text-primary-400 hover:bg-primary-50 focus:ring-primary-400',
+    primary: 'btn-primary',
+    secondary: 'btn-secondary',
+    outline: 'btn-outline',
     ghost: 'bg-transparent text-primary-400 hover:bg-primary-50 focus:ring-primary-400',
   }[variant];
 

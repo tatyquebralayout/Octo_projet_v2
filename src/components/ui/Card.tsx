@@ -14,22 +14,22 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ children, variant = 'primary', size = 'md', elevation = 1, withHoverEffect = false, className = '', ...props }, ref) => {
-    // Classes base para todos os cards
+    // Classes base usando a classe .card do Design System
     const baseClasses = cn(
-      'rounded-xl overflow-hidden transition-all duration-300',
+      'card',
       {
-        'transform hover:-translate-y-1 hover:md3-elevation-2': withHoverEffect,
+        'hover-lift': withHoverEffect,
       }
     );
 
-    // Classes específicas para cada variante
+    // Classes específicas para cada variante usando as classes do Design System
     const variantClasses = {
-      primary: 'bg-white border border-gray-200',
-      secondary: 'bg-gray-50 border border-gray-200',
-      accent: 'bg-primary-50 border border-primary-100',
+      primary: variant === 'primary' ? 'card-primary' : '',
+      secondary: variant === 'secondary' ? 'card-secondary' : '',
+      accent: variant === 'accent' ? 'card-accent' : '',
     }[variant];
 
-    // Classes para elevação
+    // Classes para elevação usando as classes do Design System
     const elevationClasses = {
       1: 'md3-elevation-1',
       2: 'md3-elevation-2',

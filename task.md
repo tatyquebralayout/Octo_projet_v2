@@ -225,9 +225,9 @@
    - [ ] Refinar simulação de erros para testar todos os cenários
 
 6. Migração do Design System - Finalização
-   - [ ] Migrar componentes base (Button, Card, Input) para as novas classes
-   - [ ] Atualizar referências de cores para usar tokens padronizados
-   - [ ] Converter tipografia para as novas classes semânticas
+   - [x] Migrar componentes base (Button, Card, Input) para as novas classes
+   - [x] Atualizar referências de cores para usar tokens padronizados
+   - [x] Converter tipografia para as novas classes semânticas
 
 ## Tarefas Pendentes 🚧
 
@@ -262,9 +262,9 @@
 
 2. **Migração Completa do Design System**
    - **Alta Prioridade**
-     - [ ] Migrar componentes base (Button, Card, Input) para as novas classes
-     - [ ] Atualizar referências de cores para usar tokens padronizados
-     - [ ] Converter tipografia para as novas classes semânticas
+     - [x] Migrar componentes base (Button, Card, Input) para as novas classes
+     - [x] Atualizar referências de cores para usar tokens padronizados
+     - [x] Converter tipografia para as novas classes semânticas
    - **Média Prioridade**
      - [ ] Migrar animações para usar as classes padronizadas
      - [ ] Refatorar layouts de página para usar grid responsivo padronizado
