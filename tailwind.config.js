@@ -34,6 +34,14 @@ export default {
       },
       transitionTimingFunction: {
         'ease-in-out': 'ease-in-out',
+        'swift-out': 'cubic-bezier(0.55, 0, 0.1, 1)',
+        'bounce-out': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+        'elastic': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        'decelerate': 'cubic-bezier(0, 0, 0.2, 1)',
+        'accelerate': 'cubic-bezier(0.4, 0, 1, 1)',
+        'entrance': 'cubic-bezier(0, 0, 0.2, 1.4)',
+        'exit': 'cubic-bezier(0.4, -0.05, 1, 0.1)',
+        'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)'
       },
       // Animações
       keyframes: {
@@ -48,6 +56,35 @@ export default {
         fadeIn: {
           from: { opacity: '0' },
           to: { opacity: '1' },
+        },
+        scaleIn: {
+          from: { opacity: '0', transform: 'scale(0.8)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
+        scaleOut: {
+          from: { opacity: '1', transform: 'scale(1)' },
+          to: { opacity: '0', transform: 'scale(0.8)' },
+        },
+        flipIn: {
+          from: { opacity: '0', transform: 'perspective(400px) rotateX(90deg)' },
+          to: { opacity: '1', transform: 'perspective(400px) rotateX(0deg)' },
+        },
+        flipOut: {
+          from: { opacity: '1', transform: 'perspective(400px) rotateX(0deg)' },
+          to: { opacity: '0', transform: 'perspective(400px) rotateX(90deg)' },
+        },
+        slideInLeft: {
+          from: { opacity: '0', transform: 'translateX(-1rem)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInRight: {
+          from: { opacity: '0', transform: 'translateX(1rem)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
+        bounce: {
+          '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
+          '40%': { transform: 'translateY(-20px)' },
+          '60%': { transform: 'translateY(-10px)' },
         },
       },
       animation: tokens.animation,

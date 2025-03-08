@@ -1,0 +1,87 @@
+/**
+ * Estilos específicos para usuários com preferência por movimento reduzido
+ * Estes estilos serão aplicados quando:
+ * 1. O usuário tiver a preferência de sistema (prefers-reduced-motion: reduce)
+ * 2. O usuário tiver ativado a opção de movimento reduzido na aplicação
+ */
+
+/* Aplicar quando a preferência do sistema for por movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  /* Remover todas as animações e transições, exceto quando a preferência for explicitamente definida como false */
+  *:not([data-force-animation="true"]) {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Desativar animações específicas */
+  .animate-float,
+  .animate-pulse,
+  .animate-spin,
+  .animate-bounce {
+    animation: none !important;
+  }
+  
+  /* Simplificar efeitos de hover */
+  .hover-lift,
+  .hover-grow,
+  .hover-float,
+  .hover-bounce {
+    transition: none !important;
+    &:hover {
+      transform: none !important;
+    }
+  }
+  
+  /* Manter apenas transições essenciais para feedback de interação */
+  .transition-colors {
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.1s !important;
+    transition-timing-function: ease-in-out !important;
+  }
+}
+
+/* Aplicar quando o usuário tiver definido explicitamente a preferência na aplicação */
+[data-reduce-motion="true"] {
+  /* Remover todas as animações e transições */
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Desativar animações específicas */
+  .animate-float,
+  .animate-pulse,
+  .animate-spin,
+  .animate-bounce {
+    animation: none !important;
+  }
+  
+  /* Simplificar efeitos de hover */
+  .hover-lift,
+  .hover-grow,
+  .hover-float,
+  .hover-bounce {
+    transition: none !important;
+    &:hover {
+      transform: none !important;
+    }
+  }
+  
+  /* Manter apenas transições essenciais para feedback de interação */
+  .transition-colors {
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.1s !important;
+    transition-timing-function: ease-in-out !important;
+  }
+}
+
+/* Forçar animações mesmo quando a preferência for por movimento reduzido */
+[data-force-animation="true"] {
+  animation-duration: inherit !important;
+  animation-iteration-count: inherit !important;
+  transition-duration: inherit !important;
+} 

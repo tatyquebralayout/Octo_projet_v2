@@ -1,0 +1,21 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Importar estilos do tema */
+@import './theme.css';
+
+/* Importar estilos do design system */
+@import './design-system.css';
+
+/* Importar estilos para movimento reduzido */
+@import './reduced-motion.css';
+
+/* Estilos globais */
+html, body {
+  font-family: var(--font-family-sans);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+}
+
+/* Outras importações e estilos globais... */ 

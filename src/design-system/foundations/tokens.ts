@@ -298,7 +298,16 @@ export const transitions = {
     default: 'ease-in-out',
     linear: 'linear',
     in: 'ease-in',
-    out: 'ease-out'
+    out: 'ease-out',
+    // Novas curvas de easing mais sofisticadas
+    'swift-out': 'cubic-bezier(0.55, 0, 0.1, 1)',
+    'bounce-out': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    'elastic': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+    'decelerate': 'cubic-bezier(0, 0, 0.2, 1)',
+    'accelerate': 'cubic-bezier(0.4, 0, 1, 1)',
+    'entrance': 'cubic-bezier(0, 0, 0.2, 1.4)',
+    'exit': 'cubic-bezier(0.4, -0.05, 1, 0.1)',
+    'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)'
   }
 };
 

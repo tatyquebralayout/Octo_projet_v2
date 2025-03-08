@@ -30,6 +30,10 @@ export interface UserPreferences {
   notifications?: boolean;
   newsletter?: boolean;
   language?: string;
+  reduceMotion?: boolean | 'system';
+  highContrast?: boolean;
+  textSize?: 'normal' | 'large' | 'x-large';
+  animationSpeed?: 'normal' | 'slow' | 'none';
 }
 
 // Papéis de usuário no sistema

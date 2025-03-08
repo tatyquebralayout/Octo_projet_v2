@@ -135,6 +135,13 @@ export interface AnimationSystem {
   float: string;
   slideIn: string;
   fadeIn: string;
+  scaleIn: string;
+  scaleOut: string;
+  flipIn: string;
+  flipOut: string;
+  slideInLeft: string;
+  slideInRight: string;
+  bounce: string;
 }
 
 export interface ZIndexSystem {
@@ -396,6 +403,13 @@ export const tokens: DesignTokens = {
     float: 'float 3s ease-in-out infinite',
     slideIn: 'slideIn 0.3s ease-out forwards',
     fadeIn: 'fadeIn 0.3s ease-out forwards',
+    scaleIn: 'scaleIn 0.3s cubic-bezier(0,0,0.2,1.4) forwards',
+    scaleOut: 'scaleOut 0.2s cubic-bezier(0.4,0,1,1) forwards',
+    flipIn: 'flipIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards',
+    flipOut: 'flipOut 0.3s cubic-bezier(0.4,0,1,1) forwards',
+    slideInLeft: 'slideInLeft 0.3s cubic-bezier(0,0,0.2,1) forwards',
+    slideInRight: 'slideInRight 0.3s cubic-bezier(0,0,0.2,1) forwards',
+    bounce: 'bounce 0.8s cubic-bezier(0.34,1.56,0.64,1)',
   },
   
   zIndex: {
