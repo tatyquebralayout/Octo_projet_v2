@@ -1,52 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { apiService } from '../services/api';
 import { Guide } from '../services/api/types';
 import { ENDPOINTS } from '../services/api/config';
 import { useNotifications } from '../services/notifications';
 import { NotificationType } from '../services/notifications/types';
 import { formatDate } from '../utils/formatters';
 import { Loading, Error } from '../design-system/components/ui';
+import { useDataFetching } from '../hooks';
 
 const CartilhaDetalhe = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { showToast } = useNotifications();
-  
-  const [guide, setGuide] = useState<Guide | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
   
-  // Buscar detalhes da cartilha
-  useEffect(() => {
-    const fetchGuide = async () => {
-      if (!id) return;
-      
-      try {
-        setIsLoading(true);
-        const response = await apiService.get<Guide>(`${ENDPOINTS.RESOURCES.GUIDES}/${id}`);
-        
-        if (response.success && response.data) {
-          setGuide(response.data);
-        } else {
-          throw new Error(response.message || 'Erro ao carregar cartilha');
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Erro desconhecido'));
-        showToast({
-          title: 'Erro ao carregar cartilha',
-          message: err instanceof Error ? err.message : 'Erro desconhecido',
-          type: NotificationType.ERROR,
-          autoClose: true
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchGuide();
-  }, [id, showToast]);
+  // Usar o hook useDataFetching para buscar os detalhes da cartilha
+  const { 
+    data: guide, 
+    isLoading, 
+    error 
+  } = useDataFetching<Guide>({
+    endpoint: `${ENDPOINTS.RESOURCES.GUIDES}/${id}`,
+    method: 'GET',
+    autoFetch: !!id,
+    useCache: true,
+    retry: true,
+    showErrorNotification: true,
+    errorTitle: 'Erro ao carregar cartilha',
+    errorMessage: 'Não foi possível carregar os detalhes da cartilha solicitada.'
+  });
   
   // Iniciar download da cartilha
   const handleDownload = async () => {
@@ -54,26 +36,41 @@ const CartilhaDetalhe = () => {
     
     try {
       setIsDownloading(true);
-      const response = await apiService.get<{ downloadUrl: string }>(`${ENDPOINTS.RESOURCES.GUIDES}/${id}/download`);
       
-      if (response.success && response.data) {
-        // Em um ambiente real, isso redirecionaria para o URL de download
-        // ou abriria em uma nova aba
-        window.open(response.data.downloadUrl, '_blank');
-        
-        showToast({
-          title: 'Download iniciado',
-          message: 'O download da cartilha foi iniciado com sucesso.',
-          type: NotificationType.SUCCESS,
-          autoClose: true
-        });
-      } else {
-        throw new Error(response.message || 'Erro ao iniciar download');
-      }
+      // Criar uma instância do hook para o download
+      const downloadHook = useDataFetching<{ downloadUrl: string }>({
+        endpoint: `${ENDPOINTS.RESOURCES.GUIDES}/${id}/download`,
+        method: 'GET',
+        autoFetch: false, // Não buscar automaticamente
+        showSuccessNotification: true,
+        successTitle: 'Download iniciado',
+        successMessage: 'O download da cartilha foi iniciado com sucesso.',
+        // Adicionar onSuccess para abrir a URL em uma nova aba
+        onSuccess: (data) => {
+          if (data && data.downloadUrl) {
+            window.open(data.downloadUrl, '_blank');
+          }
+        },
+        // Adicionar onError para tratar erros
+        onError: (error) => {
+          showToast({
+            title: 'Erro ao baixar cartilha',
+            message: error.message || 'Erro desconhecido ao baixar a cartilha',
+            type: NotificationType.ERROR,
+            autoClose: true
+          });
+        }
+      });
+      
+      // Executar a busca
+      await downloadHook.fetchData();
     } catch (err) {
+      // Tratar erros não capturados pelo hook
+      const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido ao baixar a cartilha';
+      
       showToast({
         title: 'Erro ao baixar cartilha',
-        message: err instanceof Error ? err.message : 'Erro desconhecido',
+        message: errorMessage,
         type: NotificationType.ERROR,
         autoClose: true
       });
@@ -202,7 +199,10 @@ const CartilhaDetalhe = () => {
             className="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors flex items-center disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isDownloading ? (
-              <Loading size="sm" variant="spinner" className="ml-2" />
+              <>
+                <Loading size="sm" variant="spinner" className="mr-2" />
+                Baixando...
+              </>
             ) : (
               <>
                 <span className="mr-2">📥</span>

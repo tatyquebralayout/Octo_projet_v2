@@ -228,4 +228,33 @@ export function formatCEP(cep: string): string {
   
   // Retorna o valor original se não conseguir formatar
   return cep;
+}
+
+/**
+ * Formata o valor de uma métrica de performance web
+ * 
+ * @param metric - Nome da métrica (CLS, LCP, FID, FCP, TTFB, etc.)
+ * @param value - Valor da métrica
+ * @param showUnknown - Se deve mostrar '-' para valores desconhecidos (default: true)
+ * @returns Valor formatado da métrica
+ * 
+ * @example
+ * formatMetricValue('LCP', 2500) // '2500ms'
+ * formatMetricValue('CLS', 0.123) // '0.123'
+ */
+export function formatMetricValue(metric: string, value: number, showUnknown: boolean = true): string {
+  if (value < 0) return showUnknown ? '-' : 'N/A';
+  
+  switch (metric) {
+    case 'CLS': // Cumulative Layout Shift
+      return roundNumber(value, 3).toFixed(3);
+    case 'LCP': // Largest Contentful Paint
+    case 'FID': // First Input Delay
+    case 'FCP': // First Contentful Paint
+    case 'TTFB': // Time to First Byte
+    case 'INP': // Interaction to Next Paint
+      return `${Math.round(value)}ms`;
+    default:
+      return value.toString();
+  }
 } 

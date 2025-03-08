@@ -1224,7 +1224,7 @@ src/
    - [ ] Utilitários Redundantes:
      - [✅] Consolidar hooks de fetch de dados em `useDataFetching`
      - [✅] Criar biblioteca centralizada para funções de formatação
-     - [ ] Migrar componentes para usar utilitários centralizados
+     - [✅] Migrar componentes para usar utilitários centralizados
    - [ ] Configurações Conflitantes:
      - [✅] Unificar definições de tema em uma única fonte
      - [✅] Consolidar configurações de ESLint

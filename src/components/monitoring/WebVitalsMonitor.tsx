@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getWebVitalsValues, getMonitoringStatus, MonitoringStatus } from '../../utils/monitoring';
+import { Loading } from '../../design-system/components/ui';
+
+// Adicionar importação dos utilitários de formatação
+import { formatNumber, roundNumber, formatMetricValue } from '../../utils/formatters';
 
 interface WebVitalsMonitorProps {
   /** Mostrar estado dos serviços de monitoramento */
@@ -79,23 +83,6 @@ const WebVitalsMonitor: React.FC<WebVitalsMonitorProps> = ({
     }
   };
   
-  // Formata o valor da métrica para exibição
-  const formatMetricValue = (metric: string, value: number): string => {
-    if (value < 0) return showUnknown ? '-' : 'N/A';
-    
-    switch (metric) {
-      case 'CLS':
-        return value.toFixed(3);
-      case 'LCP':
-      case 'FID':
-      case 'FCP':
-      case 'TTFB':
-        return `${Math.round(value)}ms`;
-      default:
-        return value.toString();
-    }
-  };
-  
   // Retorna o nome completo da métrica
   const getMetricName = (metric: string): string => {
     switch (metric) {
@@ -128,7 +115,12 @@ const WebVitalsMonitor: React.FC<WebVitalsMonitorProps> = ({
           disabled={loading}
           className="btn-sm btn-primary"
         >
-          {loading ? 'Atualizando...' : 'Atualizar'}
+          {loading ? (
+            <span className="flex items-center">
+              <Loading size="sm" variant="spinner" className="mr-1" />
+              Atualizando...
+            </span>
+          ) : 'Atualizar'}
         </button>
       </div>
       
@@ -175,7 +167,7 @@ const WebVitalsMonitor: React.FC<WebVitalsMonitorProps> = ({
                   {metric}
                 </td>
                 <td>
-                  {formatMetricValue(metric, value)}
+                  {formatMetricValue(metric, value, showUnknown)}
                 </td>
                 <td>
                   <span className={`status-indicator ${rating}`}></span>
@@ -194,118 +186,46 @@ const WebVitalsMonitor: React.FC<WebVitalsMonitorProps> = ({
         <div className="legend-item poor">Ruim</div>
       </div>
       
-      <style jsx>{`
-        .web-vitals-monitor {
-          border: 1px solid var(--color-border, #e2e8f0);
-          border-radius: 8px;
-          padding: 16px;
-          background-color: var(--color-surface, white);
-          max-width: 600px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        
-        .web-vitals-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 16px;
-        }
-        
-        .web-vitals-services {
-          display: flex;
-          gap: 16px;
-          margin-bottom: 12px;
-          flex-wrap: wrap;
-          font-size: 0.85rem;
-          padding: 8px;
-          background-color: var(--color-surface-variant, #f8fafc);
-          border-radius: 6px;
-        }
-        
-        .service-status {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-        
-        .service-label {
-          font-weight: 500;
-        }
-        
-        .web-vitals-table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-bottom: 16px;
-        }
-        
-        .web-vitals-table th, 
-        .web-vitals-table td {
-          padding: 8px 12px;
-          text-align: left;
-          border-bottom: 1px solid var(--color-border-light, #f1f5f9);
-        }
-        
-        .web-vitals-table th {
-          font-weight: 600;
-          background-color: var(--color-surface-variant, #f8fafc);
-        }
-        
-        .status-indicator {
-          display: inline-block;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          margin-right: 6px;
-        }
-        
-        .good .status-indicator {
-          background-color: var(--color-success, #10b981);
-        }
-        
-        .needs-improvement .status-indicator {
-          background-color: var(--color-warning, #f59e0b);
-        }
-        
-        .poor .status-indicator {
-          background-color: var(--color-error, #ef4444);
-        }
-        
-        .unknown .status-indicator {
-          background-color: var(--color-disabled, #94a3b8);
-        }
-        
-        .web-vitals-legend {
-          display: flex;
-          gap: 16px;
-          font-size: 0.75rem;
-        }
-        
-        .legend-item {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-        
-        .legend-item::before {
-          content: '';
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-        }
-        
-        .legend-item.good::before {
-          background-color: var(--color-success, #10b981);
-        }
-        
-        .legend-item.needs-improvement::before {
-          background-color: var(--color-warning, #f59e0b);
-        }
-        
-        .legend-item.poor::before {
-          background-color: var(--color-error, #ef4444);
-        }
-      `}</style>
+      {/* Estilos internos */}
+      <style>
+        {`
+          .metric-value {
+            font-variant-numeric: tabular-nums;
+          }
+          
+          .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+          }
+          
+          .status-indicator.status-active {
+            background-color: var(--color-success, #22c55e);
+          }
+          
+          .status-indicator.status-inactive {
+            background-color: var(--color-warning, #f59e0b);
+          }
+          
+          .status-indicator.status-error {
+            background-color: var(--color-error, #ef4444);
+          }
+          
+          .rating-good {
+            color: var(--color-success, #22c55e);
+          }
+          
+          .rating-needs-improvement {
+            color: var(--color-warning, #f59e0b);
+          }
+          
+          .rating-poor {
+            color: var(--color-error, #ef4444);
+          }
+        `}
+      </style>
     </div>
   );
 };
