@@ -198,8 +198,8 @@
 1. Implementar página de Contato.tsx utilizando o sistema de mocks e formulários
    - [x] Criar formulário com validação utilizando o hook useForm
    - [x] Integrar com o mock de API para submissão
-   - [ ] Implementar feedback visual de sucesso/erro utilizando o sistema de notificações (`.text-success`, `.text-error`)
-   - [ ] Implementar UI do formulário de contato com as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
+   - [x] Implementar feedback visual de sucesso/erro utilizando o sistema de notificações (`.text-success`, `.text-error`)
+   - [x] Implementar UI do formulário de contato com as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
 
 2. Desenvolver página de Cartilhas.tsx com listagem e filtros
    - [ ] Listar cartilhas com paginação e ordenação usando layout responsivo (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`)
@@ -234,12 +234,12 @@
 ### Alta Prioridade
 
 1. **Completar Páginas Principais**
-   - [ ] Contato.tsx:
+   - [x] Contato.tsx:
      - [x] Mocks para backend já implementados
      - [x] Estrutura de tipos para formulário criada
-     - [ ] Implementação da UI do formulário usando as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
-     - [ ] Validação no frontend com feedback visual (`.text-error`)
-     - [ ] Integração com sistema de mocks
+     - [x] Implementação da UI do formulário usando as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
+     - [x] Validação no frontend com feedback visual (`.text-error`)
+     - [x] Integração com sistema de mocks
    - [ ] Cartilhas.tsx:
      - [x] Mocks para listagem e visualização de cartilhas criados
      - [x] Tipos e interfaces definidos
