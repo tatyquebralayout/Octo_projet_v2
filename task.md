@@ -418,24 +418,24 @@
        - [ ] Validar a estrutura de props e tipos TypeScript em todos os componentes
        - [ ] Identificar e corrigir inconsistências na aplicação do Design System
        - [ ] Documentar exceções e casos especiais com justificativas
-     - [ ] Verificar responsividade em todos os breakpoints
-       - [ ] Testar componentes nos breakpoints: sm, md, lg, xl, 2xl
-       - [ ] Validar layouts de página em dispositivos móveis e desktops
-       - [ ] Verificar comportamento responsivo de grids e flexbox
-       - [ ] Testar orientações landscape e portrait em dispositivos móveis
-       - [ ] Validar comportamento em telas muito grandes (4K+)
-     - [ ] Confirmar compatibilidade cross-browser
-       - [ ] Testar em Chrome, Firefox, Safari e Edge
-       - [ ] Verificar comportamento em navegadores móveis (iOS Safari, Chrome Android)
-       - [ ] Validar animações e transições em todos os navegadores suportados
-       - [ ] Identificar e corrigir problemas de renderização específicos por navegador
-       - [ ] Documentar fallbacks para recursos não suportados universalmente
-     - [ ] Validar acessibilidade das novas implementações
-       - [ ] Verificar conformidade com WCAG 2.1 AA
-       - [ ] Testar navegação por teclado em todos os componentes interativos
-       - [ ] Validar estrutura semântica do HTML
-       - [ ] Confirmar contrastes de cor adequados nos temas claro e escuro
-       - [ ] Implementar labels e atributos ARIA apropriados
+       - [ ] Verificar responsividade em todos os breakpoints
+         - [ ] Testar componentes nos breakpoints: sm, md, lg, xl, 2xl
+         - [ ] Validar layouts de página em dispositivos móveis e desktops
+         - [ ] Verificar comportamento responsivo de grids e flexbox
+         - [ ] Testar orientações landscape e portrait em dispositivos móveis
+         - [ ] Validar comportamento em telas muito grandes (4K+)
+       - [ ] Confirmar compatibilidade cross-browser
+         - [ ] Testar em Chrome, Firefox, Safari e Edge
+         - [ ] Verificar comportamento em navegadores móveis (iOS Safari, Chrome Android)
+         - [ ] Validar animações e transições em todos os navegadores suportados
+         - [ ] Identificar e corrigir problemas de renderização específicos por navegador
+         - [ ] Documentar fallbacks para recursos não suportados universalmente
+       - [ ] Validar acessibilidade das novas implementações
+         - [ ] Verificar conformidade com WCAG 2.1 AA
+         - [ ] Testar navegação por teclado em todos os componentes interativos
+         - [ ] Validar estrutura semântica do HTML
+         - [ ] Confirmar contrastes de cor adequados nos temas claro e escuro
+         - [ ] Implementar labels e atributos ARIA apropriados
 
 3. **Melhorar Performance**
    - [x] Otimizar carregamento de imagens com width/height e lazy loading
@@ -933,4 +933,56 @@ src/
    - [✅] Eliminação de todos os warnings do console relacionados ao React Router
    - [ ] Redução do tempo de renderização inicial
    - [ ] Padronização de 100% das páginas com o design system
+
+### Padronização de Layout das Páginas
+
+#### Status: 15% Completo
+
+A página http://localhost:5173/somos-octo/quem-somos será utilizada como referência para o padrão visual de todas as páginas, exceto a página inicial (Home).
+
+#### Estrutura do Layout Padrão
+
+- [x] Criar componente StandardLayout baseado no layout da página QuemSomos
+- [x] Refatorar a página QuemSomos para usar o StandardLayout
+- [x] Documentar padrões visuais e de código para o StandardLayout
+
+#### Elementos do Layout Padrão
+
+- **Header**: Fixo no topo da página
+- **Hero Banner**: Banner com imagem, cor de fundo e título
+- **Seções de Conteúdo**: Múltiplas seções com estilos consistentes
+- **Footer**: Área inferior com informações de contato ou chamadas para ação
+
+#### Paleta de Cores Padrão
+
+- Cor principal: `#972ae6` (roxo)
+- Cor secundária: `#e8b624` (amarelo)
+- Backgrounds alternados: branco e cinza claro (`#f9fafb`)
+- Textos: variações de roxo com diferentes opacidades
+
+#### Plano de Implementação
+
+- [ ] Fase 1: Migrar páginas de alta prioridade para o StandardLayout
+  - [ ] Migrar página PCD
+  - [ ] Migrar página Cartilhas
+  - [ ] Migrar página OrientaPcd
+  - [ ] Migrar página CapacitaPcd
+  - [ ] Migrar página OctoFaz
+  
+- [ ] Fase 2: Migrar páginas de média prioridade
+  - [ ] Migrar páginas da seção "Conheça a OCTO"
+  - [ ] Migrar páginas de Acessibilidade
+  - [ ] Migrar páginas de Apoio
+  
+- [ ] Fase 3: Migrar páginas restantes
+  - [ ] Migrar páginas administrativas
+  - [ ] Migrar páginas de conta de usuário
+  - [ ] Verificar consistência visual em todas as páginas
+
+#### Métricas de Sucesso
+
+- [ ] 100% das páginas seguindo o layout padrão (exceto Home)
+- [ ] Redução de 50% no código CSS duplicado
+- [ ] Melhor desempenho em métricas de Web Vitals (CLS, FID, LCP)
+- [ ] Experiência de usuário consistente em todas as páginas
 
