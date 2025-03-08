@@ -954,3 +954,20 @@ src/
 - Redução de linhas de código: ~200 linhas
 - Tempo médio de carregamento: melhorado em 15%
 
+### Correções de Bugs e Problemas Técnicos
+
+- [x] Corrigido problema da página CapacitaPcd não ser exibida ao clicar no link:
+  - [x] Implementados mocks para endpoints `/api/vagas` e `/api/recursos-educacionais`
+  - [x] Corrigido conflito de importações do tipo `AuthState`
+  - [x] Atualizado sistema de autenticação para usar o contexto correto
+- [x] Resolvido problema de layout na página OctoFaz
+- [x] Corrigida importação do hook useDataFetching nas páginas
+
+### Sistema de Mocks e Serviços
+
+- [x] Expandido sistema de mocks para suportar novos endpoints:
+  - [x] Endpoint para vagas de emprego
+  - [x] Endpoint para recursos educacionais
+- [x] Implementados serviços mock com dados realistas para demonstração
+- [x] Integrados novos endpoints ao sistema de configuração da API
+
