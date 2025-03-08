@@ -9,6 +9,10 @@
 - ✅ Corrigida incompatibilidade nas bibliotecas de teste com React 18
 - ✅ Iniciada resolução sistemática de conflitos no Design System, com foco em tokens, animações e estilos
 - ✅ Implementado sistema de tipos centralizado para cartilhas, resolvendo incompatibilidades no componente CartilhasVirtualList
+- ✅ Resolvido problema de referências circulares no sistema de tokens para integração com Tailwind
+  - ✅ Simplificada estrutura de geração de tokens para evitar estouro de pilha
+  - ✅ Complementados tokens ausentes (sombras MD3, foco, z-indices)
+  - ✅ Consolidada geração de tokens via script build:tokens
 - ✅ Iniciada implementação do plano de refatoração estrutural para melhorar a qualidade e manutenibilidade do código
   - ✅ Criados arquivos de tipos centralizados para vários domínios (API, Auth, News, Config)
   - ✅ Implementada estrutura modular para tokens de cores
@@ -614,9 +618,13 @@ src/
    - [ ] Adicionar métricas de performance de usuário real (RUM)
 
 4. **Inconsistências do Design System**
-   - [x] Resolver duplicidade de tokens entre `unified-tokens.ts` e `design-tokens.js`
-   - [x] Eliminar dependência do react-transition-group para animações
-   - [x] Resolver dependências circulares no CSS
+   - [✅] Resolver duplicidade de tokens entre `unified-tokens.ts` e `design-tokens.js`
+   - [✅] Eliminar dependência do react-transition-group para animações
+   - [✅] Resolver dependências circulares no CSS
+   - [✅] Corrigir problemas de referências circulares nos tokens para integração com Tailwind
+     - [✅] Resolvido erro de estouro de pilha (Maximum call stack size exceeded)
+     - [✅] Implementada estrutura simplificada para evitar circularidade
+     - [✅] Adicionados tokens ausentes (sombras MD3, focus, modalBackdrop)
    - [ ] Padronizar completamente o uso de classes CSS e Tailwind
    - [ ] Consolidar definições de animações e curvas de timing
    - [ ] Estabelecer convenções claras para estados interativos (hover, focus, etc.)
@@ -704,7 +712,10 @@ src/
    - [ ] Criar guidelines de acessibilidade para desenvolvedores
 
 3. **Tokens e Estilos**
-   - [ ] Revisar e consolidar tokens de design para consistência
+   - [✅] Revisar e consolidar tokens de design para consistência
+     - [✅] Identificação e correção de referências circulares nos tokens
+     - [✅] Complementação de tokens ausentes necessários ao CSS
+     - [✅] Remover arquivos redundantes após migração
    - [ ] Implementar variantes de tema (claro, escuro, alto contraste)
    - [ ] Criar sistema de formatação para valores regionais (datas, números)
    - [ ] Otimizar sistema de cores para garantir contraste adequado
@@ -765,6 +776,38 @@ src/
      - [ ] Ajustar chamadas da API para corresponder à assinatura correta
      - [ ] Resolver incompatibilidades de tipo nos parâmetros
 
+### Novos Bugs Identificados no Console 🚨
+
+1. **Avisos do React Router**
+   - [ ] Resolver avisos de flags futuras do React Router:
+     - [ ] Configurar flag `v7_startTransition` para migrar proativamente para React Router v7
+     - [ ] Configurar flag `v7_relativeSplatPath` para resolver problemas com rotas splat
+   
+2. **Problemas de Atributos React**
+   - [ ] Corrigir warning sobre atributo `fetchPriority` não reconhecido:
+     - [ ] Substituir por atributo em lowercase `fetchpriority` ou removê-lo dos elementos `img`
+     - [ ] Atualizar componentes que usam este atributo (especialmente na página Home)
+
+3. **Erro de WebSocket para Dev Server**
+   - [ ] Corrigir erro de conexão WebSocket no HMR (Hot Module Replacement):
+     - [ ] Resolver problema de URL inválida: `ws://localhost:undefined/?token=9hTwwBBhIaR6`
+     - [ ] Configurar corretamente a porta WebSocket em `vite.config.ts`
+     - [ ] Adicionar fallback para casos onde a porta não está definida
+
+4. **Falhas de Importação Dinâmica**
+   - [ ] Resolver erro de carregamento de módulos dinâmicos:
+     - [ ] Corrigir caminhos para `src/pages/somos-octo/QuemSomos.tsx`
+     - [ ] Verificar se o arquivo existe e está no local correto
+     - [ ] Implementar fallback para caso de erro de carregamento
+     - [ ] Atualizar imports lazy no roteamento
+   
+5. **Problemas de Métricas de Performance**
+   - [ ] Melhorar CLS (Cumulative Layout Shift) que está atualmente em nível "poor" (0.48):
+     - [ ] Definir dimensões explícitas para imagens
+     - [ ] Evitar inserções dinâmicas que causam deslocamento de layout
+     - [ ] Revisar animações que podem causar deslocamento de conteúdo
+     - [ ] Implementar placeholders com dimensões fixas durante carregamento
+
 ### Melhorias nos Componentes de Cartilhas 📚
 
 1. **CartilhasVirtualList**
@@ -796,12 +839,14 @@ src/
    - [ ] Adicionar visualização prévia de conteúdo em hover
 
 2. **Implementar Plano de Consolidação de Arquivos Duplicados**
-   - [ ] Tokens de Design:
+   - [✅] Tokens de Design:
      - [✅] Consolidar todas as definições de cores em `colors.ts`
      - [✅] Criar arquivo centralizado para tipografia
      - [✅] Criar arquivo centralizado para espaçamento
      - [✅] Criar arquivo centralizado para sombras
-     - [ ] Remover arquivos redundantes após migração
+     - [✅] Resolver problemas de referências circulares nos tokens
+     - [✅] Complementar tokens ausentes necessários ao CSS
+     - [✅] Remover arquivos redundantes após migração
    - [ ] Componentes com Funcionalidades Semelhantes:
      - [✅] Implementar componentes base para estados de UI (Loading, Error, Empty)
      - [✅] Migrar componentes principais para usar componentes base
@@ -813,15 +858,12 @@ src/
    - [ ] Configurações Conflitantes:
      - [✅] Unificar definições de tema em uma única fonte
      - [✅] Consolidar configurações de ESLint
-   - [ ] Tokens de Design:
-     - [✅] Consolidar todas as definições de cores em `colors.ts`
-     - [✅] Criar arquivo centralizado para tipografia
-     - [✅] Criar arquivo centralizado para espaçamento
-     - [✅] Criar arquivo centralizado para sombras
+   - [✅] Sistema de Geração de Tokens:
      - [✅] Implementar sistema automatizado de compilação de tokens:
        - [✅] Criar script para compilação TypeScript → JavaScript
        - [✅] Integrar com build process (dev, build, storybook)
        - [✅] Configurar geração dinâmica para Tailwind
+       - [✅] Simplificar estrutura para evitar referências circulares
      - [✅] Remover arquivos redundantes após migração:
        - [✅] Identificação de arquivos obsoletos
        - [✅] Remoção de `design-tokens.js`
