@@ -6,7 +6,7 @@ import React, { forwardRef, InputHTMLAttributes } from 'react';
 import { cn } from '../../utils/cn';
 import { ValidationError } from './validation';
 
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
   /**
    * Nome do campo
    */
@@ -69,16 +69,18 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     ...rest
   }, ref) => {
     // Referência interna para manipular o estado indeterminado
-    const internalRef = React.useRef<HTMLInputElement>(null);
+    const internalRef = React.useRef<HTMLInputElement | null>(null);
     
     // Mescla a ref interna com a ref externa
     const handleRef = (el: HTMLInputElement | null) => {
-      internalRef.current = el;
+      if (el) {
+        // Operações com o elemento, se necessário
+      }
       
       if (typeof ref === 'function') {
         ref(el);
       } else if (ref) {
-        ref.current = el;
+        (ref as React.MutableRefObject<HTMLInputElement | null>).current = el;
       }
     };
     
@@ -120,18 +122,16 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             id={id || name}
             name={name}
             checked={checked}
-            required={required}
             disabled={disabled}
+            required={required}
             onChange={onChange}
             onBlur={onBlur}
             className={cn(
-              'rounded border-gray-300',
-              'text-primary-400 focus:ring-primary-400/50',
-              hasError && 'border-error focus:ring-error/50',
-              disabled && 'bg-gray-100 text-gray-400 cursor-not-allowed',
+              'form-checkbox',
+              hasError ? 'border-red-500' : '',
+              disabled ? 'opacity-50 cursor-not-allowed' : '',
               sizeClasses[size].checkbox
             )}
-            aria-invalid={hasError ? 'true' : 'false'}
             {...rest}
           />
           
