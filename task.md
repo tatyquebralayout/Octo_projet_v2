@@ -894,3 +894,43 @@ src/
   - ✅ Padrões de uso recomendados e melhores práticas
   - ✅ Referência de props e variantes disponíveis
 
+### Padronização de Páginas sem Design System 🎨
+
+1. **Análise de Páginas Prioritárias**
+   - [x] Cartilhas.tsx e CartilhaDetalhe.tsx (335 e 219 linhas não padronizadas)
+   - [ ] CapacitaPcd.tsx (341 linhas não padronizadas)
+   - [ ] OrientaPcd.tsx (306 linhas não padronizadas)
+   - [ ] Home.tsx (286 linhas não padronizadas)
+   - [ ] DeficienciasOcultas.tsx, Neurodivergencias.tsx e QuemSomos.tsx (~200 linhas não padronizadas cada)
+
+2. **Estratégia de Migração Sistemática**
+   - [✅] Criar componente base de PageLayout padronizado:
+     - [✅] Definir estrutura de cabeçalho de página consistente
+     - [✅] Implementar container principal com espaçamentos padrão
+     - [✅] Adicionar suporte para breadcrumbs e metadata
+   - [✅] Migrar para hooks padronizados:
+     - [✅] Substituir chamadas diretas à API por useDataFetching
+     - [✅] Implementar estados de loading, erro e vazio consistentes
+     - [✅] Padronizar tratamento de cache e revalidação
+
+3. **Plano de Execução por Fase**
+   - [ ] Fase 1: Páginas de alto impacto (Home, Cartilhas):
+     - [✅] Substituir classes CSS personalizadas por tokens do design system
+     - [✅] Atualizar tipografia para usar classes text-h* e text-body
+     - [✅] Implementar estados de loading/error com componentes padrão
+     - [✅] Corrigir dimensões de imagens para melhorar CLS
+   - [ ] Fase 2: Páginas de subseções (CapacitaPcd, OrientaPcd, QuemSomos):
+     - [ ] Padronizar estrutura de grid e layout
+     - [ ] Unificar componentes de destaque (cards, banners, CTAs)
+     - [ ] Corrigir inconsistências de espaçamento
+   - [ ] Fase 3: Páginas restantes:
+     - [ ] Completar migração de todas as páginas para o design system
+     - [ ] Realizar validação cruzada para garantir consistência
+     - [ ] Documentar exceções e casos especiais
+
+4. **Métricas de Sucesso**
+   - [ ] Redução do CLS para nível "good" (<0.1)
+   - [✅] Eliminação de todos os warnings do console relacionados ao React Router
+   - [ ] Redução do tempo de renderização inicial
+   - [ ] Padronização de 100% das páginas com o design system
+

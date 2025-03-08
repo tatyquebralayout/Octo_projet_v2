@@ -1,31 +1,46 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import Card from '../common/Card';
-import { ErrorMessage } from '../../utils/errors/components';
 import { ErrorType } from '../../utils/errors/types';
+import { Error } from '../../design-system/components/ui';
+import debounce from 'lodash.debounce';
 
 // Propriedades para o componente de filtro
 interface GuidesFilterProps {
   categories: string[];
   tags: string[];
-  onFilterChange: (filters: { category?: string; tag?: string; searchTerm?: string }) => void;
+  // Novos props para versão padronizada
+  selectedCategory?: string;
+  selectedTag?: string;
+  onCategoryChange?: (category: string | undefined) => void;
+  onTagChange?: (tag: string | undefined) => void;
+  onSearch?: (term: string) => void;
+  // Props legados para compatibilidade
+  onFilterChange?: (filters: { category?: string; tag?: string; searchTerm?: string }) => void; 
   className?: string;
   isLoading?: boolean;
   error?: Error | null;
 }
 
-const GuidesFilter: React.FC<GuidesFilterProps> = ({ 
-  categories = [], 
-  tags = [], 
-  onFilterChange, 
+const GuidesFilter: React.FC<GuidesFilterProps> = ({
+  categories = [],
+  tags = [],
+  // Novos props
+  selectedCategory,
+  selectedTag,
+  onCategoryChange,
+  onTagChange,
+  onSearch,
+  // Props legados
+  onFilterChange,
   className = '',
   isLoading = false,
   error = null
 }) => {
-  // Estado interno para os filtros
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
-  const [selectedTag, setSelectedTag] = useState<string | undefined>(undefined);
-  const [searchTerm, setSearchTerm] = useState('');
+  // Estado interno para componentes controlados
+  const [category, setCategory] = useState<string | undefined>(selectedCategory);
+  const [tag, setTag] = useState<string | undefined>(selectedTag);
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
 
   // Processar categorias e tags para garantir dados consistentes
@@ -40,6 +55,75 @@ const GuidesFilter: React.FC<GuidesFilterProps> = ({
       ? [...new Set(tags)].sort()
       : [];
   }, [tags]);
+
+  // Sincronizar com props externos quando mudam
+  useEffect(() => {
+    setCategory(selectedCategory);
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    setTag(selectedTag);
+  }, [selectedTag]);
+
+  // Callback para mudança de categoria
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value || undefined;
+    setCategory(value);
+    
+    // Chamar callback moderno ou legado
+    if (onCategoryChange) {
+      onCategoryChange(value);
+    } else if (onFilterChange) {
+      onFilterChange({ category: value, tag, searchTerm: searchTerm || undefined });
+    }
+  };
+
+  // Callback para mudança de tag
+  const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value || undefined;
+    setTag(value);
+    
+    // Chamar callback moderno ou legado
+    if (onTagChange) {
+      onTagChange(value);
+    } else if (onFilterChange) {
+      onFilterChange({ category, tag: value, searchTerm: searchTerm || undefined });
+    }
+  };
+
+  // Callback para busca
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    
+    // Para busca, apenas usar o callback moderno se disponível
+    if (onSearch) {
+      onSearch(value);
+    }
+  };
+
+  // Callback debounced para a versão legada
+  const debouncedSearch = useMemo(
+    () => 
+      onFilterChange
+        ? debounce((term: string) => {
+            onFilterChange({ category, tag, searchTerm: term || undefined });
+          }, 500)
+        : undefined,
+    [category, tag, onFilterChange]
+  );
+
+  // Usar o debounce apenas para a versão legada
+  useEffect(() => {
+    if (debouncedSearch && !onSearch) {
+      debouncedSearch(searchTerm);
+    }
+    return () => {
+      if (debouncedSearch) {
+        debouncedSearch.cancel();
+      }
+    };
+  }, [searchTerm, debouncedSearch, onSearch]);
 
   // Efeito para debounce da busca
   useEffect(() => {
@@ -61,8 +145,8 @@ const GuidesFilter: React.FC<GuidesFilterProps> = ({
 
   // Função para limpar todos os filtros
   const handleClearFilters = () => {
-    setSelectedCategory(undefined);
-    setSelectedTag(undefined);
+    setCategory(undefined);
+    setTag(undefined);
     setSearchTerm('');
     // O onFilterChange será chamado pelo efeito
   };
@@ -87,7 +171,7 @@ const GuidesFilter: React.FC<GuidesFilterProps> = ({
             id="search"
             type="text"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             placeholder={searchPlaceholder}
             disabled={isLoading}
             className="pl-9 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
@@ -103,8 +187,8 @@ const GuidesFilter: React.FC<GuidesFilterProps> = ({
         </label>
         <select
           id="category"
-          value={selectedCategory || ''}
-          onChange={(e) => setSelectedCategory(e.target.value || undefined)}
+          value={category || ''}
+          onChange={handleCategoryChange}
           disabled={isLoading || processedCategories.length === 0}
           className="w-full p-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
         >
@@ -127,8 +211,8 @@ const GuidesFilter: React.FC<GuidesFilterProps> = ({
         </label>
         <select
           id="tag"
-          value={selectedTag || ''}
-          onChange={(e) => setSelectedTag(e.target.value || undefined)}
+          value={tag || ''}
+          onChange={handleTagChange}
           disabled={isLoading || processedTags.length === 0}
           className="w-full p-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
         >
@@ -147,7 +231,7 @@ const GuidesFilter: React.FC<GuidesFilterProps> = ({
       {/* Botão para limpar filtros */}
       <button
         onClick={handleClearFilters}
-        disabled={isLoading || (!selectedCategory && !selectedTag && !searchTerm)}
+        disabled={isLoading || (!category && !tag && !searchTerm)}
         className="w-full py-2 px-4 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         Limpar filtros
@@ -156,9 +240,10 @@ const GuidesFilter: React.FC<GuidesFilterProps> = ({
       {/* Mostrar mensagem de erro se houver */}
       {error && (
         <div className="mt-4">
-          <ErrorMessage 
+          <Error 
             message="Não foi possível carregar filtros" 
-            type={ErrorType.SERVER}
+            variant="inline"
+            size="sm"
           />
           <p className="text-xs text-gray-500 mt-1">
             Você ainda pode fazer buscas, mas os filtros avançados não estão disponíveis.

@@ -6,9 +6,11 @@ import Pagination from '../components/common/Pagination';
 import useGuides from '../hooks/useGuides';
 import { useNotifications } from '../services/notifications';
 import { NotificationType } from '../services/notifications/types';
-import ProfilerWrapper from '../utils/performance/ProfilerWrapper';
-import '../components/guides/guides.css';
-import { Loading, Error, Empty } from '../design-system/components/ui';
+import PageLayout from '../components/layout/PageLayout';
+import { Link } from 'react-router-dom';
+import { cn } from '../utils/cn';
+import { useDataFetching } from '../hooks/useDataFetching';
+import { GuideListItem } from '../types/guides';
 
 interface FilterState {
   category?: string;
@@ -16,6 +18,9 @@ interface FilterState {
   searchTerm?: string;
 }
 
+/**
+ * Página de Cartilhas - Listagem de todas as cartilhas disponíveis com filtros e paginação
+ */
 const Cartilhas = () => {
   // Estado para os filtros
   const [filters, setFilters] = useState<FilterState>({
@@ -48,287 +53,117 @@ const Cartilhas = () => {
   } = useGuides({
     page: currentPage,
     limit: 12, // Aumentamos o limite para otimizar a paginação com virtualização
-    ...filters
+    category: filters.category,
+    tag: filters.tag,
+    searchTerm: filters.searchTerm
   });
   
-  // Exibir erro se houver (apenas uma vez por erro)
-  useEffect(() => {
-    if (error) {
-      console.error('Erro ao carregar cartilhas:', error);
-      showToast({
-        title: 'Erro ao carregar cartilhas',
-        message: error.message || 'Ocorreu um erro ao carregar as cartilhas. Tente novamente mais tarde.',
-        type: NotificationType.ERROR,
-        autoClose: true
-      });
-    }
-  }, [error, showToast]);
+  // Lidar com a mudança de página
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    goToPage(page);
+    
+    // Rolar para o topo da lista
+    window.scrollTo({
+      top: document.getElementById('cartilhas-list')?.offsetTop - 100 || 0,
+      behavior: 'smooth'
+    });
+  }, [goToPage]);
   
-  // Debounce para aplicação de filtros
-  const debouncedFilterChange = useMemo(
-    () => debounce((newFilters: FilterState) => {
-      setFilters(prev => {
-        // Verificar se os filtros realmente mudaram
-        if (
-          prev.category === newFilters.category &&
-          prev.tag === newFilters.tag &&
-          prev.searchTerm === newFilters.searchTerm
-        ) {
-          return prev; // Não atualizar se não houve mudança
-        }
-        return newFilters;
-      });
-    }, 300), // 300ms de delay para evitar atualizações frequentes
+  // Handler para filtro de categoria
+  const handleCategoryFilter = useCallback((category: string | undefined) => {
+    setFilters(prev => ({ ...prev, category }));
+  }, []);
+  
+  // Handler para filtro de tag
+  const handleTagFilter = useCallback((tag: string | undefined) => {
+    setFilters(prev => ({ ...prev, tag }));
+  }, []);
+  
+  // Handler para busca com debounce
+  const handleSearch = useMemo(
+    () =>
+      debounce((term: string) => {
+        setFilters(prev => ({ ...prev, searchTerm: term || undefined }));
+      }, 500),
     []
   );
   
-  // Manipular mudança de filtros com debounce
-  const handleFilterChange = useCallback((newFilters: FilterState) => {
-    debouncedFilterChange(newFilters);
-  }, [debouncedFilterChange]);
+  // Componente Breadcrumbs
+  const BreadcrumbsComponent = () => (
+    <nav aria-label="breadcrumbs" className="text-sm flex space-x-2 text-gray-600">
+      <Link to="/" className="hover:text-primary-600 transition-colors">Home</Link>
+      <span>/</span>
+      <span className="text-gray-900 font-medium">Cartilhas</span>
+    </nav>
+  );
+
+  // Calcular estatísticas para exibição
+  const startItem = totalItems > 0 ? (currentPage - 1) * 12 + 1 : 0;
+  const endItem = Math.min(currentPage * 12, totalItems || 0);
   
-  // Manipular limpeza de filtros
-  const handleClearFilters = useCallback(() => {
-    setFilters({
-      category: undefined,
-      tag: undefined,
-      searchTerm: undefined
-    });
-    setCurrentPage(1);
-  }, []);
-  
-  // Manipular mudança de página de forma otimizada
-  const handlePageChange = useCallback((page: number) => {
-    if (page === currentPage) return; // Evitar recargas desnecessárias
-    
-    setCurrentPage(page);
-    
-    // Rolar para o topo da página
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }, [currentPage]);
-
-  // Sincronizar mudanças de página com o hook useGuides
-  useEffect(() => {
-    if (currentPage > 0) {
-      goToPage(currentPage);
-    }
-  }, [currentPage, goToPage]);
-  
-  // Função para tentar novamente em caso de erro
-  const handleRetry = useCallback(() => {
-    // Forçar recarga de dados
-    goToPage(currentPage);
-  }, [currentPage, goToPage]);
-
-  // Memorizar o texto de contagem de resultados
-  const resultsCountText = useMemo(() => {
-    if (isLoading) return 'Carregando cartilhas...';
-    if (error) return 'Erro ao carregar cartilhas';
-    return `Mostrando ${guides ? guides.length : 0} de ${totalItems || 0} cartilhas`;
-  }, [isLoading, error, guides, totalItems]);
-
-  // Renderização condicional para Loading/Error/Empty
-  const renderContent = useCallback(() => {
-    if (isLoading && (!guides || guides.length === 0)) {
-      return <Loading fullPage accessibilityLabel="Carregando cartilhas..." />;
-    }
-    
-    if (error && (!guides || guides.length === 0)) {
-      return (
-        <Error 
-          title="Erro ao carregar cartilhas"
-          message="Não foi possível carregar as cartilhas. Por favor, tente novamente mais tarde."
-          variant="card"
-          size="lg"
-          onRetry={handleRetry}
-        />
-      );
-    }
-    
-    if (!isLoading && (!guides || guides.length === 0)) {
-      return (
-        <Empty 
-          title="Nenhuma cartilha encontrada"
-          message="Não encontramos cartilhas para os filtros selecionados."
-          action={
-            <button 
-              className="btn btn-primary mt-4"
-              onClick={handleClearFilters}
-            >
-              Limpar filtros
-            </button>
-          }
-        />
-      );
-    }
-    
-    return (
-      <>
-        {/* Lista de cartilhas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {guides && guides.map((guide) => (
-            <GuideCard key={guide.id} guide={guide} />
-          ))}
-        </div>
-        
-        {/* Paginação */}
-        {!isLoading && guides && guides.length > 0 && totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-            className="mt-8"
-          />
-        )}
-
-        {/* Carregar mais e contagem de resultados */}
-        <div className="mt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-600 mb-4 md:mb-0">
-            {isLoading ? (
-              <span className="flex items-center">
-                <Loading size="sm" variant="spinner" className="mr-2" />
-                Carregando cartilhas...
-              </span>
-            ) : error ? (
-              <Error message="Erro ao carregar cartilhas" variant="inline" size="sm" />
-            ) : `Mostrando ${guides ? guides.length : 0} de ${totalItems || 0} cartilhas`}
-          </p>
-          <button
-            className="btn btn-primary"
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={isLoading || Boolean(error) || currentPage >= totalPages}
-          >
-            {isLoading ? (
-              <span className="flex items-center">
-                <Loading size="sm" variant="spinner" className="mr-2" />
-                Carregando...
-              </span>
-            ) : 'Carregar mais'}
-          </button>
-        </div>
-      </>
-    );
-  }, [isLoading, error, guides, totalItems, currentPage, totalPages, handlePageChange, goToPage, handleClearFilters, handleRetry]);
-
   return (
-    <div className="container mx-auto px-4 py-8">
+    <PageLayout 
+      title="Cartilhas"
+      description="Acesse nossa biblioteca de cartilhas e guias para capacitação e orientação sobre deficiências ocultas e neurodivergências."
+      breadcrumbs={<BreadcrumbsComponent />}
+      isLoading={isLoading}
+      error={error}
+      onRetry={() => goToPage(currentPage)}
+      animation="fade"
+    >
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Cartilhas e Manuais</h1>
-        <p className="text-gray-600">
-          Acesse nossos materiais educativos sobre inclusão, acessibilidade e neurodiversidade.
+        <p className="text-body-large mb-4">
+          Nossa biblioteca de cartilhas oferece recursos educativos sobre diversos temas relacionados 
+          a deficiências ocultas e neurodivergências. Explore, baixe e compartilhe nosso conteúdo.
         </p>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Sidebar com filtros */}
-        <div className="lg:col-span-1">
-          <ProfilerWrapper id="GuidesFilterComponent">
-            <GuidesFilter
-              categories={categories || []}
-              tags={tags || []}
-              onFilterChange={handleFilterChange}
-              className="sticky top-24"
-              isLoading={isLoading}
-              error={error}
-            />
-          </ProfilerWrapper>
+      {/* Filtros */}
+      <div className="bg-gray-50 p-6 rounded-lg mb-8 shadow-sm">
+        <h2 className="text-h4 mb-4">Filtrar Cartilhas</h2>
+        <GuidesFilter
+          categories={categories}
+          tags={tags}
+          selectedCategory={filters.category}
+          selectedTag={filters.tag}
+          onCategoryChange={handleCategoryFilter}
+          onTagChange={handleTagFilter}
+          onSearch={handleSearch}
+        />
+      </div>
+      
+      {/* Estatísticas e resultados */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-h3">Resultados</h2>
+        <div className="text-body text-gray-600">
+          {!isLoading && (
+            totalItems > 0 
+              ? `Mostrando ${startItem}-${endItem} de ${totalItems} cartilhas`
+              : "Nenhuma cartilha encontrada"
+          )}
         </div>
+      </div>
+      
+      {/* Lista de cartilhas */}
+      <div id="cartilhas-list" className="min-h-[300px]">
+        <CartilhasVirtualList 
+          guides={guides || []} 
+          isLoading={isLoading}
+        />
         
-        {/* Lista de cartilhas */}
-        <div className="lg:col-span-3">
-          {/* Informações sobre resultados */}
-          <div className="mb-4 flex justify-between items-center">
-            <p className="text-gray-600">
-              {resultsCountText}
-            </p>
-            
-            {/* Seletor de ordenação (a ser implementado) */}
-            <div className="flex items-center">
-              <label htmlFor="sort" className="mr-2 text-sm text-gray-600">
-                Ordenar por:
-              </label>
-              <select
-                id="sort"
-                className="border rounded-md px-2 py-1 text-sm"
-                defaultValue="recent"
-                disabled={isLoading || Boolean(error)}
-              >
-                <option value="recent">Mais recentes</option>
-                <option value="title">Título (A-Z)</option>
-                <option value="popular">Mais populares</option>
-              </select>
-            </div>
-          </div>
-          
-          {/* Grid de cartilhas com virtualização */}
-          <ProfilerWrapper id="CartilhasVirtualList">
-            <CartilhasVirtualList 
-              guides={guides || []} 
-              isLoading={isLoading}
-              error={error}
-              onRetry={handleRetry}
-              noResultsComponent={
-                <div className="text-center py-12">
-                  <h3 className="text-xl font-semibold mb-2">Nenhuma cartilha encontrada</h3>
-                  <p className="text-gray-600 mb-4">
-                    Tente ajustar seus filtros ou termos de busca.
-                  </p>
-                  <button
-                    onClick={handleClearFilters}
-                    className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
-                  >
-                    Limpar filtros
-                  </button>
-                </div>
-              }
-            />
-          </ProfilerWrapper>
-          
-          {/* Paginação */}
-          {!isLoading && guides && guides.length > 0 && totalPages > 1 && (
+        {/* Paginação */}
+        {totalPages > 1 && (
+          <div className="mt-8 flex justify-center">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}
-              className="mt-8"
             />
-          )}
-
-          {/* Carregar mais e contagem de resultados */}
-          <div className="mt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-600 mb-4 md:mb-0">
-              {isLoading ? (
-                <span className="flex items-center">
-                  <Loading size="sm" variant="spinner" className="mr-2" />
-                  Carregando cartilhas...
-                </span>
-              ) : error ? (
-                <Error message="Erro ao carregar cartilhas" variant="inline" size="sm" />
-              ) : `Mostrando ${guides ? guides.length : 0} de ${totalItems || 0} cartilhas`}
-            </p>
-            <button
-              className="btn btn-primary"
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={isLoading || Boolean(error) || currentPage >= totalPages}
-            >
-              {isLoading ? (
-                <span className="flex items-center">
-                  <Loading size="sm" variant="spinner" className="mr-2" />
-                  Carregando...
-                </span>
-              ) : 'Carregar mais'}
-            </button>
           </div>
-        </div>
+        )}
       </div>
-
-      <div className="mt-8">
-        {renderContent()}
-      </div>
-    </div>
+    </PageLayout>
   );
 };
 

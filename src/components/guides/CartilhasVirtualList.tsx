@@ -17,7 +17,7 @@ interface GuideItemData {
 interface CartilhasVirtualListProps {
   guides: GuideListItem[];
   isLoading: boolean;
-  error: Error | null;
+  error?: Error | null;
   onRetry?: () => void;
   noResultsComponent?: React.ReactNode;
   className?: string;
