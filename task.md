@@ -658,10 +658,10 @@ Esta seção documenta o plano de ação para resolver problemas de duplicação
 
 ### 2. Componentes com Funcionalidades Semelhantes (40% concluído)
 
-- **Bibliotecas de Animação Duplicadas** (80% concluído)
+- **Bibliotecas de Animação Duplicadas** (100% concluído)
   - [✅] Analisar uso de `react-transition-group` vs `framer-motion`
   - [✅] Consolidar para usar apenas `framer-motion`
-  - [ ] Completar migração de componentes restantes
+  - [✅] Completar migração de componentes restantes
 
 - **Estados de Loading/Error Inconsistentes** (100% concluído)
   - [✅] Identificar componentes com lógica duplicada para estados de loading/error
@@ -963,11 +963,11 @@ Esta seção documenta o plano de ação para resolver problemas de duplicação
    - [ ] Deploy automatizado
 
 3. **Consolidação de Tecnologias**
-   - [ ] Completar migração de react-transition-group para framer-motion
+   - [✅] Completar migração de react-transition-group para framer-motion
      - [✅] Fase 1: Remoção da dependência react-transition-group do package.json
-     - [ ] Fase 2: Implementação de exemplos e protótipos usando apenas framer-motion
-     - [ ] Fase 3: Migração gradual de componentes existentes
-     - [ ] Fase 4: Testes finais e validação
+     - [✅] Fase 2: Implementação de exemplos e protótipos usando apenas framer-motion
+     - [✅] Fase 3: Migração gradual de componentes existentes
+     - [✅] Fase 4: Testes finais e validação
    - [ ] Padronizar biblioteca de gerenciamento de estado
    - [ ] Consolidar soluções de cache e persistência
    - [ ] Padronizar abordagem para requisições de API
@@ -1220,7 +1220,7 @@ src/
    - [ ] Componentes com Funcionalidades Semelhantes:
      - [✅] Implementar componentes base para estados de UI (Loading, Error, Empty)
      - [✅] Migrar componentes principais para usar componentes base
-     - [ ] Completar migração de componentes com animações para usar framer-motion (90% concluído)
+     - [✅] Completar migração de componentes com animações para usar framer-motion (100% concluído)
    - [ ] Utilitários Redundantes:
      - [✅] Consolidar hooks de fetch de dados em `useDataFetching`
      - [✅] Criar biblioteca centralizada para funções de formatação

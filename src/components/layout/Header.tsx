@@ -1,5 +1,4 @@
 import React, { useRef, useMemo } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import { MenuItem } from './navigation/MenuItem';
 import { SubMenuItem } from './navigation/SubMenuItem';
 import { SocialIcons } from './navigation/SocialIcons';
@@ -12,6 +11,9 @@ import './styles/animations.css';
 import { Link } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 import OptimizedImage from '../ui/OptimizedImage';
+import { AnimatePresence, motion } from 'framer-motion';
+import AccessibleMotion from '../../design-system/components/AccessibleMotion';
+import { menuVariants } from '../../design-system/utils/animations/accessible-variants';
 
 const Header: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
@@ -113,35 +115,34 @@ const Header: React.FC = () => {
                       onMouseEnter={() => handleMouseEnter(item.name)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <CSSTransition
-                        in={isSubmenuOpen(item.name)}
-                        timeout={300}
-                        classNames="submenu"
-                        unmountOnExit
-                        nodeRef={submenuRefs.current[item.name]}
-                      >
-                        <ul 
-                          ref={submenuRefs.current[item.name]}
-                          className={cn(
-                            "bg-white border border-gray-100 rounded-lg shadow-lg",
-                            "py-2 z-[60]"
-                          )}
-                          role="menu"
-                          aria-orientation="vertical"
-                          aria-label={`Submenu ${item.name}`}
-                        >
-                          {item.submenu.map((subItem) => (
-                            <SubMenuItem
-                              key={subItem.name}
-                              name={subItem.name}
-                              href={subItem.href}
-                              onClick={closeMenu}
-                              aria-label={subItem.name}
-                              className="ripple text-gray-700 hover:text-[#972ae6]"
-                            />
-                          ))}
-                        </ul>
-                      </CSSTransition>
+                      <AnimatePresence>
+                        {isSubmenuOpen(item.name) && (
+                          <motion.ul
+                            className={cn(
+                              "bg-white border border-gray-100 rounded-lg shadow-lg",
+                              "py-2 z-[60]"
+                            )}
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-label={`Submenu ${item.name}`}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            variants={menuVariants.standard}
+                          >
+                            {item.submenu.map((subItem) => (
+                              <SubMenuItem
+                                key={subItem.name}
+                                name={subItem.name}
+                                href={subItem.href}
+                                onClick={closeMenu}
+                                aria-label={subItem.name}
+                                className="ripple text-gray-700 hover:text-[#972ae6]"
+                              />
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
                     </div>
                   )}
                 </li>
@@ -163,75 +164,76 @@ const Header: React.FC = () => {
         </div>
 
         {/* Menu Mobile */}
-        <CSSTransition
-          in={isMenuOpen}
-          timeout={300}
-          classNames="menu"
-          unmountOnExit
-          nodeRef={menuRef}
-        >
-          <nav 
-            id="mobile-menu"
-            className="lg:hidden py-4 bg-white border-t border-gray-100 shadow-lg"
-            ref={menuRef}
-            role="navigation" 
-            aria-label="Menu mobile"
-          >
-            <ul 
-              className="flex flex-col gap-2" 
-              role="menubar"
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.nav 
+              id="mobile-menu"
+              className="lg:hidden py-4 bg-white border-t border-gray-100 shadow-lg"
+              ref={menuRef}
+              role="navigation" 
               aria-label="Menu mobile"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={menuVariants.standard}
             >
-              {memoizedMenuItems.map((item) => (
-                <li key={item.name} className="flex flex-col" role="none">
-                  <MenuItem
-                    name={item.name}
-                    href={item.href}
-                    hasSubmenu={!!item.submenu}
-                    isSubmenuOpen={isSubmenuOpen(item.name)}
-                    onClick={() => {
-                      if (!item.submenu) {
-                        closeMenu();
-                      } else {
-                        isSubmenuOpen(item.name) ? closeSubmenu() : openSubmenu(item.name);
-                      }
-                    }}
-                    role="menuitem"
-                    aria-haspopup={!!item.submenu}
-                    aria-expanded={isSubmenuOpen(item.name)}
-                    className="ripple text-gray-700 hover:text-[#972ae6] px-4"
-                  />
-                  
-                  {item.submenu && (
-                    <CSSTransition
-                      in={isSubmenuOpen(item.name)}
-                      timeout={300}
-                      classNames="submenu-mobile"
-                      unmountOnExit
-                    >
-                      <ul
-                        className="pl-4 py-2 bg-gray-50"
-                        role="menu"
-                        aria-label={`Submenu ${item.name}`}
-                      >
-                        {item.submenu.map((subItem) => (
-                          <SubMenuItem
-                            key={subItem.name}
-                            name={subItem.name}
-                            href={subItem.href}
-                            onClick={closeMenu}
-                            aria-label={subItem.name}
-                            className="ripple text-gray-700 hover:text-[#972ae6]"
-                          />
-                        ))}
-                      </ul>
-                    </CSSTransition>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </CSSTransition>
+              <ul 
+                className="flex flex-col gap-2" 
+                role="menubar"
+                aria-label="Menu mobile"
+              >
+                {memoizedMenuItems.map((item) => (
+                  <li key={item.name} className="flex flex-col" role="none">
+                    <MenuItem
+                      name={item.name}
+                      href={item.href}
+                      hasSubmenu={!!item.submenu}
+                      isSubmenuOpen={isSubmenuOpen(item.name)}
+                      onClick={() => {
+                        if (!item.submenu) {
+                          closeMenu();
+                        } else {
+                          isSubmenuOpen(item.name) ? closeSubmenu() : openSubmenu(item.name);
+                        }
+                      }}
+                      role="menuitem"
+                      aria-haspopup={!!item.submenu}
+                      aria-expanded={isSubmenuOpen(item.name)}
+                      className="ripple text-gray-700 hover:text-[#972ae6] px-4"
+                    />
+                    
+                    {item.submenu && (
+                      <AnimatePresence>
+                        {isSubmenuOpen(item.name) && (
+                          <motion.ul
+                            className="pl-4 py-2 bg-gray-50"
+                            role="menu"
+                            aria-label={`Submenu ${item.name}`}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            variants={menuVariants.standard}
+                          >
+                            {item.submenu.map((subItem) => (
+                              <SubMenuItem
+                                key={subItem.name}
+                                name={subItem.name}
+                                href={subItem.href}
+                                onClick={closeMenu}
+                                aria-label={subItem.name}
+                                className="ripple text-gray-700 hover:text-[#972ae6]"
+                              />
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

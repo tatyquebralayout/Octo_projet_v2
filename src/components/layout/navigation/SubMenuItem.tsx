@@ -56,7 +56,7 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
   }, [onClick]);
 
   return (
-    <li>
+    <li role="none">
       <Link
         to={href}
         onClick={onClick}
@@ -76,6 +76,7 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         aria-label={ariaLabel || name}
+        role="menuitem"
       >
         <span className="relative">
           {name}
