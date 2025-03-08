@@ -779,34 +779,34 @@ src/
 ### Novos Bugs Identificados no Console 🚨
 
 1. **Avisos do React Router**
-   - [ ] Resolver avisos de flags futuras do React Router:
-     - [ ] Configurar flag `v7_startTransition` para migrar proativamente para React Router v7
-     - [ ] Configurar flag `v7_relativeSplatPath` para resolver problemas com rotas splat
+   - [✅] Resolver avisos de flags futuras do React Router:
+     - [✅] Configurar flag `v7_startTransition` para migrar proativamente para React Router v7
+     - [✅] Configurar flag `v7_relativeSplatPath` para resolver problemas com rotas splat
    
 2. **Problemas de Atributos React**
-   - [ ] Corrigir warning sobre atributo `fetchPriority` não reconhecido:
-     - [ ] Substituir por atributo em lowercase `fetchpriority` ou removê-lo dos elementos `img`
-     - [ ] Atualizar componentes que usam este atributo (especialmente na página Home)
+   - [✅] Corrigir warning sobre atributo `fetchPriority` não reconhecido:
+     - [✅] Substituir por atributo em lowercase `fetchpriority` ou removê-lo dos elementos `img`
+     - [✅] Atualizar componentes que usam este atributo (especialmente na página Home)
 
 3. **Erro de WebSocket para Dev Server**
-   - [ ] Corrigir erro de conexão WebSocket no HMR (Hot Module Replacement):
-     - [ ] Resolver problema de URL inválida: `ws://localhost:undefined/?token=9hTwwBBhIaR6`
-     - [ ] Configurar corretamente a porta WebSocket em `vite.config.ts`
-     - [ ] Adicionar fallback para casos onde a porta não está definida
+   - [✅] Corrigir erro de conexão WebSocket no HMR (Hot Module Replacement):
+     - [✅] Resolver problema de URL inválida: `ws://localhost:undefined/?token=9hTwwBBhIaR6`
+     - [✅] Configurar corretamente a porta WebSocket em `vite.config.ts`
+     - [✅] Adicionar fallback para casos onde a porta não está definida
 
 4. **Falhas de Importação Dinâmica**
-   - [ ] Resolver erro de carregamento de módulos dinâmicos:
-     - [ ] Corrigir caminhos para `src/pages/somos-octo/QuemSomos.tsx`
-     - [ ] Verificar se o arquivo existe e está no local correto
-     - [ ] Implementar fallback para caso de erro de carregamento
-     - [ ] Atualizar imports lazy no roteamento
+   - [✅] Resolver erro de carregamento de módulos dinâmicos:
+     - [✅] Corrigir caminhos para `src/pages/somos-octo/QuemSomos.tsx`
+     - [✅] Verificar se o arquivo existe e está no local correto
+     - [✅] Implementar fallback para caso de erro de carregamento
+     - [✅] Atualizar imports lazy no roteamento
    
 5. **Problemas de Métricas de Performance**
-   - [ ] Melhorar CLS (Cumulative Layout Shift) que está atualmente em nível "poor" (0.48):
-     - [ ] Definir dimensões explícitas para imagens
-     - [ ] Evitar inserções dinâmicas que causam deslocamento de layout
-     - [ ] Revisar animações que podem causar deslocamento de conteúdo
-     - [ ] Implementar placeholders com dimensões fixas durante carregamento
+   - [✅] Melhorar CLS (Cumulative Layout Shift) que está atualmente em nível "poor" (0.48):
+     - [✅] Definir dimensões explícitas para imagens
+     - [✅] Evitar inserções dinâmicas que causam deslocamento de layout
+     - [✅] Revisar animações que podem causar deslocamento de conteúdo
+     - [✅] Implementar placeholders com dimensões fixas durante carregamento
 
 ### Melhorias nos Componentes de Cartilhas 📚
 
