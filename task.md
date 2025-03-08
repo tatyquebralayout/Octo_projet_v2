@@ -1178,10 +1178,22 @@ src/
      - [✅] Resolvido problema entre `GuideListItem` (downloadUrl opcional) e `Guide` (downloadUrl obrigatório)
      - [✅] Implementada solução com tipos centralizados e função de conversão segura
      - [✅] Melhorada manutenibilidade com hierarquia clara de tipos
-   - [ ] Resolver problemas de acessibilidade no Card e Button
-   - [ ] Corrigir problema de memória em listas grandes
-   - [ ] Resolver erros de cache que causam dados desatualizados
-   - [ ] Corrigir comportamento errático da paginação em telas pequenas
+   - [✅] Resolver problemas de acessibilidade no Card e Button
+     - [✅] Adicionado suporte a teclado para Card interativo
+     - [✅] Melhorada semântica com atributos ARIA apropriados
+     - [✅] Corrigido foco visual para melhor acessibilidade
+   - [✅] Corrigir problema de memória em listas grandes
+     - [✅] Otimizada memoização de componentes
+     - [✅] Implementada comparação personalizada para evitar rerenderizações
+     - [✅] Limitado número de itens pré-renderizados
+   - [✅] Resolver erros de cache que causam dados desatualizados
+     - [✅] Adicionado mecanismo de revalidação automática
+     - [✅] Implementada detecção de dados obsoletos
+     - [✅] Adicionadas funções para limpar e revalidar cache manualmente
+   - [✅] Corrigir comportamento errático da paginação em telas pequenas
+     - [✅] Implementada detecção de tamanho de tela
+     - [✅] Ajustado layout para dispositivos móveis
+     - [✅] Reduzido número de páginas visíveis em telas pequenas
 
 2. **Importantes**
    - [ ] Corrigir layout quebrado em navegadores móveis específicos

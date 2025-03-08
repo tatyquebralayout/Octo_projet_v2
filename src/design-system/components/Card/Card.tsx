@@ -49,15 +49,36 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(({
   elevation,
   children,
   className = '',
+  onClick,
+  onKeyDown,
+  tabIndex,
+  role,
   ...props
 }, ref) => {
   const baseStyles = cn(
     'rounded-lg',
     'transition-all duration-200',
     {
-      'cursor-pointer hover:transform hover:scale-[1.02]': interactive,
+      'cursor-pointer hover:transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary-500': interactive,
     }
   );
+
+  // Gerenciar interação via teclado para cards interativos
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (interactive && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick?.(e as unknown as React.MouseEvent<HTMLDivElement>);
+    }
+    onKeyDown?.(e);
+  };
+
+  // Determinar as props de acessibilidade com base em se o card é interativo
+  const accessibilityProps = interactive ? {
+    role: role || 'button',
+    tabIndex: tabIndex ?? 0, // Permitir foco por teclado se interativo
+    onKeyDown: handleKeyDown,
+    'aria-pressed': undefined, // Remover aria-pressed pois não é um toggle
+  } : {};
 
   return (
     <div
@@ -70,6 +91,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(({
         elevation && `shadow-${elevation}`,
         className
       )}
+      {...accessibilityProps}
       {...props}
     >
       {children}

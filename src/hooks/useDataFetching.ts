@@ -66,6 +66,9 @@ export interface DataFetchingOptions<T = any> {
     page?: number;
     limit?: number;
   };
+
+  // Adicionar opção para forçar revalidação do cache
+  forceRevalidate?: boolean;
 }
 
 // Tipo de retorno do hook
@@ -128,7 +131,8 @@ export function useDataFetching<T = any>(options: DataFetchingOptions<T>): DataF
     initialData = null,
     mockData = null,
     mockDelay = 0,
-    pagination = { enabled: false, page: 1, limit: 10 }
+    pagination = { enabled: false, page: 1, limit: 10 },
+    forceRevalidate = false
   } = options;
 
   // Estados para gerenciamento de dados e loading
@@ -145,9 +149,12 @@ export function useDataFetching<T = any>(options: DataFetchingOptions<T>): DataF
   const { handleError, getUserFriendlyMessage } = useErrorHandler();
   const { showToast } = useNotifications();
   
-  // Se estiver usando cache, usar os hooks específicos de cache
+  // Se estiver usando cache, usar os hooks específicos de cache com melhor controle de expiração
   const cacheResult = useCache ? 
-    useApiCache<T>(endpoint, params || {}, { expiresIn: cacheTime }) :
+    useApiCache<T>(endpoint, params || {}, { 
+      expiresIn: cacheTime,
+      forceRevalidate: forceRevalidate
+    }) :
     null;
     
   // Se estiver usando paginação, usar o hook específico de paginação
@@ -162,6 +169,33 @@ export function useDataFetching<T = any>(options: DataFetchingOptions<T>): DataF
   // Calcular se há erro e se houve sucesso
   const hasError = Boolean(error);
   const isSuccess = Boolean(data) && !hasError;
+  
+  // Adicionar função para limpar o cache manualmente
+  const clearCache = useCallback(() => {
+    if (useCache && cacheResult?.clearCache) {
+      cacheResult.clearCache();
+    }
+  }, [useCache, cacheResult]);
+
+  // Adicionar função para revalidar o cache
+  const revalidateCache = useCallback(() => {
+    if (useCache && cacheResult?.revalidate) {
+      cacheResult.revalidate();
+    } else {
+      // Se não estiver usando cache, apenas refetch
+      fetchData();
+    }
+  }, [useCache, cacheResult]);
+
+  // Verificar se os dados do cache estão potencialmente desatualizados
+  // e revalidar automaticamente se necessário
+  useEffect(() => {
+    if (useCache && cacheResult?.data && cacheResult?.isStale) {
+      // Se temos dados em cache, mas eles estão potencialmente desatualizados,
+      // revalidar em segundo plano
+      fetchData({ silent: true });
+    }
+  }, [useCache, cacheResult?.data, cacheResult?.isStale]);
   
   // Implementação da função principal de fetch
   const fetchData = useCallback(async (): Promise<T | null> => {

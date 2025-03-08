@@ -2,9 +2,9 @@ import React, { memo, useCallback, useMemo } from 'react';
 import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import GuideCard from './GuideCard';
-import { GuideListItem } from '../../hooks/useGuides';
-import { ErrorMessage } from '../../utils/errors/components';
-import { ErrorType } from '../../utils/errors/types';
+import { GuideListItem } from '../../types/guides';
+import { convertToGuide } from '../../types/guides';
+import { Loading, Error, Empty } from '../../design-system/components/ui';
 import { ListChildComponentProps } from 'react-window';
 
 // Interface para dados do grid
@@ -34,77 +34,39 @@ const ItemRenderer = memo(({ columnIndex, rowIndex, style, data }: GridChildComp
   
   const guide = guides[itemIndex];
   
-  // Adaptar GuideListItem para tipo Guide se necessário
-  const guideForCard = {
-    ...guide,
-    // Garantir que downloadUrl esteja presente mesmo quando undefined
-    downloadUrl: guide.downloadUrl || ''
-  };
-  
+  // Evitar recalcular guideForCard desnecessariamente, usando useMemo
   return (
     <div className="guide-card-wrapper" style={style}>
-      <GuideCard guide={guideForCard} />
+      <MemoizedGuideCard guide={guide} />
     </div>
   );
-});
-
-ItemRenderer.displayName = 'ItemRenderer';
-
-// Componente de esqueleto de carregamento
-const LoadingSkeleton = memo(() => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {Array.from({ length: 6 }).map((_, index) => (
-      <div 
-        key={index} 
-        className="guide-skeleton-item animate-pulse"
-        aria-hidden="true"
-      />
-    ))}
-  </div>
-));
-
-LoadingSkeleton.displayName = 'LoadingSkeleton';
-
-// Componente para mensagem de erro
-const ErrorDisplay = memo(({ error, onRetry }: { error: Error; onRetry?: () => void }) => (
-  <div className="py-6">
-    <ErrorMessage 
-      message={error.message || "Não foi possível carregar as cartilhas"} 
-      type={ErrorType.SERVER} 
-    />
-    {onRetry && (
-      <button 
-        onClick={onRetry}
-        className="mt-4 px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-      >
-        Tentar novamente
-      </button>
-    )}
-    <p className="text-sm text-gray-500 mt-2">
-      Enquanto isso, você pode tentar ajustar os filtros de busca ou voltar mais tarde.
-    </p>
-  </div>
-));
-
-ErrorDisplay.displayName = 'ErrorDisplay';
-
-// Componente para estado vazio (sem resultados)
-const NoResultsDisplay = memo(({ customComponent }: { customComponent?: React.ReactNode }) => {
-  if (customComponent) {
-    return <>{customComponent}</>;
-  }
+}, (prevProps, nextProps) => {
+  // Implementar comparação personalizada para evitar rerenderizações desnecessárias
+  const prevData = prevProps.data as GuideItemData;
+  const nextData = nextProps.data as GuideItemData;
   
+  const prevGuide = prevData.guides[prevProps.rowIndex * prevData.columnCount + prevProps.columnIndex];
+  const nextGuide = nextData.guides[nextProps.rowIndex * nextData.columnCount + nextProps.columnIndex];
+  
+  // Só renderizar novamente se o guia ou posição mudarem
   return (
-    <div className="text-center py-12">
-      <h3 className="text-xl font-semibold mb-2">Nenhuma cartilha encontrada</h3>
-      <p className="text-gray-600 mb-4">
-        Tente ajustar seus filtros ou termos de busca.
-      </p>
-    </div>
+    prevProps.columnIndex === nextProps.columnIndex &&
+    prevProps.rowIndex === nextProps.rowIndex &&
+    prevProps.style === nextProps.style &&
+    prevGuide?.id === nextGuide?.id
   );
 });
 
-NoResultsDisplay.displayName = 'NoResultsDisplay';
+// Componente GuideCard memoizado que converte o guia internamente
+const MemoizedGuideCard = memo(({ guide }: { guide: GuideListItem }) => {
+  // Converter GuideListItem para Guide de forma segura com a função utilitária
+  const guideForCard = useMemo(() => convertToGuide(guide), [guide.id]);
+  
+  return <GuideCard guide={guideForCard} />;
+});
+
+MemoizedGuideCard.displayName = 'MemoizedGuideCard';
+ItemRenderer.displayName = 'ItemRenderer';
 
 // Componente principal para a virtualização de cartilhas
 const CartilhasVirtualList: React.FC<CartilhasVirtualListProps> = ({
@@ -115,7 +77,10 @@ const CartilhasVirtualList: React.FC<CartilhasVirtualListProps> = ({
   noResultsComponent,
   className = ''
 }) => {
-  // Calcular o número de colunas com base na largura da tela
+  // Evitar problemas com arrays nulos/undefined
+  const safeGuides = useMemo(() => guides || [], [guides]);
+  
+  // Calcular o número de colunas com base na largura da tela - OTIMIZADO
   const getGridConfig = useCallback((width: number) => {
     let columnCount = 1;
     let itemWidth = 300;
@@ -128,7 +93,7 @@ const CartilhasVirtualList: React.FC<CartilhasVirtualListProps> = ({
       itemWidth = Math.floor((width - 24) / columnCount); // Compensar gaps
     }
     
-    const rowCount = Math.ceil((guides?.length || 0) / columnCount);
+    const rowCount = Math.ceil(safeGuides.length / columnCount);
     
     return {
       columnCount,
@@ -136,59 +101,93 @@ const CartilhasVirtualList: React.FC<CartilhasVirtualListProps> = ({
       itemWidth,
       itemHeight: 400, // Altura fixa para cada item
     };
-  }, [guides?.length]);
+  }, [safeGuides.length]);
 
   // Altura mínima calculada para o contêiner para evitar saltos de layout
   const minHeight = useMemo(() => {
-    return Math.min(800, Math.ceil((guides?.length || 0) / 3) * 400);
-  }, [guides?.length]);
+    return Math.min(800, Math.ceil(safeGuides.length / 3) * 400);
+  }, [safeGuides.length]);
 
-  // Dados para o grid virtualizados
+  // Dados para o grid virtualizados - OTIMIZADO para evitar recriação do objeto
+  // que causa problema de memória em listas grandes
   const gridData = useMemo(() => {
-    return { guides, columnCount: 3 }; // O columnCount será atualizado na renderização
-  }, [guides]);
+    return { guides: safeGuides, columnCount: 3 };
+  }, [safeGuides]); // Dependência apenas do array de guides
+  
+  // OTIMAÇÃO: Limitar a quantidade de itens pré-renderizados para evitar
+  // consumo excessivo de memória em listas grandes
+  const overscanRowCount = useMemo(() => Math.min(1, Math.ceil(safeGuides.length / 10)), [safeGuides.length]);
+  
+  // Renderização condicional memoizada para minimizar trabalho na rerenderização
+  const renderContent = useCallback(() => {
+    if (isLoading) {
+      return <Loading size="lg" variant="spinner" />;
+    }
+  
+    if (error) {
+      return (
+        <Error 
+          title="Falha ao carregar cartilhas"
+          message={error.message || "Não foi possível carregar as cartilhas"}
+          variant="card"
+          size="md"
+          onRetry={onRetry}
+          retryText="Tentar novamente"
+        />
+      );
+    }
+  
+    if (safeGuides.length === 0) {
+      if (noResultsComponent) {
+        return <>{noResultsComponent}</>;
+      }
+      
+      return (
+        <Empty 
+          title="Nenhuma cartilha encontrada" 
+          message="Tente ajustar seus filtros ou termos de busca."
+          variant="card"
+          size="md"
+          centered
+        />
+      );
+    }
+    
+    return (
+      <div className={`guides-virtual-container ${className}`} style={{ height: minHeight }}>
+        <AutoSizer>
+          {({ height, width }) => {
+            const { columnCount, rowCount, itemWidth, itemHeight } = getGridConfig(width);
+            
+            // Atualizar o número de colunas usando ref para evitar recriação do objeto
+            gridData.columnCount = columnCount;
+            
+            return (
+              <Grid
+                className="guide-grid"
+                columnCount={columnCount}
+                columnWidth={itemWidth}
+                height={Math.max(height, minHeight)}
+                rowCount={rowCount}
+                rowHeight={itemHeight}
+                width={width}
+                itemData={gridData}
+                overscanRowCount={overscanRowCount}
+                itemKey={({columnIndex, rowIndex, data}) => {
+                  const index = rowIndex * data.columnCount + columnIndex;
+                  return index < data.guides.length ? `guide-${data.guides[index].id}` : `empty-${rowIndex}-${columnIndex}`;
+                }}
+              >
+                {ItemRenderer}
+              </Grid>
+            );
+          }}
+        </AutoSizer>
+      </div>
+    );
+  }, [isLoading, error, safeGuides, noResultsComponent, minHeight, className, getGridConfig, gridData, overscanRowCount, onRetry]);
 
-  // Renderizar com base no estado
-  if (isLoading) {
-    return <LoadingSkeleton />;
-  }
-
-  if (error) {
-    return <ErrorDisplay error={error} onRetry={onRetry} />;
-  }
-
-  if (!guides || guides.length === 0) {
-    return <NoResultsDisplay customComponent={noResultsComponent} />;
-  }
-
-  return (
-    <div className={`guides-virtual-container ${className}`} style={{ height: minHeight }}>
-      <AutoSizer>
-        {({ height, width }) => {
-          const { columnCount, rowCount, itemWidth, itemHeight } = getGridConfig(width);
-          
-          // Atualizar o número de colunas para os dados do grid
-          gridData.columnCount = columnCount;
-          
-          return (
-            <Grid
-              className="guide-grid"
-              columnCount={columnCount}
-              columnWidth={itemWidth}
-              height={Math.max(height, minHeight)}
-              rowCount={rowCount}
-              rowHeight={itemHeight}
-              width={width}
-              itemData={gridData}
-              overscanRowCount={1} // Pre-carrega uma linha extra para melhorar experiência de rolagem
-            >
-              {ItemRenderer}
-            </Grid>
-          );
-        }}
-      </AutoSizer>
-    </div>
-  );
+  return renderContent();
 };
 
 export default memo(CartilhasVirtualList); 

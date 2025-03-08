@@ -17,15 +17,34 @@ export const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   className = ''
 }) => {
-  // Determinar quais páginas mostrar
+  // Detectar se estamos em uma tela pequena
+  const [isSmallScreen, setIsSmallScreen] = React.useState(false);
+  
+  // Efeito para detectar o tamanho da tela
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+    
+    // Verificar tamanho inicial
+    checkScreenSize();
+    
+    // Adicionar listener para mudanças de tamanho
+    window.addEventListener('resize', checkScreenSize);
+    
+    // Limpar listener
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+  
+  // Determinar quais páginas mostrar com base no tamanho da tela
   const getPageNumbers = () => {
     const pages = [];
     
     // Sempre mostrar a primeira página
     pages.push(1);
     
-    // Adicionar páginas ao redor da página atual
-    const range = 2; // Quantas páginas mostrar para cada lado
+    // Em telas pequenas, mostrar menos páginas ao redor da atual
+    const range = isSmallScreen ? 1 : 2;
     
     for (let i = Math.max(2, currentPage - range); i <= Math.min(totalPages - 1, currentPage + range); i++) {
       pages.push(i);
@@ -58,6 +77,20 @@ export const Pagination: React.FC<PaginationProps> = ({
     return null;
   }
   
+  // Função para ir para a página anterior com verificação de limites
+  const goToPrevPage = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
+  };
+  
+  // Função para ir para a próxima página com verificação de limites
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1);
+    }
+  };
+  
   return (
     <nav
       aria-label="Paginação"
@@ -67,9 +100,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         {/* Botão Anterior */}
         <li>
           <button
-            onClick={() => onPageChange(currentPage - 1)}
+            onClick={goToPrevPage}
             disabled={currentPage === 1}
-            className={`flex items-center justify-center w-10 h-10 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+            className={`flex items-center justify-center ${isSmallScreen ? 'w-8 h-8' : 'w-10 h-10'} rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 ${
               currentPage === 1
                 ? 'cursor-not-allowed text-gray-400'
                 : 'hover:bg-gray-100 text-gray-700'
@@ -86,7 +119,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           if (page < 0) {
             return (
               <li key={`ellipsis-${index}`}>
-                <span className="flex items-center justify-center w-10 h-10 text-gray-500">
+                <span className={`flex items-center justify-center ${isSmallScreen ? 'w-8 h-8' : 'w-10 h-10'} text-gray-500`}>
                   ...
                 </span>
               </li>
@@ -100,7 +133,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 onClick={() => onPageChange(page)}
                 aria-current={currentPage === page ? 'page' : undefined}
                 aria-label={`Página ${page}`}
-                className={`flex items-center justify-center w-10 h-10 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                className={`flex items-center justify-center ${isSmallScreen ? 'w-8 h-8 text-sm' : 'w-10 h-10'} rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                   currentPage === page
                     ? 'bg-primary-600 text-white'
                     : 'hover:bg-gray-100 text-gray-700'
@@ -115,9 +148,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         {/* Botão Próximo */}
         <li>
           <button
-            onClick={() => onPageChange(currentPage + 1)}
+            onClick={goToNextPage}
             disabled={currentPage === totalPages}
-            className={`flex items-center justify-center w-10 h-10 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+            className={`flex items-center justify-center ${isSmallScreen ? 'w-8 h-8' : 'w-10 h-10'} rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 ${
               currentPage === totalPages
                 ? 'cursor-not-allowed text-gray-400'
                 : 'hover:bg-gray-100 text-gray-700'

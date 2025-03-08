@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { cn } from '../../utils/cn';
+import { Loading } from '../../design-system/components/ui';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -103,17 +104,20 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
     <>
       {isLoading ? (
         <>
-          <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          {loadingText || children}
+          <Loading 
+            size="sm" 
+            variant="spinner" 
+            className="mr-2" 
+            color="currentColor"
+            aria-hidden="true"
+          />
+          <span>{loadingText || children}</span>
         </>
       ) : (
         <>
-          {leftIcon && <span className="inline-flex">{leftIcon}</span>}
-          {children}
-          {rightIcon && <span className="inline-flex">{rightIcon}</span>}
+          {leftIcon && <span className="inline-flex" aria-hidden="true">{leftIcon}</span>}
+          <span>{children}</span>
+          {rightIcon && <span className="inline-flex" aria-hidden="true">{rightIcon}</span>}
         </>
       )}
     </>
@@ -122,6 +126,10 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
   // Renderizar como link externo
   if (isExternalLink(props)) {
     const { href, external, variant, size, fullWidth, leftIcon, rightIcon, isLoading, loadingText, ...linkProps } = props;
+    // Preparar os atributos ARIA como strings literais para evitar erros de linter
+    const isDisabled = isLoading || disabled;
+    const ariaDisabled = isDisabled ? "true" : "false";
+    
     return (
       <a 
         ref={ref as React.Ref<HTMLAnchorElement>}
@@ -129,6 +137,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
         target="_blank"
         rel="noopener noreferrer"
         className={allClasses}
+        aria-disabled={ariaDisabled}
         {...linkProps}
       >
         {content}
@@ -139,11 +148,16 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
   // Renderizar como Link do React Router
   if (isInternalLink(props)) {
     const { href, external, variant, size, fullWidth, leftIcon, rightIcon, isLoading, loadingText, ...linkProps } = props;
+    // Preparar os atributos ARIA como strings literais para evitar erros de linter
+    const isDisabled = isLoading || disabled;
+    const ariaDisabled = isDisabled ? "true" : "false";
+    
     return (
       <Link 
         ref={ref as React.Ref<HTMLAnchorElement>}
         to={href} 
-        className={allClasses} 
+        className={allClasses}
+        aria-disabled={ariaDisabled}
         {...linkProps}
       >
         {content}
@@ -153,12 +167,15 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
 
   // Renderizar como botão padrão
   const { variant: _v, size: _s, fullWidth: _fw, leftIcon: _li, rightIcon: _ri, isLoading: _il, loadingText: _lt, ...buttonProps } = rest as ButtonProps;
+  // Preparar os atributos ARIA como strings literais para evitar erros de linter
+  const ariaBusy = isLoading ? "true" : "false";
   
   return (
     <button 
       ref={ref as React.Ref<HTMLButtonElement>}
       className={allClasses}
       disabled={isLoading || disabled}
+      aria-busy={ariaBusy}
       {...buttonProps}
     >
       {content}
