@@ -8,7 +8,14 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+      includeAssets: [
+        'favicon.ico', 
+        'robots.txt', 
+        'icons/apple-touch-icon.png',
+        'icons/favicon-16x16.png',
+        'icons/favicon-32x32.png',
+        'icons/safari-pinned-tab.svg'
+      ],
       manifest: {
         name: 'OCTO - Inclusão e Acessibilidade',
         short_name: 'OCTO',
@@ -18,20 +25,36 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/android-chrome-192x192.png',
+            src: '/icons/android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/android-chrome-512x512.png',
+            src: '/icons/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           },
           {
-            src: '/android-chrome-512x512.png',
+            src: '/icons/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'maskable'
+          },
+          {
+            src: '/icons/apple-touch-icon.png',
+            sizes: '180x180',
+            type: 'image/png',
+            purpose: 'apple touch icon'
+          },
+          {
+            src: '/icons/favicon-32x32.png',
+            sizes: '32x32',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/favicon-16x16.png',
+            sizes: '16x16',
+            type: 'image/png'
           }
         ]
       },
