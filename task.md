@@ -501,11 +501,11 @@
        - [x] Adicionar novos keyframes em src/design-system/utils/animations/index.ts
        - [x] Criar utilitários em src/design-system/tokens/unified-tokens.ts
        - [x] Usar Framer Motion para casos mais complexos, seguindo o exemplo em src/components/notifications/Toast.tsx
-     - [x] Adicionar suporte a preferências de usuário para redução de movimento
-       - [x] Modificar src/services/api/types.ts para adicionar reduceMotion à interface UserPreferences
-       - [x] Criar novos hooks para detectar prefers-reduced-motion na pasta src/design-system/utils/hooks/
-       - [x] Implementar lógica condicional em src/design-system/utils/animations/index.ts
-       - [x] Adicionar variáveis condicionais em src/styles/reduced-motion.css
+       - [x] Adicionar suporte a preferências de usuário para redução de movimento
+         - [x] Modificar src/services/api/types.ts para adicionar reduceMotion à interface UserPreferences
+         - [x] Criar novos hooks para detectar prefers-reduced-motion na pasta src/design-system/utils/hooks/
+         - [x] Implementar lógica condicional em src/design-system/utils/animations/index.ts
+         - [x] Adicionar variáveis condicionais em src/styles/reduced-motion.css
    - **Tarefas de Validação**
      - [ ] Auditar todos os componentes para garantir conformidade com o novo sistema
        - [ ] Verificar uso consistente de tokens de design em todos os componentes
@@ -631,4 +631,135 @@ src/
 - Material Design 3 para elevação e sombras (`.md3-elevation-1`, `.md3-elevation-2`, `.md3-elevation-3`)
 - Animações padronizadas (`.transition-standard`, `.hover-lift`)
 - Lazy loading otimizado
+
+## Novas Tarefas e Melhorias Adicionadas 🆕
+
+### Problemas Críticos a Resolver 🚨
+1. **Corrigir Incompatibilidades de Tipos**
+   - [x] Resolver incompatibilidade entre `GuideListItem` e `Guide` no componente CartilhasVirtualList
+   - [ ] Revisar e corrigir todas as interfaces relacionadas a cartilhas e guias
+   - [ ] Padronizar convenções de tipos em todo o projeto
+   - [ ] Implementar validações de tipo em tempo de execução para dados da API
+
+2. **Corrigir Problemas de Acessibilidade**
+   - [x] Corrigir atributos ARIA inválidos no componente Card
+   - [ ] Realizar auditoria completa de acessibilidade em todos componentes interativos
+   - [ ] Implementar focus trap em modals e dropdowns
+   - [ ] Adicionar controles de teclado para todos componentes interativos
+   - [ ] Criar contexto de acessibilidade para gerenciar preferências do usuário
+
+3. **Otimização de Performance**
+   - [x] Implementar backoff exponencial para retentativas de API
+   - [ ] Otimizar renderização de listas grandes com virtualização
+   - [ ] Implementar lazy loading inteligente para imagens e componentes pesados
+   - [ ] Configurar Service Worker para cache de assets
+   - [ ] Adicionar métricas de performance de usuário real (RUM)
+
+### Melhorias de Infraestrutura 🔧
+
+1. **Otimização da pasta `/public`**
+   - [ ] Revisar e otimizar `robots.txt` para melhor indexação
+   - [ ] Atualizar `sitemap.xml` para incluir novas páginas
+   - [ ] Implementar cache agressivo para arquivos estáticos no `.htaccess`
+   - [ ] Adicionar mais metadados Open Graph no `index.html`
+   - [ ] Expandir `manifest.webmanifest` com suporte a temas e ícones diversos
+
+2. **Configuração do Storybook**
+   - [ ] Migrar configurações para Storybook 7.x
+   - [ ] Implementar decoradores para tema e internacionalização
+   - [ ] Adicionar controles de acessibilidade nas histórias
+   - [ ] Criar histórias para todos os componentes principais
+   - [ ] Integrar testes visuais automatizados no Storybook
+
+3. **Organização de Código**
+   - [ ] Reorganizar pastas por domínio ao invés de tipo
+   - [ ] Criar arquivos de barril (index.ts) para todas as pastas
+   - [ ] Padronizar nomenclatura de arquivos e componentes
+   - [ ] Implementar imports organizados com aliases consistentes
+   - [ ] Revisar e atualizar documentação de código
+
+### Refinamentos do Design System 🎨
+
+1. **Componentes Base**
+   - [ ] Revisar e atualizar sistema de tipos para componentes base
+   - [ ] Implementar variantes mais flexíveis para Card e Button
+   - [ ] Criar componentes compostos para padrões comuns de UI
+   - [ ] Adicionar testes unitários para todos componentes do Design System
+   - [ ] Documentar padrões de uso e exemplos interativos
+
+2. **Acessibilidade e Internacionalização**
+   - [ ] Implementar suporte completo para i18n em todos componentes
+   - [ ] Criar contexto de tema com suporte para alto contraste
+   - [ ] Adicionar suporte para texto e controles redimensionáveis
+   - [ ] Implementar testes automatizados para acessibilidade
+   - [ ] Criar guidelines de acessibilidade para desenvolvedores
+
+3. **Tokens e Estilos**
+   - [ ] Revisar e consolidar tokens de design para consistência
+   - [ ] Implementar variantes de tema (claro, escuro, alto contraste)
+   - [ ] Criar sistema de formatação para valores regionais (datas, números)
+   - [ ] Otimizar sistema de cores para garantir contraste adequado
+   - [ ] Documentar sistema de espaçamento e grid
+
+### DevOps e Qualidade 🔄
+
+1. **Testes Automatizados**
+   - [ ] Implementar testes unitários para todos componentes críticos
+   - [ ] Configurar testes E2E para fluxos principais do usuário
+   - [ ] Implementar testes de regressão visual
+   - [ ] Adicionar testes de performance e carga
+   - [ ] Configurar relatórios de cobertura de código
+
+2. **CI/CD**
+   - [ ] Configurar pipeline de integração contínua
+   - [ ] Implementar deploys automáticos para ambientes de teste
+   - [ ] Criar processo de release automatizado
+   - [ ] Adicionar verificações de segurança ao pipeline
+   - [ ] Implementar monitoramento de produção
+
+### Bugs Conhecidos a Corrigir 🐛
+
+1. **Críticos**
+   - [x] Corrigir erro no componente CartilhasVirtualList relacionado a tipos
+   - [ ] Resolver problemas de acessibilidade no Card e Button
+   - [ ] Corrigir problema de memória em listas grandes
+   - [ ] Resolver erros de cache que causam dados desatualizados
+   - [ ] Corrigir comportamento errático da paginação em telas pequenas
+
+2. **Importantes**
+   - [ ] Corrigir layout quebrado em navegadores móveis específicos
+   - [ ] Resolver problemas de contraste em alguns elementos de UI
+   - [ ] Corrigir animações que podem causar problemas em dispositivos antigos
+   - [ ] Resolver warnings no console sobre props não utilizadas
+   - [ ] Corrigir problemas de foco em elementos interativos
+
+### Melhorias nos Componentes de Cartilhas 📚
+
+1. **CartilhasVirtualList**
+   - [x] Corrigir incompatibilidade entre `GuideListItem` e `Guide` no componente
+   - [ ] Melhorar a virtualização para lidar com milhares de itens sem problemas de performance
+   - [ ] Adicionar animações de fade-in para novos itens carregados
+   - [ ] Implementar prefetch de dados para a próxima página
+   - [ ] Adicionar estados de carregamento progressivo para melhorar a experiência do usuário
+
+2. **GuidesFilter**
+   - [ ] Melhorar acessibilidade dos controles de filtro
+   - [ ] Otimizar performace de filtragem para grandes conjuntos de dados
+   - [ ] Implementar persistência de preferências de filtro
+   - [ ] Adicionar filtros avançados (intervalo de datas, múltiplas tags)
+   - [ ] Criar URL amigáveis que reflitam o estado dos filtros
+
+3. **Sistema de Cache e Resiliência**
+   - [x] Implementar backoff exponencial para retentativas de API
+   - [x] Adicionar suporte a configurações de retry por ambiente
+   - [ ] Implementar cache em vários níveis (memória, localStorage, IndexedDB)
+   - [ ] Criar sistema de sincronização offline para uso sem conectividade
+   - [ ] Adicionar suporte a websockets para atualizações em tempo real de cartilhas populares
+
+4. **Experiência do Usuário**
+   - [ ] Implementar sistema de avaliação e feedback para cartilhas
+   - [ ] Adicionar recursos de compartilhamento em redes sociais
+   - [ ] Criar sistema de recomendações baseado em interesses do usuário
+   - [ ] Implementar notificações para novas cartilhas em categorias favoritas
+   - [ ] Adicionar visualização prévia de conteúdo em hover
 
