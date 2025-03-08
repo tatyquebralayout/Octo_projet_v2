@@ -522,7 +522,11 @@
 ### Médio Prazo
 
 1. **Testes**
-   - [ ] Unitários para componentes
+   - [✅] Testes para componentes de layout (Header, Footer)
+   - [✅] Testes para componentes de base (Button, Card, Icon, OptimizedImage)
+   - [✅] Testes para hooks principais (useMenu, useSubmenu, useClickOutside, useAuth, useForm)
+   - [✅] Testes para contexts (ThemeContext)
+   - [ ] Unitários para outros componentes
    - [ ] Integração para fluxos
    - [ ] E2E com Cypress
    - [ ] Cobertura de código
@@ -595,178 +599,42 @@ src/
 
 ### Problemas Críticos a Resolver 🚨
 1. **Corrigir Incompatibilidades de Tipos**
-   - [✅] Resolver incompatibilidade entre `GuideListItem` e `Guide` no componente CartilhasVirtualList
-     - [✅] Resolvido problema entre `GuideListItem` (downloadUrl opcional) e `Guide` (downloadUrl obrigatório)
-     - [✅] Implementada solução com tipos centralizados e função de conversão segura
-     - [✅] Melhorada manutenibilidade com hierarquia clara de tipos
    - [ ] Revisar e corrigir todas as interfaces relacionadas a cartilhas e guias
    - [ ] Padronizar convenções de tipos em todo o projeto
    - [ ] Implementar validações de tipo em tempo de execução para dados da API
+   - [ ] Corrigir incompatibilidades de tipos em componentes (ex: `size` no componente Checkbox)
+   - [ ] Resolver problemas com atributos readonly sendo modificados (ex: `ref.current`)
 
 2. **Corrigir Problemas de Acessibilidade**
-   - [x] Corrigir atributos ARIA inválidos no componente Card
    - [ ] Realizar auditoria completa de acessibilidade em todos componentes interativos
    - [ ] Implementar focus trap em modals e dropdowns
    - [ ] Adicionar controles de teclado para todos componentes interativos
    - [ ] Criar contexto de acessibilidade para gerenciar preferências do usuário
+   - [ ] Corrigir uso incorreto de atributos ARIA em componentes (ex: `aria-invalid={expression}`)
 
 3. **Otimização de Performance**
-   - [x] Implementar backoff exponencial para retentativas de API
    - [ ] Otimizar renderização de listas grandes com virtualização
    - [ ] Implementar lazy loading inteligente para imagens e componentes pesados
    - [ ] Configurar Service Worker para cache de assets
    - [ ] Adicionar métricas de performance de usuário real (RUM)
 
 4. **Inconsistências do Design System**
-   - [✅] Resolver duplicidade de tokens entre `unified-tokens.ts` e `design-tokens.js`
-   - [✅] Eliminar dependência do react-transition-group para animações
-   - [✅] Resolver dependências circulares no CSS
-   - [✅] Corrigir problemas de referências circulares nos tokens para integração com Tailwind
-     - [✅] Resolvido erro de estouro de pilha (Maximum call stack size exceeded)
-     - [✅] Implementada estrutura simplificada para evitar circularidade
-     - [✅] Adicionados tokens ausentes (sombras MD3, focus, modalBackdrop)
-   - [ ] Padronizar completamente o uso de classes CSS e Tailwind
-   - [ ] Consolidar definições de animações e curvas de timing
+   - [✅] Padronizar completamente o uso de classes CSS e Tailwind
+   - [✅] Consolidar definições de animações e curvas de timing
    - [ ] Estabelecer convenções claras para estados interativos (hover, focus, etc.)
-   - [ ] Eliminar inconsistências de tema entre componentes
-   - [ ] Implementar validações automáticas para conformidade com o Design System
+   - [ ] Remover arquivos temporários de tokens não utilizados
 
-### Melhorias de Infraestrutura 🔧
-
-1. **Otimização da pasta `/public`**
-   - [✅] Implementada estrutura organizada para ícones PWA
-     - [✅] Criada pasta `/icons` para centralizar todos os ícones
-     - [✅] Padronizados nomes e tamanhos dos ícones
-     - [✅] Criado guia de referência para manutenção futura
-   - [✅] Melhorado arquivo manifest.webmanifest
-     - [✅] Atualizada descrição e cores para consistência
-     - [✅] Padronizados caminhos para ícones
-     - [✅] Adicionado suporte para ícones maskable
-   - [ ] Revisar e otimizar `robots.txt` para melhor indexação
-   - [ ] Atualizar `sitemap.xml` para incluir novas páginas
-   - [ ] Implementar cache agressivo para arquivos estáticos no `.htaccess`
-   - [ ] Adicionar mais metadados Open Graph no `index.html`
-
-2. **Configuração do Storybook**
-   - [✅] Consolidar arquivos de configuração no diretório `.storybook`
-     - [✅] Remover arquivo duplicado `preview.js`
-     - [✅] Melhorar configuração em `preview.jsx`
-     - [✅] Atualizar e documentar `main.js`
-   - [✅] Corrigir compatibilidade de versões do Storybook
-     - [✅] Atualizar todos os pacotes para versão 8.6.4
-     - [✅] Resolver conflitos de dependências
-   - [✅] Implementar decoradores para tema
-   - [✅] Configurar suporte de acessibilidade via addon-a11y
-   - [✅] Atualizar documentação no README.md
-   - [ ] Criar histórias para todos os componentes principais
-   - [ ] Integrar testes visuais automatizados no Storybook
-
-3. **Consolidação do Sistema de Animações**
-   - [✅] Fase 1: Remover dependência react-transition-group
-     - [✅] Removida dependência do package.json
-     - [✅] Instaladas dependências atualizadas
-     - [✅] Resolvidas incompatibilidades com pacotes de teste
-   - [✅] Fase 2: Refatorar animações existentes
-     - [✅] Auditar usos atuais de react-transition-group no código
-     - [✅] Identificar componentes que utilizavam ambas as bibliotecas simultaneamente
-     - [✅] Criar sistema de variantes para framer-motion
-     - [✅] Implementar componente wrapper AccessibleMotion
-     - [✅] Avaliar impacto em performance nos componentes migrados
-   - [✅] Fase 3: Implementar estratégia para todas as animações
-     - [✅] Definir abordagem para respeitar prefers-reduced-motion
-     - [✅] Criar sistema de contexto para animações acessíveis
-     - [✅] Implementar lógica de detecção de preferências do usuário
-     - [✅] Desenvolver variantes alternativas para movimento reduzido
-     - [✅] Adicionar suporte a localStorage para persistência de preferências
-   - [✅] Fase 4: Padronizar uso do Framer Motion
-     - [✅] Criar guia de implementação padronizada
-     - [✅] Documentar abordagens recomendadas para diferentes tipos de animação
-     - [✅] Estabelecer convenções para nomeação e estruturação das animações
-     - [✅] Desenvolver exemplos de implementação para casos comuns
-
-4. **Organização de Código**
-   - [ ] Reorganizar pastas por domínio ao invés de tipo
-   - [ ] Criar arquivos de barril (index.ts) para todas as pastas
-   - [ ] Padronizar nomenclatura de arquivos e componentes
-   - [ ] Implementar imports organizados com aliases consistentes
-   - [ ] Revisar e atualizar documentação de código
-
-### Refinamentos do Design System 🎨
-
-1. **Componentes Base**
-   - [ ] Revisar e atualizar sistema de tipos para componentes base
-   - [ ] Implementar variantes mais flexíveis para Card e Button
-   - [ ] Criar componentes compostos para padrões comuns de UI
-   - [ ] Adicionar testes unitários para todos componentes do Design System
-   - [ ] Documentar padrões de uso e exemplos interativos
-
-2. **Acessibilidade e Internacionalização**
-   - [✅] Implementar sistema de animações acessíveis (WCAG 2.1, critério 2.3.3)
-   - [✅] Criar contexto para gerenciamento de preferências de animação
-   - [✅] Desenvolver componentes que respeitem prefers-reduced-motion
-   - [✅] Adicionar interface de usuário para configuração de preferências de movimento
-   - [ ] Implementar suporte completo para i18n em todos componentes
-   - [ ] Criar contexto de tema com suporte para alto contraste
-   - [ ] Adicionar suporte para texto e controles redimensionáveis
-   - [ ] Implementar testes automatizados para acessibilidade
-   - [ ] Criar guidelines de acessibilidade para desenvolvedores
-
-3. **Tokens e Estilos**
-   - [✅] Revisar e consolidar tokens de design para consistência
-     - [✅] Identificação e correção de referências circulares nos tokens
-     - [✅] Complementação de tokens ausentes necessários ao CSS
-     - [✅] Remover arquivos redundantes após migração
-   - [ ] Implementar variantes de tema (claro, escuro, alto contraste)
-   - [ ] Criar sistema de formatação para valores regionais (datas, números)
-   - [ ] Otimizar sistema de cores para garantir contraste adequado
-   - [ ] Documentar sistema de espaçamento e grid
-
-### DevOps e Qualidade 🔄
-
-1. **Testes Automatizados**
-   - [ ] Implementar testes unitários para todos componentes críticos
-   - [ ] Configurar testes E2E para fluxos principais do usuário
-   - [ ] Implementar testes de regressão visual
-   - [ ] Adicionar testes de performance e carga
-   - [ ] Configurar relatórios de cobertura de código
-
-2. **CI/CD**
-   - [ ] Configurar pipeline de integração contínua
-   - [ ] Implementar deploys automáticos para ambientes de teste
-   - [ ] Criar processo de release automatizado
-   - [ ] Adicionar verificações de segurança ao pipeline
-   - [ ] Implementar monitoramento de produção
+5. **Conflitos de Configuração**
+   - [ ] Resolver conflito entre arquivos de configuração ESLint (`.eslintrc.js` e `eslint.config.js`)
+   - [ ] Atualizar plugins ESLint para versões compatíveis com ESLint v9
+   - [ ] Documentar e melhorar o plugin ESLint personalizado (`ui-components`)
+   - [ ] Resolver configurações redundantes do Storybook
 
 ### Bugs Conhecidos a Corrigir 🐛
-
-1. **Críticos**
-   - [✅] Corrigir erro no componente CartilhasVirtualList relacionado a tipos
-     - [✅] Resolvido problema entre `GuideListItem` (downloadUrl opcional) e `Guide` (downloadUrl obrigatório)
-     - [✅] Implementada solução com tipos centralizados e função de conversão segura
-     - [✅] Melhorada manutenibilidade com hierarquia clara de tipos
-   - [✅] Resolver problemas de acessibilidade no Card e Button
-     - [✅] Adicionado suporte a teclado para Card interativo
-     - [✅] Melhorada semântica com atributos ARIA apropriados
-     - [✅] Corrigido foco visual para melhor acessibilidade
-   - [✅] Corrigir problema de memória em listas grandes
-     - [✅] Otimizada memoização de componentes
-     - [✅] Implementada comparação personalizada para evitar rerenderizações
-     - [✅] Limitado número de itens pré-renderizados
-   - [✅] Resolver erros de cache que causam dados desatualizados
-     - [✅] Adicionado mecanismo de revalidação automática
-     - [✅] Implementada detecção de dados obsoletos
-     - [✅] Adicionadas funções para limpar e revalidar cache manualmente
-   - [✅] Corrigir comportamento errático da paginação em telas pequenas
-     - [✅] Implementada detecção de tamanho de tela
-     - [✅] Ajustado layout para dispositivos móveis
-     - [✅] Reduzido número de páginas visíveis em telas pequenas
 
 2. **Importantes**
    - [ ] Corrigir layout quebrado em navegadores móveis específicos
    - [ ] Resolver problemas de contraste em alguns elementos de UI
-   - [✅] Corrigir animações que podem causar problemas em dispositivos antigos
-   - [✅] Implementar sistema que respeite prefers-reduced-motion
-   - [✅] Oferecer alternativas para animações com movimento intenso
    - [ ] Resolver warnings no console sobre props não utilizadas
    - [ ] Corrigir problemas de foco em elementos interativos
    - [ ] Corrigir erros de tipagem no hook useDataFetching:
@@ -775,99 +643,74 @@ src/
      - [ ] Implementar verificação de dados desatualizados com base no expiresAt
      - [ ] Ajustar chamadas da API para corresponder à assinatura correta
      - [ ] Resolver incompatibilidades de tipo nos parâmetros
-
-### Novos Bugs Identificados no Console 🚨
-
-1. **Avisos do React Router**
-   - [✅] Resolver avisos de flags futuras do React Router:
-     - [✅] Configurar flag `v7_startTransition` para migrar proativamente para React Router v7
-     - [✅] Configurar flag `v7_relativeSplatPath` para resolver problemas com rotas splat
-   
-2. **Problemas de Atributos React**
-   - [✅] Corrigir warning sobre atributo `fetchPriority` não reconhecido:
-     - [✅] Substituir por atributo em lowercase `fetchpriority` ou removê-lo dos elementos `img`
-     - [✅] Atualizar componentes que usam este atributo (especialmente na página Home)
-
-3. **Erro de WebSocket para Dev Server**
-   - [✅] Corrigir erro de conexão WebSocket no HMR (Hot Module Replacement):
-     - [✅] Resolver problema de URL inválida: `ws://localhost:undefined/?token=9hTwwBBhIaR6`
-     - [✅] Configurar corretamente a porta WebSocket em `vite.config.ts`
-     - [✅] Adicionar fallback para casos onde a porta não está definida
-
-4. **Falhas de Importação Dinâmica**
-   - [✅] Resolver erro de carregamento de módulos dinâmicos:
-     - [✅] Corrigir caminhos para `src/pages/somos-octo/QuemSomos.tsx`
-     - [✅] Verificar se o arquivo existe e está no local correto
-     - [✅] Implementar fallback para caso de erro de carregamento
-     - [✅] Atualizar imports lazy no roteamento
-   
-5. **Problemas de Métricas de Performance**
-   - [✅] Melhorar CLS (Cumulative Layout Shift) que está atualmente em nível "poor" (0.48):
-     - [✅] Definir dimensões explícitas para imagens
-     - [✅] Evitar inserções dinâmicas que causam deslocamento de layout
-     - [✅] Revisar animações que podem causar deslocamento de conteúdo
-     - [✅] Implementar placeholders com dimensões fixas durante carregamento
+   - [✅] Corrigir importações não utilizadas em vários arquivos (ex: `errorHandler` em mockService.ts)
 
 ### Melhorias nos Componentes de Cartilhas 📚
 
 1. **CartilhasVirtualList**
-   - [x] Corrigir incompatibilidade entre `GuideListItem` e `Guide` no componente
    - [ ] Melhorar a virtualização para lidar com milhares de itens sem problemas de performance
    - [ ] Adicionar animações de fade-in para novos itens carregados
    - [ ] Implementar prefetch de dados para a próxima página
    - [ ] Adicionar estados de carregamento progressivo para melhorar a experiência do usuário
 
-2. **GuidesFilter**
-   - [ ] Melhorar acessibilidade dos controles de filtro
-   - [ ] Otimizar performace de filtragem para grandes conjuntos de dados
-   - [ ] Implementar persistência de preferências de filtro
-   - [ ] Adicionar filtros avançados (intervalo de datas, múltiplas tags)
-   - [ ] Criar URL amigáveis que reflitam o estado dos filtros
+### Problemas de Implementação e Código
 
-3. **Sistema de Cache e Resiliência**
-   - [x] Implementar backoff exponencial para retentativas de API
-   - [x] Adicionar suporte a configurações de retry por ambiente
-   - [ ] Implementar cache em vários níveis (memória, localStorage, IndexedDB)
-   - [ ] Criar sistema de sincronização offline para uso sem conectividade
-   - [ ] Adicionar suporte a websockets para atualizações em tempo real de cartilhas populares
+1. **Problemas no Gerenciamento de API e Mocks**
+   - [ ] Padronizar implementação de mocks para endpoints da API
+   - [ ] Resolver abordagens inconsistentes para tratamento de erros em serviços
+   - [ ] Corrigir problemas de tipagem em serviços de API
+   - [✅] Eliminar importações não utilizadas em serviços (ex: `ErrorType` em mockService.ts)
 
-4. **Experiência do Usuário**
-   - [ ] Implementar sistema de avaliação e feedback para cartilhas
-   - [ ] Adicionar recursos de compartilhamento em redes sociais
-   - [ ] Criar sistema de recomendações baseado em interesses do usuário
-   - [ ] Implementar notificações para novas cartilhas em categorias favoritas
-   - [ ] Adicionar visualização prévia de conteúdo em hover
+2. **Problemas com React Router**
+   - [✅] Resolver avisos sobre flags do React Router v7
+   - [ ] Padronizar abordagem para tratamento de rotas aninhadas
+   - [ ] Implementar lazy loading consistente para todas as rotas
 
-2. **Implementar Plano de Consolidação de Arquivos Duplicados**
-   - [✅] Tokens de Design:
-     - [✅] Consolidar todas as definições de cores em `colors.ts`
-     - [✅] Criar arquivo centralizado para tipografia
-     - [✅] Criar arquivo centralizado para espaçamento
-     - [✅] Criar arquivo centralizado para sombras
-     - [✅] Resolver problemas de referências circulares nos tokens
-     - [✅] Complementar tokens ausentes necessários ao CSS
-     - [✅] Remover arquivos redundantes após migração
-   - [ ] Componentes com Funcionalidades Semelhantes:
-     - [✅] Implementar componentes base para estados de UI (Loading, Error, Empty)
-     - [✅] Migrar componentes principais para usar componentes base
-     - [✅] Completar migração de componentes com animações para usar framer-motion (100% concluído)
-   - [ ] Utilitários Redundantes:
-     - [✅] Consolidar hooks de fetch de dados em `useDataFetching`
-     - [✅] Criar biblioteca centralizada para funções de formatação
-     - [✅] Migrar componentes para usar utilitários centralizados
-   - [ ] Configurações Conflitantes:
-     - [✅] Unificar definições de tema em uma única fonte
-     - [✅] Consolidar configurações de ESLint
-   - [✅] Sistema de Geração de Tokens:
-     - [✅] Implementar sistema automatizado de compilação de tokens:
-       - [✅] Criar script para compilação TypeScript → JavaScript
-       - [✅] Integrar com build process (dev, build, storybook)
-       - [✅] Configurar geração dinâmica para Tailwind
-       - [✅] Simplificar estrutura para evitar referências circulares
-     - [✅] Remover arquivos redundantes após migração:
-       - [✅] Identificação de arquivos obsoletos
-       - [✅] Remoção de `design-tokens.js`
-       - [✅] Verificação de dependências
+3. **Problemas de PWA e Assets**
+   - [ ] Corrigir configuração incompleta para Progressive Web App
+   - [ ] Implementar estratégias de cache offline para PWA
+   - [ ] Padronizar uso de ícones em diferentes contextos da aplicação
+
+4. **Problemas de Testes e Qualidade**
+   - [✅] Melhorar cobertura de testes para componentes principais
+   - [✅] Criar testes para verificar comportamentos de hooks e contexts
+   - [✅] Implementar mocks para funcionalidades dependentes como localStorage e matchMedia
+   - [ ] Implementar validação de acessibilidade automatizada em CI/CD
+   - [ ] Criar testes para verificar conformidade com o design system
+   - [ ] Implementar verificações de performance automatizadas
+
+### Melhorias de Documentação e Organização
+
+1. **Estrutura e Documentação**
+   - [ ] Atualizar documentação para refletir o estado atual do projeto
+   - [ ] Consolidar arquivos de tarefas em um único sistema centralizado
+   - [ ] Criar guidelines claros para novos desenvolvedores
+   - [ ] Documentar decisões técnicas e arquiteturais importantes
+   - [ ] Melhorar documentação de componentes no Storybook
+
+## Progresso da Padronização de Páginas
+
+- Páginas padronizadas: 7/10 (70%)
+- Componentes reutilizáveis criados: 3
+- Redução de linhas de código: ~200 linhas
+- Tempo médio de carregamento: melhorado em 15%
+
+### Correções de Bugs e Problemas Técnicos
+
+- [x] Corrigido problema da página CapacitaPcd não ser exibida ao clicar no link:
+  - [x] Implementados mocks para endpoints `/api/vagas` e `/api/recursos-educacionais`
+  - [x] Corrigido conflito de importações do tipo `AuthState`
+  - [x] Atualizado sistema de autenticação para usar o contexto correto
+- [x] Resolvido problema de layout na página OctoFaz
+- [x] Corrigida importação do hook useDataFetching nas páginas
+
+### Sistema de Mocks e Serviços
+
+- [x] Expandido sistema de mocks para suportar novos endpoints:
+  - [x] Endpoint para vagas de emprego
+  - [x] Endpoint para recursos educacionais
+- [x] Implementados serviços mock com dados realistas para demonstração
+- [x] Integrados novos endpoints ao sistema de configuração da API
 
 ## Documentação
 
@@ -898,10 +741,10 @@ src/
 
 1. **Análise de Páginas Prioritárias**
    - [x] Cartilhas.tsx e CartilhaDetalhe.tsx (335 e 219 linhas não padronizadas)
-   - [ ] CapacitaPcd.tsx (341 linhas não padronizadas)
+   - [✅] CapacitaPcd.tsx (341 linhas não padronizadas)
    - [ ] OrientaPcd.tsx (306 linhas não padronizadas)
    - [ ] Home.tsx (286 linhas não padronizadas)
-   - [ ] DeficienciasOcultas.tsx, Neurodivergencias.tsx e QuemSomos.tsx (~200 linhas não padronizadas cada)
+   - [✅] DeficienciasOcultas.tsx, Neurodivergencias.tsx e QuemSomos.tsx (~200 linhas não padronizadas cada)
 
 2. **Estratégia de Migração Sistemática**
    - [✅] Criar componente base de PageLayout padronizado:
@@ -914,7 +757,7 @@ src/
      - [✅] Padronizar tratamento de cache e revalidação
 
 3. **Plano de Execução por Fase**
-   - [ ] Fase 1: Páginas de alto impacto (Home, Cartilhas):
+   - [✅] Fase 1: Páginas de alto impacto (Home, Cartilhas):
      - [✅] Substituir classes CSS personalizadas por tokens do design system
      - [✅] Atualizar tipografia para usar classes text-h* e text-body
      - [✅] Implementar estados de loading/error com componentes padrão
@@ -942,32 +785,31 @@ src/
   - [x] CapacitaPcd.tsx
   - [x] OctoFaz.tsx
   - [x] OrientaPcd.tsx
-  - [ ] CuidaPcd.tsx
+  - [✅] CuidaPcd.tsx
   - [ ] CapacitaEmpresas.tsx
 - [x] Substituição de classes CSS personalizadas por tokens do design system
 - [x] Implementação de elementos visuais consistentes (cores, espaçamentos, tipografia)
 
-## Progresso da Padronização de Páginas
+### Fase de Implementação
 
-- Páginas padronizadas: 5/10 (50%)
-- Componentes reutilizáveis criados: 3
-- Redução de linhas de código: ~200 linhas
-- Tempo médio de carregamento: melhorado em 15%
+- [✅] Fase 1: Estruturação e configuração base
+  // ... existing code ...
 
-### Correções de Bugs e Problemas Técnicos
+- [✅] Fase 2: Design System e componentes fundamentais
+  // ... existing code ...
 
-- [x] Corrigido problema da página CapacitaPcd não ser exibida ao clicar no link:
-  - [x] Implementados mocks para endpoints `/api/vagas` e `/api/recursos-educacionais`
-  - [x] Corrigido conflito de importações do tipo `AuthState`
-  - [x] Atualizado sistema de autenticação para usar o contexto correto
-- [x] Resolvido problema de layout na página OctoFaz
-- [x] Corrigida importação do hook useDataFetching nas páginas
-
-### Sistema de Mocks e Serviços
-
-- [x] Expandido sistema de mocks para suportar novos endpoints:
-  - [x] Endpoint para vagas de emprego
-  - [x] Endpoint para recursos educacionais
-- [x] Implementados serviços mock com dados realistas para demonstração
-- [x] Integrados novos endpoints ao sistema de configuração da API
+- [ ] Fase 3: Desenvolvimento final
+  // ... existing code ...
+  - [✅] Expandir testes para garantir consistência funcional
+    - [✅] Configurar testes de componentes base
+    - [✅] Implementar testes de regressão para hooks e contexts
+    - [✅] Testar componentes em isolamento
+    - [✅] Criar testes para eventos de mudança, submissão e interação
+    - [✅] Implementar testes para diferentes estados (carregamento, erro, dados)
+  - [ ] Expandir testes para garantir consistência visual
+    - [ ] Configurar testes visuais com snapshots para componentes base
+    - [ ] Implementar testes de regressão visual para componentes
+    - [ ] Testar componentes em diferentes tamanhos de tela
+    - [ ] Criar testes de interação para eventos de hover, focus e click
+    - [ ] Implementar testes para temas claro e escuro
 
