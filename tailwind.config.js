@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-const tokens = require('./src/design-system/tokens/design-tokens.js');
+const tokens = require('./tailwind-tokens.js');
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     // Configuração dos breakpoints usando os tokens unificados
-    screens: tokens.breakpoints,
+    screens: tokens["unified-tokens"].breakpoints,
     extend: {
       colors: {
         // Usando os tokens de cores do design system unificado
@@ -23,9 +23,9 @@ export default {
       },
       fontSize: tokens.typography.fontSize,
       spacing: tokens.spacing,
-      borderRadius: tokens.borderRadius,
+      borderRadius: tokens["unified-tokens"].borderRadius,
       boxShadow: tokens.shadows,
-      zIndex: tokens.zIndex,
+      zIndex: tokens["unified-tokens"].zIndex,
       // Usando as transições definidas nos tokens unificados
       transitionDuration: {
         fast: '150ms',
@@ -87,7 +87,7 @@ export default {
           '60%': { transform: 'translateY(-10px)' },
         },
       },
-      animation: tokens.animation,
+      animation: tokens["unified-tokens"].animation,
     },
   },
   // Ativar dark mode baseado em atributo de dados

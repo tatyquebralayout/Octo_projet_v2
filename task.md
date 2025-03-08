@@ -61,6 +61,11 @@
 - ✅ Padronizar uso de classes CSS (utilitárias vs. componentes)
 - ✅ Estabelecer convenções claras para breakpoints responsivos (`sm`, `md`, `lg`, `xl`, `2xl`)
 - ✅ Remover media queries customizadas em favor de classes Tailwind
+- ✅ Implementado sistema automatizado de compilação de tokens:
+  - Script para compilação TypeScript → JavaScript
+  - Integração com builds (dev, build, storybook)
+  - Geração automática de tokens para Tailwind
+  - Remoção de arquivos temporários após construção
 
 ### Componentes de Layout
 #### Header.tsx
@@ -643,7 +648,7 @@ Esta seção documenta o plano de ação para resolver problemas de duplicação
   - [✅] Migrar definições de tipografia para arquivo dedicado
   - [✅] Migrar definições de espaçamento para arquivo dedicado
   - [✅] Migrar definições de sombras para arquivo dedicado
-  - [ ] Remover arquivos redundantes após migração completa
+  - [✅] Remover arquivos redundantes após migração completa
 
 - **Configurações Duplicadas do Storybook** (0% concluído)
   - [ ] Avaliar `preview.js` vs `preview.jsx`
