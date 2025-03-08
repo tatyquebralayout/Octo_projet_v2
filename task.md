@@ -364,8 +364,8 @@
        - [ ] Implementar busca textual em conteúdo de notícias
        - [ ] Adicionar URLs amigáveis para compartilhamento de filtros
 
-2. **Resolução de Conflitos no Design System** (40% concluído)
-   - **Consolidação de Tokens de Design**: (75% concluído)
+2. **Resolução de Conflitos no Design System** (45% concluído)
+   - **Consolidação de Tokens de Design**: (90% concluído)
      - [x] Identificar tokens duplicados entre `unified-tokens.ts` e `design-tokens.js`
      - [x] Migrar tokens essenciais para `unified-tokens.ts`
      - [x] Criar sistema de geração automática de tokens derivados
@@ -373,7 +373,7 @@
        - [x] Criada integração automatizada com build process
        - [x] Configurada geração dinâmica de tokens para Tailwind
      - [ ] Implementar validação de consistência entre tokens
-     - [ ] Remover arquivo `design-tokens.js` após migração completa
+     - [x] Remover arquivo `design-tokens.js` após migração completa
 
    - **Padronização do Sistema de Animações**: (70% concluído)
      - [x] Remover dependência do react-transition-group
@@ -1249,7 +1249,10 @@ src/
        - [✅] Criar script para compilação TypeScript → JavaScript
        - [✅] Integrar com build process (dev, build, storybook)
        - [✅] Configurar geração dinâmica para Tailwind
-     - [ ] Remover arquivos redundantes após migração
+     - [✅] Remover arquivos redundantes após migração:
+       - [✅] Identificação de arquivos obsoletos
+       - [✅] Remoção de `design-tokens.js`
+       - [✅] Verificação de dependências
 
 ## Documentação
 
