@@ -625,18 +625,19 @@ Este plano visa melhorar a consistência, manutenibilidade e qualidade do códig
   - [ ] Implementar métricas de qualidade de código
   - [ ] Documentar processos de revisão de código
 
-## Consolidação de Arquivos Duplicados e Redundâncias 🔄 (25% concluído)
+## Consolidação de Arquivos Duplicados e Redundâncias 🔄 (35% concluído)
 
 Esta seção documenta o plano de ação para resolver problemas de duplicação de código, componentes com funcionalidades sobrepostas, e configurações conflitantes.
 
 ### 1. Arquivos Duplicados ou Sobrepostos (40% concluído)
 
-- **Tokens de Design Duplicados** (80% concluído)
+- **Tokens de Design Duplicados** (90% concluído)
   - [✅] Analisar e mapear arquivos de tokens sobrepostos (`tokens.ts`, `design-tokens.js`, etc.)
   - [✅] Definir estrutura para migração para arquivos modulares
   - [✅] Migrar definições de cores para `colors.ts`
   - [✅] Migrar definições de tipografia para arquivo dedicado
   - [✅] Migrar definições de espaçamento para arquivo dedicado
+  - [✅] Migrar definições de sombras para arquivo dedicado
   - [ ] Remover arquivos redundantes após migração completa
 
 - **Configurações Duplicadas do Storybook** (0% concluído)
@@ -650,16 +651,16 @@ Esta seção documenta o plano de ação para resolver problemas de duplicação
   - [ ] Remover definições duplicadas em componentes
   - [ ] Atualizar importações em todos os componentes
 
-### 2. Componentes com Funcionalidades Semelhantes (10% concluído)
+### 2. Componentes com Funcionalidades Semelhantes (40% concluído)
 
 - **Bibliotecas de Animação Duplicadas** (80% concluído)
   - [✅] Analisar uso de `react-transition-group` vs `framer-motion`
   - [✅] Consolidar para usar apenas `framer-motion`
   - [ ] Completar migração de componentes restantes
 
-- **Estados de Loading/Error Inconsistentes** (0% concluído)
-  - [ ] Identificar componentes com lógica duplicada para estados de loading/error
-  - [ ] Criar componentes base reutilizáveis
+- **Estados de Loading/Error Inconsistentes** (80% concluído)
+  - [✅] Identificar componentes com lógica duplicada para estados de loading/error
+  - [✅] Criar componentes base reutilizáveis (`Loading`, `Error`, `Empty`)
   - [ ] Refatorar para utilizar componentes base
 
 ### 3. Utilitários Redundantes (5% concluído)
@@ -1186,9 +1187,10 @@ src/
      - [✅] Consolidar todas as definições de cores em `colors.ts`
      - [✅] Criar arquivo centralizado para tipografia
      - [✅] Criar arquivo centralizado para espaçamento
+     - [✅] Criar arquivo centralizado para sombras
      - [ ] Remover arquivos redundantes após migração
    - [ ] Componentes com Funcionalidades Semelhantes:
-     - [ ] Implementar componentes base para estados de UI (Loading, Error, Empty)
+     - [✅] Implementar componentes base para estados de UI (Loading, Error, Empty)
      - [ ] Migrar todos os componentes para usar componentes base
      - [ ] Completar migração de componentes com animações para usar framer-motion
    - [ ] Utilitários Redundantes:

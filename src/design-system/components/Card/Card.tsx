@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
-import { shadows } from '../foundations/tokens';
+import { shadows } from '../../tokens';
 
 export type CardVariant = 'elevated' | 'outlined' | 'filled';
 export type CardSize = 'sm' | 'md' | 'lg';
