@@ -7,6 +7,7 @@
 - Resolvido problema crítico de incompatibilidade entre versões dos pacotes Storybook
 - ✅ Implementada consolidação do sistema de animações removendo react-transition-group e mantendo apenas framer-motion
 - ✅ Corrigida incompatibilidade nas bibliotecas de teste com React 18
+- ✅ Iniciada resolução sistemática de conflitos no Design System, com foco em tokens, animações e estilos
 - Próximos passos: implementação das páginas principais com integração ao sistema de mocks
 - Foco contínuo em UI/UX, acessibilidade e melhorias de performance
 
@@ -251,40 +252,21 @@
     - ✅ Documentação abrangente com exemplos
     - ✅ Estrutura modular e bem organizada
     - ✅ Suporte a casos específicos brasileiros (CPF, CNPJ, etc.)
+18. ✅ Consolidação inicial do Design System
+    - ✅ Padronização do sistema tipográfico completo
+    - ✅ Unificação das definições de cor e tokens primários
+    - ✅ Resolução de dependências circulares no CSS
+    - ✅ Migração parcial para um único sistema de tokens
+    - ✅ Padronização de breakpoints responsivos
+    - ✅ Consolidação do sistema de animações em Framer Motion
+    - ✅ Documentação das convenções e padrões estabelecidos
 
 ## Próximas Tarefas Prioritárias para Sprint Atual 🔥
 
-1. Implementar página de Contato.tsx utilizando o sistema de mocks e formulários
-   - [x] Contato.tsx:
-     - [x] Mocks para backend já implementados
-     - [x] Estrutura de tipos para formulário criada
-     - [x] Implementação da UI do formulário usando as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
-     - [x] Validação no frontend com feedback visual (`.text-error`)
-     - [x] Integração com sistema de mocks
-   - [ ] Cartilhas.tsx:
-     - [x] Mocks para listagem e visualização de cartilhas criados
-     - [x] Tipos e interfaces definidos
-     - [x] Sistema de visualização usando os componentes `.card` e `.card-secondary`
-       - [x] Criar componente Card para exibição de cartilha
-       - [x] Implementar exibição de capa e metadados básicos
-       - [x] Adicionar indicadores visuais de popularidade/relevância
-       - [x] Implementar estados hover com preview de conteúdo
-       - [x] Criar variações do card para diferentes contextos de exibição
-     - [x] Paginação e filtros usando grid responsivo (`md:grid-cols-2 lg:grid-cols-3`)
-       - [x] Implementar grid responsivo com Tailwind
-       - [x] Criar sistema de filtragem por temática e público-alvo
-       - [x] Adicionar ordenação por data, relevância e alfabética
-       - [x] Implementar componente de paginação acessível
-       - [x] Adicionar pesquisa textual com highlighting
-     - [x] Integração com sistema de mocks
-       - [x] Conectar componentes à API mock de cartilhas
-       - [x] Implementar cache para melhorar performance
-       - [x] Adicionar tratamento de erro e estados de fallback
-       - [x] Criar mecanismo de atualização em tempo real
-       - [x] Implementar testes de integração para garantir funcionamento
-   - [ ] OctoFaz.tsx e subpáginas:
+1. **Desenvolvimento de Páginas Principais**
+   - **OctoFaz.tsx e subpáginas**: (9% concluído)
      - [x] APIs simuladas para carregamento de conteúdo
-     - [ ] Conteúdo real com tipografia padronizada (`.text-h1` a `.text-h4`, `.text-body`)
+     - [ ] Implementação de tipografia padronizada
        - [ ] Migrar títulos para utilizar classes `.text-h1` a `.text-h4`
        - [ ] Atualizar parágrafos para usar `.text-body` e `.text-body-large`
        - [ ] Implementar elementos de destaques com `.text-emphasis`
@@ -297,31 +279,32 @@
        - [ ] Implementar cache de dados para melhorar performance
        - [ ] Integrar com sistema de notificações para feedback
 
-   - [ ] SomosOcto.tsx e subpáginas:
+   - **SomosOcto.tsx e subpáginas**: (9% concluído)
      - [x] APIs simuladas para carregamento de conteúdo
-     - [ ] Conteúdo aprofundado usando classes tipográficas padronizadas
+     - [ ] Conteúdo com classes tipográficas padronizadas
        - [ ] Aplicar hierarquia visual com classes tipográficas
        - [ ] Atualizar espaçamento e layout para padrões do Design System
        - [ ] Implementar variações de cores usando tokens de cores
        - [ ] Adicionar elementos de destaque com tipografia específica
        - [ ] Padronizar estilo de texto em todas as subpáginas
-     - [ ] Recursos interativos com animações (`.transition-standard`, `.hover-lift`)
+     - [ ] Recursos interativos com animações
        - [ ] Adicionar efeitos de hover em cards e elementos interativos
        - [ ] Implementar animações de entrada para seções ao scroll
        - [ ] Criar transições suaves entre subpáginas
        - [ ] Adicionar parallax em elementos de destaque
        - [ ] Incorporar micro-interações com feedback visual
-   - [ ] Notícias.tsx:
+
+   - **Notícias.tsx**: (6% concluído)
      - [x] Sistema de mocks para notícias implementado
-     - [ ] Listagem com paginação usando layout responsivo
+     - [ ] Listagem com paginação
        - [ ] Implementar grid responsivo para diferentes tamanhos de tela
        - [ ] Criar componente de paginação acessível
        - [ ] Adicionar rolagem infinita como alternativa à paginação
        - [ ] Implementar estados de loading para carregamento gradual
        - [ ] Otimizar renderização para grandes listas de notícias
-     - [ ] Visualização detalhada com tipografia padronizada
+     - [ ] Visualização detalhada
        - [ ] Criar layout para exibição de notícia completa
-       - [ ] Implementar componentes para diferentes tipos de mídia (imagens, vídeos)
+       - [ ] Implementar componentes para diferentes tipos de mídia
        - [ ] Adicionar suporte para conteúdo formatado com rich text
        - [ ] Implementar componentes de compartilhamento
        - [ ] Criar seção para notícias relacionadas
@@ -332,159 +315,115 @@
        - [ ] Implementar busca textual em conteúdo de notícias
        - [ ] Adicionar URLs amigáveis para compartilhamento de filtros
 
-2. Desenvolver página de Cartilhas.tsx com listagem e filtros
-   - [x] Listar cartilhas com paginação e ordenação usando layout responsivo (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`)
-     - [x] Implementar componente de card para cartilha usando `.card-secondary`
-     - [x] Adicionar exibição de capa, título e descrição dentro do card
-     - [x] Implementar layout responsivo para listar cartilhas
-     - [x] Criar componente de paginação com navegação de páginas
-     - [x] Adicionar opções de ordenação (mais recentes, mais populares, A-Z)
-   - [x] Implementar filtros por categoria e tags
-     - [x] Criar componente de filtro por categorias com seleção múltipla
-     - [x] Implementar filtro por tags com chips interativos
-     - [x] Adicionar campo de busca textual
-     - [x] Implementar lógica para combinar múltiplos filtros
-     - [x] Permitir salvamento/compartilhamento de configurações de filtro
-   - [x] Criar visualização detalhada de cada cartilha usando `.card-secondary`
-     - [x] Implementar rota para visualização detalhada (`/cartilhas/:id`)
-     - [x] Criar layout com informações completas da cartilha
-     - [x] Adicionar opções para download de diferentes formatos
-     - [x] Implementar visualizador de PDF embutido
-     - [x] Incluir informações relacionadas e cartilhas similares
-   - [x] Integrar sistema de notificações para feedback de ações
-     - [x] Exibir notificações de sucesso ao baixar ou compartilhar
-     - [x] Implementar feedback para erros de carregamento
-     - [x] Adicionar estados de loading utilizando esqueletos de carregamento
-     - [x] Mostrar notificações para novos lançamentos
+2. **Resolução de Conflitos no Design System** (30% concluído)
+   - **Consolidação de Tokens de Design**: (50% concluído)
+     - [x] Identificar tokens duplicados entre `unified-tokens.ts` e `design-tokens.js`
+     - [x] Migrar tokens essenciais para `unified-tokens.ts`
+     - [ ] Criar sistema de geração automática de tokens derivados
+     - [ ] Implementar validação de consistência entre tokens
+     - [ ] Remover arquivo `design-tokens.js` após migração completa
+   
+   - **Padronização do Sistema de Animações**: (70% concluído)
+     - [x] Remover dependência do react-transition-group
+     - [x] Criar variantes acessíveis para animações comuns
+     - [x] Implementar sistema com suporte a prefers-reduced-motion
+     - [ ] Refatorar animações restantes que usam padrões do react-transition-group
+     - [ ] Padronizar definições de curvas de easing em todos os componentes
+   
+   - **Normalização de Estilos CSS**: (40% concluído)
+     - [x] Resolver dependências circulares no CSS
+     - [x] Padronizar uso de classes vs. utilitários
+     - [ ] Auditar e corrigir uso inconsistente de classes em componentes
+     - [ ] Implementar linter de CSS personalizado para validação
+     - [ ] Criar guia de convenções para estilos
+   
+   - **Resolução de Conflitos de Tipos**: (20% concluído)
+     - [x] Corrigir conflito de tipos no componente Button
+     - [ ] Centralizar definições de tipos comuns
+     - [ ] Criar sistema hierárquico de tipos para componentes relacionados
+     - [ ] Estender tipagem do Tailwind para tokens personalizados
+     - [ ] Implementar validação de tipos em runtime para dados da API
+   
+   - **Padronização de Responsividade**: (60% concluído)
+     - [x] Estabelecer convenções claras para breakpoints
+     - [x] Remover media queries customizadas em favor do Tailwind
+     - [ ] Auditar componentes para garantir uso consistente de classes responsivas
+     - [ ] Criar componentes responsivos reutilizáveis para padrões comuns
+     - [ ] Implementar testes em múltiplas resoluções
 
-3. Adicionar página de Notícias com integração aos mocks
-   - [ ] Implementar listagem principal com destaque para notícias recentes (`.card-primary` para destaque, `.card` para demais)
-     - [ ] Criar layout de destaque para notícias principais (3-5 mais recentes)
-     - [ ] Implementar carrossel para notícias em destaque com navegação intuitiva
-     - [ ] Adicionar seção de notícias recentes usando layout de grid
-     - [ ] Criar variações de cards para diferentes tipos de conteúdo (eventos, artigos, etc.)
-     - [ ] Implementar lazy loading para carregar mais notícias ao rolar
-   - [ ] Adicionar paginação e filtros por categoria
-     - [ ] Implementar filtros por tipos de conteúdo (notícias, eventos, comunicados)
-     - [ ] Criar filtros por tópicos e tags
-     - [ ] Adicionar barra de pesquisa com sugestões
-     - [ ] Implementar paginação com opção para ajustar itens por página
-     - [ ] Salvar preferências de filtro para persistência entre sessões
-   - [ ] Desenvolver página de visualização detalhada de cada notícia
-     - [ ] Criar layout para visualização de notícia completa
-     - [ ] Implementar exibição de metadados (autor, data, categorias)
-     - [ ] Adicionar galeria de imagens relacionadas
-     - [ ] Implementar seção de compartilhamento
-     - [ ] Mostrar notícias relacionadas ao final do conteúdo
-   - [ ] Utilizar notificações para atualizações de conteúdo
-     - [ ] Implementar notificações para novas publicações
-     - [ ] Adicionar indicadores visuais para conteúdo não lido
-     - [ ] Criar sistema de inscrição em tópicos específicos
-     - [ ] Implementar toast para confirmação de ações do usuário
-     - [ ] Adicionar feedback visual para interações (curtidas, compartilhamentos)
+   - **Sistema de Temas Consistente**: (30% concluído)
+     - [x] Configurar suporte a temas no Storybook
+     - [x] Definir paletas de cores para temas claro e escuro
+     - [ ] Padronizar uso do sistema de temas do Tailwind
+     - [ ] Implementar mecanismo de preferência de tema
+     - [ ] Verificar contraste adequado em todos os temas
 
-4. Integrar sistema de notificações com APIs em tempo real
-   - [ ] Implementar conexão de websockets para notificações em tempo real
-     - [ ] Configurar cliente websocket com autenticação
-     - [ ] Implementar gerenciamento de conexão (reconexão automática, heartbeat)
-     - [ ] Criar handlers para diferentes tipos de eventos
-     - [ ] Implementar lógica de serialização/deserialização de mensagens
-     - [ ] Adicionar suporte para canais de notificação específicos
-   - [ ] Configurar polling para verificação periódica de novas notificações
-     - [ ] Implementar fallback para quando websockets não estiver disponível
-     - [ ] Criar lógica de polling com backoff exponencial
-     - [ ] Otimizar requisições para minimizar tráfego
-     - [ ] Adicionar suporte para sincronização offline
-     - [ ] Implementar cache inteligente para notificações
-   - [ ] Criar componente de notificação para HeaderBar utilizando `.badge` e `.icon-container`
-     - [ ] Desenvolver ícone interativo com contador de notificações
-     - [ ] Implementar dropdown para exibir notificações recentes
-     - [ ] Criar estados visuais para diferentes tipos de notificação
-     - [ ] Adicionar suporte para notificações prioritárias
-     - [ ] Implementar ações rápidas nas notificações
-   - [ ] Adicionar badge indicador no ícone do perfil
-     - [ ] Desenvolver badge com contador de notificações não lidas
-     - [ ] Implementar animação de entrada para novas notificações
-     - [ ] Adicionar variações visuais por prioridade de notificação
-     - [ ] Criar lógica para agrupar múltiplas notificações
-     - [ ] Implementar gestos para marcar como lido ou descartar
+3. **Recursos PWA Avançados**
+   - **Implementação avançada de PWA**: (0% concluído)
+     - [ ] Estratégias de cache offline personalizadas
+     - [ ] Experiência de instalação aprimorada
+     - [ ] Notificações push
+     - [ ] Sincronização em segundo plano
+   
+   - **Service worker e cache avançado**: (0% concluído)
+     - [ ] Implementar cache de assets estáticos
+     - [ ] Definir estratégias de cache para API
+     - [ ] Configurar sincronização em background
+     - [ ] Implementar mecanismo de atualização automática
+   
+   - **Otimização de recursos**: (0% concluído)
+     - [ ] Lazy loading de componentes não críticos
+     - [ ] Prefetching de rotas comuns
+     - [ ] Otimização de fontes com font-display: swap
+     - [ ] Implementação de Image Optimization API
 
-5. Melhorar mocks para ambientes de teste e desenvolvimento
-   - [ ] Adicionar mais dados de teste para cenários específicos
-     - [ ] Expandir conjunto de dados de usuários com perfis diversificados
-     - [ ] Criar mocks para diferentes estados de cartilhas (rascunho, publicada, arquivada)
-     - [ ] Adicionar conteúdo de notícias com formatos variados (vídeo, galeria, artigo longo)
-     - [ ] Implementar dados para testes de situações de borda e casos limite
-     - [ ] Criar conjuntos de dados para testes de internacionalização
-   - [ ] Implementar persistência temporária para testes de fluxo completo
-     - [ ] Desenvolver sistema de armazenamento local com localStorage/IndexedDB
-     - [ ] Criar APIs para salvar e restaurar estado de mock
-     - [ ] Implementar mecanismo de exportação/importação de dados de teste
-     - [ ] Adicionar suporte para reset seletivo de dados
-     - [ ] Implementar sincronização entre múltiplas abas/janelas
-   - [ ] Refinar simulação de erros para testar todos os cenários
-     - [ ] Criar controles para testar diferentes códigos de erro HTTP
-     - [ ] Implementar simulação de latência variável e timeout
-     - [ ] Adicionar erros específicos para validação de formulários
-     - [ ] Criar cenários de erro para teste de resiliência
-     - [ ] Implementar painel de controle para gerenciar comportamento dos mocks
+4. **Acessibilidade e SEO**
+   - **Acessibilidade avançada**: (57% concluído)
+     - [x] Sistema de notificações com suporte a leitores de tela
+     - [x] Atributos ARIA para notificações e toasts
+     - [x] Pausas automáticas em hover para deficiências cognitivas
+     - [x] Sistema de animações acessível com prefers-reduced-motion
+     - [ ] Auditoria WCAG 2.1 AA
+     - [ ] Skip links
+     - [ ] Landmarks semânticos
+     - [ ] Testes com leitores de tela
+   
+   - **SEO Avançado**: (0% concluído)
+     - [ ] Schema.org específico para entidades do projeto
+       - [ ] Serviços (Service)
+       - [ ] Artigos (Article)
+       - [ ] Eventos (Event)
+       - [ ] FAQs (FAQPage)
+     - [ ] Breadcrumbs com markup
+     - [ ] Tags canônicas
+     - [ ] Rich snippets
 
-6. Migração do Design System - Finalização
-   - [x] Migrar componentes base (Button, Card, Input) para as novas classes
-   - [x] Atualizar referências de cores para usar tokens padronizados
-   - [x] Converter tipografia para as novas classes semânticas
-   - [x] Migrar animações para usar as classes padronizadas
-   - [x] Refatorar layouts de página para usar grid responsivo padronizado
-   - [x] Atualizar usos de elevação e sombras para classes MD3
-   - [x] Substituir elementos com usos repetidos de classes por componentes reutilizáveis
-   - [x] Criar documentação visual completa dos componentes migrados
+5. **Sistema de Notificações em Tempo Real**
+   - **Integração com APIs em tempo real**: (0% concluído)
+     - [ ] Conexão de websockets para notificações em tempo real
+     - [ ] Polling como fallback
+     - [ ] Componente de notificação para HeaderBar
+     - [ ] Badge indicador no ícone do perfil
 
-7. **Acessibilidade**
-   - [x] Sistema de notificações com suporte a leitores de tela
-   - [x] Atributos ARIA para notificações e toasts
-   - [x] Pausas automáticas em hover para deficiências cognitivas
-   - [x] Sistema de animações acessível com suporte a prefers-reduced-motion
-   - [x] Componente de configuração de preferências de animação
-   - [x] Suporte a personalização da experiência de movimento
-   - [x] Compatibilidade com WCAG 2.1, critério 2.3.3 (Movimento, Piscar, Rolar)
-   - [ ] Auditoria WCAG 2.1 AA
-   - [ ] Skip links
-   - [ ] Landmarks semânticos
-   - [ ] Testes com leitores de tela
-   - [ ] Tabulação por teclado nas interfaces de autenticação
+6. **Aprimoramento do Ambiente de Desenvolvimento**
+   - **Sistema de mocks avançado**: (0% concluído)
+     - [ ] Dados de teste para cenários específicos
+     - [ ] Persistência temporária para testes de fluxo completo
+     - [ ] Simulação refinada de erros
+     - [ ] Painel de controle para comportamento dos mocks
 
-8. **Consolidação do Sistema de Animações**
-   - [✅] Fase 1: Remover dependência react-transition-group
-     - [✅] Removida dependência do package.json
-     - [✅] Instaladas dependências atualizadas
-     - [✅] Resolvidas incompatibilidades com pacotes de teste
-   - [✅] Fase 2: Refatorar animações existentes
-     - [✅] Auditar usos atuais de react-transition-group no código
-     - [✅] Identificar componentes que utilizavam ambas as bibliotecas simultaneamente
-     - [✅] Criar sistema de variantes para framer-motion
-     - [✅] Implementar componente wrapper AccessibleMotion
-     - [✅] Avaliar impacto em performance nos componentes migrados
-   - [✅] Fase 3: Implementar estratégia para todas as animações
-     - [✅] Definir abordagem para respeitar prefers-reduced-motion
-     - [✅] Criar sistema de contexto para animações acessíveis
-     - [✅] Implementar lógica de detecção de preferências do usuário
-     - [✅] Desenvolver variantes alternativas para movimento reduzido
-     - [✅] Adicionar suporte a localStorage para persistência de preferências
-   - [✅] Fase 4: Padronizar uso do Framer Motion
-     - [✅] Criar guia de implementação padronizada
-     - [✅] Documentar abordagens recomendadas para diferentes tipos de animação
-     - [✅] Estabelecer convenções para nomeação e estruturação das animações
-     - [✅] Desenvolver exemplos de implementação para casos comuns
-
-9. **SEO Avançado**
-   - [ ] Schema.org específico:
-     - Serviços (Service)
-     - Artigos (Article)
-     - Eventos (Event)
-     - FAQs (FAQPage)
-   - [ ] Breadcrumbs com markup
-   - [ ] Tags canônicas
-   - [ ] Rich snippets
+7. **Expansão do Sistema de Monitoramento**
+   - **Dashboard de performance**: (0% concluído)
+     - [ ] Expansão do componente WebVitalsMonitor
+     - [ ] Histórico de métricas ao longo do tempo
+     - [ ] Alertas para degradação de performance
+     - [ ] Relatórios exportáveis para equipe técnica
+   
+   - **Documentação técnica**: (0% concluído)
+     - [ ] Guia de implementação para sistemas de monitoramento e PWA
+     - [ ] Documentação de padrões de código
+     - [ ] Guia rápido para novos desenvolvedores
+     - [ ] Exemplos de configuração para diferentes ambientes
 
 ## Tarefas Pendentes 🚧
 
@@ -813,6 +752,16 @@ src/
    - [ ] Implementar lazy loading inteligente para imagens e componentes pesados
    - [ ] Configurar Service Worker para cache de assets
    - [ ] Adicionar métricas de performance de usuário real (RUM)
+
+4. **Inconsistências do Design System**
+   - [x] Resolver duplicidade de tokens entre `unified-tokens.ts` e `design-tokens.js`
+   - [x] Eliminar dependência do react-transition-group para animações
+   - [x] Resolver dependências circulares no CSS
+   - [ ] Padronizar completamente o uso de classes CSS e Tailwind
+   - [ ] Consolidar definições de animações e curvas de timing
+   - [ ] Estabelecer convenções claras para estados interativos (hover, focus, etc.)
+   - [ ] Eliminar inconsistências de tema entre componentes
+   - [ ] Implementar validações automáticas para conformidade com o Design System
 
 ### Melhorias de Infraestrutura 🔧
 
