@@ -90,6 +90,15 @@ class AuthService {
   }
 
   /**
+   * Atualiza o perfil do usuário atual
+   * @param data Dados a serem atualizados
+   * @returns Perfil atualizado
+   */
+  async updateProfile(data: any): Promise<ApiResponse<User>> {
+    return apiService.put<User>(ENDPOINTS.USERS.UPDATE_PROFILE, data);
+  }
+
+  /**
    * Verifica se o usuário está autenticado
    * @returns true se o usuário estiver autenticado
    */

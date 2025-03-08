@@ -87,4 +87,14 @@ export type {
  *   }
  * };
  * ```
- */ 
+ */
+
+/**
+ * Exportações dos serviços de API
+ */
+
+// Tipos
+export * from './types';
+
+// Serviços
+export * as authService from './auth'; 
