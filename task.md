@@ -196,35 +196,107 @@
 ## Próximas Tarefas Prioritárias para Sprint Atual 🔥
 
 1. Implementar página de Contato.tsx utilizando o sistema de mocks e formulários
-   - [x] Criar formulário com validação utilizando o hook useForm
-   - [x] Integrar com o mock de API para submissão
-   - [x] Implementar feedback visual de sucesso/erro utilizando o sistema de notificações (`.text-success`, `.text-error`)
-   - [x] Implementar UI do formulário de contato com as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
+   - [x] Contato.tsx:
+     - [x] Mocks para backend já implementados
+     - [x] Estrutura de tipos para formulário criada
+     - [x] Implementação da UI do formulário usando as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
+     - [x] Validação no frontend com feedback visual (`.text-error`)
+     - [x] Integração com sistema de mocks
+   - [ ] Cartilhas.tsx:
+     - [x] Mocks para listagem e visualização de cartilhas criados
+     - [x] Tipos e interfaces definidos
+     - [x] Sistema de visualização usando os componentes `.card` e `.card-secondary`
+       - [x] Criar componente Card para exibição de cartilha
+       - [x] Implementar exibição de capa e metadados básicos
+       - [x] Adicionar indicadores visuais de popularidade/relevância
+       - [x] Implementar estados hover com preview de conteúdo
+       - [x] Criar variações do card para diferentes contextos de exibição
+     - [x] Paginação e filtros usando grid responsivo (`md:grid-cols-2 lg:grid-cols-3`)
+       - [x] Implementar grid responsivo com Tailwind
+       - [x] Criar sistema de filtragem por temática e público-alvo
+       - [x] Adicionar ordenação por data, relevância e alfabética
+       - [x] Implementar componente de paginação acessível
+       - [x] Adicionar pesquisa textual com highlighting
+     - [x] Integração com sistema de mocks
+       - [x] Conectar componentes à API mock de cartilhas
+       - [x] Implementar cache para melhorar performance
+       - [x] Adicionar tratamento de erro e estados de fallback
+       - [x] Criar mecanismo de atualização em tempo real
+       - [x] Implementar testes de integração para garantir funcionamento
+   - [ ] OctoFaz.tsx e subpáginas:
+     - [x] APIs simuladas para carregamento de conteúdo
+     - [ ] Conteúdo real com tipografia padronizada (`.text-h1` a `.text-h4`, `.text-body`)
+       - [ ] Migrar títulos para utilizar classes `.text-h1` a `.text-h4`
+       - [ ] Atualizar parágrafos para usar `.text-body` e `.text-body-large`
+       - [ ] Implementar elementos de destaques com `.text-emphasis`
+       - [ ] Adicionar legendas com `.text-caption`
+       - [ ] Padronizar links usando `.text-link`
+     - [ ] Integração com sistemas
+       - [ ] Conectar formulários com sistema de validação
+       - [ ] Implementar estado de loading durante carregamento de dados
+       - [ ] Adicionar tratamento de erros consistente
+       - [ ] Implementar cache de dados para melhorar performance
+       - [ ] Integrar com sistema de notificações para feedback
+
+   - [ ] SomosOcto.tsx e subpáginas:
+     - [x] APIs simuladas para carregamento de conteúdo
+     - [ ] Conteúdo aprofundado usando classes tipográficas padronizadas
+       - [ ] Aplicar hierarquia visual com classes tipográficas
+       - [ ] Atualizar espaçamento e layout para padrões do Design System
+       - [ ] Implementar variações de cores usando tokens de cores
+       - [ ] Adicionar elementos de destaque com tipografia específica
+       - [ ] Padronizar estilo de texto em todas as subpáginas
+     - [ ] Recursos interativos com animações (`.transition-standard`, `.hover-lift`)
+       - [ ] Adicionar efeitos de hover em cards e elementos interativos
+       - [ ] Implementar animações de entrada para seções ao scroll
+       - [ ] Criar transições suaves entre subpáginas
+       - [ ] Adicionar parallax em elementos de destaque
+       - [ ] Incorporar micro-interações com feedback visual
+   - [ ] Notícias.tsx:
+     - [x] Sistema de mocks para notícias implementado
+     - [ ] Listagem com paginação usando layout responsivo
+       - [ ] Implementar grid responsivo para diferentes tamanhos de tela
+       - [ ] Criar componente de paginação acessível
+       - [ ] Adicionar rolagem infinita como alternativa à paginação
+       - [ ] Implementar estados de loading para carregamento gradual
+       - [ ] Otimizar renderização para grandes listas de notícias
+     - [ ] Visualização detalhada com tipografia padronizada
+       - [ ] Criar layout para exibição de notícia completa
+       - [ ] Implementar componentes para diferentes tipos de mídia (imagens, vídeos)
+       - [ ] Adicionar suporte para conteúdo formatado com rich text
+       - [ ] Implementar componentes de compartilhamento
+       - [ ] Criar seção para notícias relacionadas
+     - [ ] Filtros por categoria/tag
+       - [ ] Implementar sistema de filtros com múltiplos critérios
+       - [ ] Criar componentes visuais para seleção de categorias
+       - [ ] Adicionar filtro por data de publicação
+       - [ ] Implementar busca textual em conteúdo de notícias
+       - [ ] Adicionar URLs amigáveis para compartilhamento de filtros
 
 2. Desenvolver página de Cartilhas.tsx com listagem e filtros
-   - [ ] Listar cartilhas com paginação e ordenação usando layout responsivo (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`)
-     - [ ] Implementar componente de card para cartilha usando `.card-secondary`
-     - [ ] Adicionar exibição de capa, título e descrição dentro do card
-     - [ ] Implementar layout responsivo para listar cartilhas
-     - [ ] Criar componente de paginação com navegação de páginas
-     - [ ] Adicionar opções de ordenação (mais recentes, mais populares, A-Z)
-   - [ ] Implementar filtros por categoria e tags
-     - [ ] Criar componente de filtro por categorias com seleção múltipla
-     - [ ] Implementar filtro por tags com chips interativos
-     - [ ] Adicionar campo de busca textual
-     - [ ] Implementar lógica para combinar múltiplos filtros
-     - [ ] Permitir salvamento/compartilhamento de configurações de filtro
-   - [ ] Criar visualização detalhada de cada cartilha usando `.card-secondary`
-     - [ ] Implementar rota para visualização detalhada (`/cartilhas/:id`)
-     - [ ] Criar layout com informações completas da cartilha
-     - [ ] Adicionar opções para download de diferentes formatos
-     - [ ] Implementar visualizador de PDF embutido
-     - [ ] Incluir informações relacionadas e cartilhas similares
-   - [ ] Integrar sistema de notificações para feedback de ações
-     - [ ] Exibir notificações de sucesso ao baixar ou compartilhar
-     - [ ] Implementar feedback para erros de carregamento
-     - [ ] Adicionar estados de loading utilizando esqueletos de carregamento
-     - [ ] Mostrar notificações para novos lançamentos
+   - [x] Listar cartilhas com paginação e ordenação usando layout responsivo (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`)
+     - [x] Implementar componente de card para cartilha usando `.card-secondary`
+     - [x] Adicionar exibição de capa, título e descrição dentro do card
+     - [x] Implementar layout responsivo para listar cartilhas
+     - [x] Criar componente de paginação com navegação de páginas
+     - [x] Adicionar opções de ordenação (mais recentes, mais populares, A-Z)
+   - [x] Implementar filtros por categoria e tags
+     - [x] Criar componente de filtro por categorias com seleção múltipla
+     - [x] Implementar filtro por tags com chips interativos
+     - [x] Adicionar campo de busca textual
+     - [x] Implementar lógica para combinar múltiplos filtros
+     - [x] Permitir salvamento/compartilhamento de configurações de filtro
+   - [x] Criar visualização detalhada de cada cartilha usando `.card-secondary`
+     - [x] Implementar rota para visualização detalhada (`/cartilhas/:id`)
+     - [x] Criar layout com informações completas da cartilha
+     - [x] Adicionar opções para download de diferentes formatos
+     - [x] Implementar visualizador de PDF embutido
+     - [x] Incluir informações relacionadas e cartilhas similares
+   - [x] Integrar sistema de notificações para feedback de ações
+     - [x] Exibir notificações de sucesso ao baixar ou compartilhar
+     - [x] Implementar feedback para erros de carregamento
+     - [x] Adicionar estados de loading utilizando esqueletos de carregamento
+     - [x] Mostrar notificações para novos lançamentos
 
 3. Adicionar página de Notícias com integração aos mocks
    - [ ] Implementar listagem principal com destaque para notícias recentes (`.card-primary` para destaque, `.card` para demais)
@@ -319,27 +391,27 @@
      - [x] Implementação da UI do formulário usando as classes do Design System (`.form-group`, `.input-field`, `.btn-primary`)
      - [x] Validação no frontend com feedback visual (`.text-error`)
      - [x] Integração com sistema de mocks
-   - [ ] Cartilhas.tsx:
+   - [x] Cartilhas.tsx:
      - [x] Mocks para listagem e visualização de cartilhas criados
      - [x] Tipos e interfaces definidos
-     - [ ] Sistema de visualização usando os componentes `.card` e `.card-secondary`
-       - [ ] Criar componente Card para exibição de cartilha
-       - [ ] Implementar exibição de capa e metadados básicos
-       - [ ] Adicionar indicadores visuais de popularidade/relevância
-       - [ ] Implementar estados hover com preview de conteúdo
-       - [ ] Criar variações do card para diferentes contextos de exibição
-     - [ ] Paginação e filtros usando grid responsivo (`md:grid-cols-2 lg:grid-cols-3`)
-       - [ ] Implementar grid responsivo com Tailwind
-       - [ ] Criar sistema de filtragem por temática e público-alvo
-       - [ ] Adicionar ordenação por data, relevância e alfabética
-       - [ ] Implementar componente de paginação acessível
-       - [ ] Adicionar pesquisa textual com highlighting
-     - [ ] Integração com sistema de mocks
-       - [ ] Conectar componentes à API mock de cartilhas
-       - [ ] Implementar cache para melhorar performance
-       - [ ] Adicionar tratamento de erro e estados de fallback
-       - [ ] Criar mecanismo de atualização em tempo real
-       - [ ] Implementar testes de integração para garantir funcionamento
+     - [x] Sistema de visualização usando os componentes `.card` e `.card-secondary`
+       - [x] Criar componente Card para exibição de cartilha
+       - [x] Implementar exibição de capa e metadados básicos
+       - [x] Adicionar indicadores visuais de popularidade/relevância
+       - [x] Implementar estados hover com preview de conteúdo
+       - [x] Criar variações do card para diferentes contextos de exibição
+     - [x] Paginação e filtros usando grid responsivo (`md:grid-cols-2 lg:grid-cols-3`)
+       - [x] Implementar grid responsivo com Tailwind
+       - [x] Criar sistema de filtragem por temática e público-alvo
+       - [x] Adicionar ordenação por data, relevância e alfabética
+       - [x] Implementar componente de paginação acessível
+       - [x] Adicionar pesquisa textual com highlighting
+     - [x] Integração com sistema de mocks
+       - [x] Conectar componentes à API mock de cartilhas
+       - [x] Implementar cache para melhorar performance
+       - [x] Adicionar tratamento de erro e estados de fallback
+       - [x] Criar mecanismo de atualização em tempo real
+       - [x] Implementar testes de integração para garantir funcionamento
    - [ ] OctoFaz.tsx e subpáginas:
      - [x] APIs simuladas para carregamento de conteúdo
      - [ ] Conteúdo real com tipografia padronizada (`.text-h1` a `.text-h4`, `.text-body`)

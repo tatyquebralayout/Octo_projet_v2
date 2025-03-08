@@ -25,6 +25,7 @@ const ColunaOcto = React.lazy(() => import('./pages/octo-com-voce/ColunaOcto'));
 const SeloOcto = React.lazy(() => import('./pages/octo-com-voce/SeloOcto'));
 const Noticias = React.lazy(() => import('./pages/Noticias'));
 const Cartilhas = React.lazy(() => import('./pages/Cartilhas'));
+const CartilhaDetalhe = React.lazy(() => import('./pages/CartilhaDetalhe'));
 const Contato = React.lazy(() => import('./pages/Contato'));
 
 // Layout principal
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
       { path: "octo-com-voce/selo", element: <SeloOcto /> },
       { path: "noticias", element: <Noticias /> },
       { path: "cartilhas", element: <Cartilhas /> },
+      { path: "cartilhas/:id", element: <CartilhaDetalhe /> },
       { path: "contato", element: <Contato /> },
       { path: "*", element: <NotFound /> }
     ]
