@@ -14,6 +14,12 @@ import {
 import { API_ENV, AUTH_CONFIG } from './config';
 import { mockServices } from './mockService';
 import { logger } from '../../utils/logger';
+import { 
+  errorHandler, 
+  ErrorType, 
+  withRetry,
+  HTTP_ERROR_MAPPING
+} from '../../utils/errors';
 
 class ApiService {
   private instance: AxiosInstance;
@@ -93,9 +99,19 @@ class ApiService {
           this.clearAuthData();
         }
         
-        // Formata o erro para um formato padrão
-        const apiError = this.formatError(error);
-        return Promise.reject(apiError);
+        // Formata o erro para um formato padrão e processa com o errorHandler
+        const appError = errorHandler.createAppError(error, {
+          type: error.response?.status ? HTTP_ERROR_MAPPING[error.response.status] || ErrorType.UNKNOWN : ErrorType.NETWORK,
+          context: {
+            url: error.config?.url,
+            method: error.config?.method,
+            status: error.response?.status,
+            responseData: error.response?.data
+          }
+        });
+        
+        // Não logar aqui para evitar duplicação de logs, pois o errorHandler já loga
+        return Promise.reject(appError);
       }
     );
   }
@@ -116,7 +132,10 @@ class ApiService {
       const refreshToken = localStorage.getItem(AUTH_CONFIG.REFRESH_TOKEN_KEY);
       
       if (!refreshToken) {
-        throw new Error('Refresh token não disponível');
+        throw errorHandler.createAppError(new Error('Refresh token não disponível'), {
+          type: ErrorType.AUTHENTICATION,
+          code: 'REFRESH_TOKEN_MISSING'
+        });
       }
       
       // Chamar a API para renovar o token
@@ -137,27 +156,23 @@ class ApiService {
         };
         return this.instance(originalConfig);
       } else {
-        throw new Error('Configuração original não disponível');
+        throw errorHandler.createAppError(new Error('Configuração original não disponível'), {
+          type: ErrorType.CLIENT,
+          code: 'MISSING_CONFIG'
+        });
       }
     } catch (refreshError) {
       // Se a renovação falhar, limpa os dados de autenticação
       this.clearAuthData();
-      return Promise.reject(refreshError);
+      
+      // Processa o erro com o errorHandler
+      const appError = errorHandler.createAppError(refreshError, {
+        type: ErrorType.AUTHENTICATION,
+        code: 'REFRESH_TOKEN_FAILED'
+      });
+      
+      return Promise.reject(appError);
     }
-  }
-  
-  // Formatação de erro para padrão da API
-  private formatError(error: AxiosError): ApiError {
-    const errorResponse = error.response?.data as any;
-    
-    return {
-      code: errorResponse?.code || 'unknown_error',
-      message: errorResponse?.message || error.message || 'Erro desconhecido',
-      status: error.response?.status || 500,
-      timestamp: new Date().toISOString(),
-      path: error.config?.url,
-      details: errorResponse?.details
-    };
   }
   
   // Obtenção do token de autenticação
@@ -198,7 +213,10 @@ class ApiService {
     })?.[1];
     
     if (!mockFn) {
-      throw new Error(`Mock não encontrado para ${method} ${url}`);
+      throw errorHandler.createAppError(new Error(`Mock não encontrado para ${method} ${url}`), {
+        type: ErrorType.CLIENT,
+        code: 'MOCK_NOT_FOUND'
+      });
     }
     
     try {
@@ -206,104 +224,137 @@ class ApiService {
       const result = await mockFn(data);
       return result as unknown as T;
     } catch (error) {
-      logger.error('Mock Error:', error);
-      throw error;
+      // Processa o erro usando o errorHandler
+      throw errorHandler.handleError(error, {
+        context: { url, method, mockData: data },
+        rethrow: true
+      });
     }
   }
   
   // Métodos públicos da API
   
-  // GET - Obter dados
-  async get<T = any>(url: string, params?: QueryParams): Promise<ApiResponse<T>> {
-    try {
-      if (this.mockEnabled) {
-        return await this.mockResponse<ApiResponse<T>>(url, 'GET', params);
+  // GET - Obter dados com suporte a retry
+  async get<T = any>(url: string, params?: QueryParams, retry = false): Promise<ApiResponse<T>> {
+    const operation = async () => {
+      try {
+        if (this.mockEnabled) {
+          return await this.mockResponse<ApiResponse<T>>(url, 'GET', params);
+        }
+        
+        const response = await this.instance.get<ApiResponse<T>>(url, {
+          params: this.prepareParams(params)
+        });
+        
+        return response.data;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+        
+        throw new Error(`GET ${url} failed: ${String(error)}`);
       }
-      
-      const response = await this.instance.get<ApiResponse<T>>(url, {
-        params: this.prepareParams(params)
-      });
-      
-      return response.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      
-      throw new Error(`GET ${url} failed: ${String(error)}`);
-    }
+    };
+    
+    return retry 
+      ? withRetry(operation)
+      : operation();
   }
   
-  // POST - Criar dados
-  async post<T = any, D = any>(url: string, data: D): Promise<ApiResponse<T>> {
-    try {
-      if (this.mockEnabled) {
-        return await this.mockResponse<ApiResponse<T>>(url, 'POST', data);
+  // POST - Criar dados com suporte a retry
+  async post<T = any, D = any>(url: string, data: D, retry = false): Promise<ApiResponse<T>> {
+    const operation = async () => {
+      try {
+        if (this.mockEnabled) {
+          return await this.mockResponse<ApiResponse<T>>(url, 'POST', data);
+        }
+        
+        const response = await this.instance.post<ApiResponse<T>>(url, data);
+        return response.data;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+        
+        throw new Error(`POST ${url} failed: ${String(error)}`);
       }
-      
-      const response = await this.instance.post<ApiResponse<T>>(url, data);
-      return response.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      
-      throw new Error(`POST ${url} failed: ${String(error)}`);
-    }
+    };
+    
+    return retry 
+      ? withRetry(operation)
+      : operation();
   }
   
-  // PUT - Atualizar dados
-  async put<T = any, D = any>(url: string, data: D): Promise<ApiResponse<T>> {
-    try {
-      if (this.mockEnabled) {
-        return await this.mockResponse<ApiResponse<T>>(url, 'PUT', data);
+  // PUT - Atualizar dados com suporte a retry
+  async put<T = any, D = any>(url: string, data: D, retry = false): Promise<ApiResponse<T>> {
+    const operation = async () => {
+      try {
+        if (this.mockEnabled) {
+          return await this.mockResponse<ApiResponse<T>>(url, 'PUT', data);
+        }
+        
+        const response = await this.instance.put<ApiResponse<T>>(url, data);
+        return response.data;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+        
+        throw new Error(`PUT ${url} failed: ${String(error)}`);
       }
-      
-      const response = await this.instance.put<ApiResponse<T>>(url, data);
-      return response.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      
-      throw new Error(`PUT ${url} failed: ${String(error)}`);
-    }
+    };
+    
+    return retry 
+      ? withRetry(operation)
+      : operation();
   }
   
-  // PATCH - Atualizar dados parcialmente
-  async patch<T = any, D = any>(url: string, data: D): Promise<ApiResponse<T>> {
-    try {
-      if (this.mockEnabled) {
-        return await this.mockResponse<ApiResponse<T>>(url, 'PATCH', data);
+  // PATCH - Atualizar dados parcialmente com suporte a retry
+  async patch<T = any, D = any>(url: string, data: D, retry = false): Promise<ApiResponse<T>> {
+    const operation = async () => {
+      try {
+        if (this.mockEnabled) {
+          return await this.mockResponse<ApiResponse<T>>(url, 'PATCH', data);
+        }
+        
+        const response = await this.instance.patch<ApiResponse<T>>(url, data);
+        return response.data;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+        
+        throw new Error(`PATCH ${url} failed: ${String(error)}`);
       }
-      
-      const response = await this.instance.patch<ApiResponse<T>>(url, data);
-      return response.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      
-      throw new Error(`PATCH ${url} failed: ${String(error)}`);
-    }
+    };
+    
+    return retry 
+      ? withRetry(operation)
+      : operation();
   }
   
-  // DELETE - Remover dados
-  async delete<T = any>(url: string): Promise<ApiResponse<T>> {
-    try {
-      if (this.mockEnabled) {
-        return await this.mockResponse<ApiResponse<T>>(url, 'DELETE');
+  // DELETE - Remover dados com suporte a retry
+  async delete<T = any>(url: string, retry = false): Promise<ApiResponse<T>> {
+    const operation = async () => {
+      try {
+        if (this.mockEnabled) {
+          return await this.mockResponse<ApiResponse<T>>(url, 'DELETE');
+        }
+        
+        const response = await this.instance.delete<ApiResponse<T>>(url);
+        return response.data;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+        
+        throw new Error(`DELETE ${url} failed: ${String(error)}`);
       }
-      
-      const response = await this.instance.delete<ApiResponse<T>>(url);
-      return response.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      
-      throw new Error(`DELETE ${url} failed: ${String(error)}`);
-    }
+    };
+    
+    return retry 
+      ? withRetry(operation)
+      : operation();
   }
   
   // Método para habilitar/desabilitar mocks
