@@ -184,11 +184,86 @@ export const detectCustomEmptyState = createRule({
   },
 });
 
+/**
+ * Regra para detectar divs com mensagens de "nenhum resultado" e sugerir o uso do componente Empty
+ */
+export const preferEmptyComponent = {
+  meta: {
+    type: 'suggestion',
+    docs: {
+      description: 'Preferir o uso do componente Empty para estados vazios',
+      category: 'Best Practices',
+      recommended: true,
+    },
+    fixable: 'code',
+    schema: [],
+    messages: {
+      useEmptyComponent: 'Preferir o uso do componente Empty para estados vazios em vez de divs personalizadas',
+    },
+  },
+  defaultOptions: [],
+  create(context) {
+    return {
+      JSXElement(node) {
+        // Verificar se é um div, p, span ou h* com texto de "nenhum resultado" ou similar
+        if (
+          node.openingElement &&
+          node.openingElement.name &&
+          node.openingElement.name.type === 'JSXIdentifier' &&
+          (
+            node.openingElement.name.name === 'div' ||
+            node.openingElement.name.name === 'p' ||
+            node.openingElement.name.name === 'span' ||
+            /^h[1-6]$/.test(node.openingElement.name.name)
+          )
+        ) {
+          // Verificar se o conteúdo do elemento contém algo como "nenhum resultado" ou "sem resultados"
+          const textContent = extractTextContent(node);
+          if (
+            textContent &&
+            (
+              /nenhum\s+result|sem\s+result|não\s+encontr|lista\s+vazi|vazio|empty/i.test(textContent) ||
+              /no\s+results|not\s+found|empty\s+list/i.test(textContent)
+            )
+          ) {
+            context.report({
+              node,
+              messageId: 'useEmptyComponent',
+            });
+          }
+        }
+      },
+    };
+  },
+};
+
+// Função auxiliar para extrair conteúdo de texto de um elemento JSX
+function extractTextContent(node) {
+  if (!node.children || node.children.length === 0) {
+    return '';
+  }
+
+  return node.children.reduce((content, child) => {
+    if (child.type === 'JSXText') {
+      return content + child.value;
+    } else if (child.type === 'JSXElement') {
+      return content + extractTextContent(child);
+    } else if (child.type === 'JSXExpressionContainer' && 
+               child.expression && 
+               child.expression.type === 'Literal' && 
+               typeof child.expression.value === 'string') {
+      return content + child.expression.value;
+    }
+    return content;
+  }, '');
+}
+
 // Exportando todas as regras
 export default {
   rules: {
     'no-custom-spinner': detectCustomSpinner,
     'no-custom-error': detectCustomErrorMessage,
     'no-custom-empty-state': detectCustomEmptyState,
+    'prefer-empty-component': preferEmptyComponent,
   },
 }; 

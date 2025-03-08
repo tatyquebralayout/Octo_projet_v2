@@ -8,6 +8,7 @@ import { useNotifications } from '../services/notifications';
 import { NotificationType } from '../services/notifications/types';
 import ProfilerWrapper from '../utils/performance/ProfilerWrapper';
 import '../components/guides/guides.css';
+import { Loading, Error, Empty } from '../design-system/components/ui';
 
 interface FilterState {
   category?: string;
@@ -129,95 +130,205 @@ const Cartilhas = () => {
     return `Mostrando ${guides ? guides.length : 0} de ${totalItems || 0} cartilhas`;
   }, [isLoading, error, guides, totalItems]);
 
-  // Renderização segura para evitar erros
-  return (
-    <>
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Cartilhas e Manuais</h1>
-          <p className="text-gray-600">
-            Acesse nossos materiais educativos sobre inclusão, acessibilidade e neurodiversidade.
-          </p>
+  // Renderização condicional para Loading/Error/Empty
+  const renderContent = useCallback(() => {
+    if (isLoading && (!guides || guides.length === 0)) {
+      return <Loading fullPage accessibilityLabel="Carregando cartilhas..." />;
+    }
+    
+    if (error && (!guides || guides.length === 0)) {
+      return (
+        <Error 
+          title="Erro ao carregar cartilhas"
+          message="Não foi possível carregar as cartilhas. Por favor, tente novamente mais tarde."
+          variant="card"
+          size="lg"
+          onRetry={handleRetry}
+        />
+      );
+    }
+    
+    if (!isLoading && (!guides || guides.length === 0)) {
+      return (
+        <Empty 
+          title="Nenhuma cartilha encontrada"
+          message="Não encontramos cartilhas para os filtros selecionados."
+          action={
+            <button 
+              className="btn btn-primary mt-4"
+              onClick={handleClearFilters}
+            >
+              Limpar filtros
+            </button>
+          }
+        />
+      );
+    }
+    
+    return (
+      <>
+        {/* Lista de cartilhas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {guides && guides.map((guide) => (
+            <GuideCard key={guide.id} guide={guide} />
+          ))}
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Sidebar com filtros */}
-          <div className="lg:col-span-1">
-            <ProfilerWrapper id="GuidesFilterComponent">
-              <GuidesFilter
-                categories={categories || []}
-                tags={tags || []}
-                onFilterChange={handleFilterChange}
-                className="sticky top-24"
-                isLoading={isLoading}
-                error={error}
-              />
-            </ProfilerWrapper>
+        {/* Paginação */}
+        {!isLoading && guides && guides.length > 0 && totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            className="mt-8"
+          />
+        )}
+
+        {/* Carregar mais e contagem de resultados */}
+        <div className="mt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-600 mb-4 md:mb-0">
+            {isLoading ? (
+              <span className="flex items-center">
+                <Loading size="sm" variant="spinner" className="mr-2" />
+                Carregando cartilhas...
+              </span>
+            ) : error ? (
+              <Error message="Erro ao carregar cartilhas" variant="inline" size="sm" />
+            ) : `Mostrando ${guides ? guides.length : 0} de ${totalItems || 0} cartilhas`}
+          </p>
+          <button
+            className="btn btn-primary"
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={isLoading || Boolean(error) || currentPage >= totalPages}
+          >
+            {isLoading ? (
+              <span className="flex items-center">
+                <Loading size="sm" variant="spinner" className="mr-2" />
+                Carregando...
+              </span>
+            ) : 'Carregar mais'}
+          </button>
+        </div>
+      </>
+    );
+  }, [isLoading, error, guides, totalItems, currentPage, totalPages, handlePageChange, goToPage, handleClearFilters, handleRetry]);
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">Cartilhas e Manuais</h1>
+        <p className="text-gray-600">
+          Acesse nossos materiais educativos sobre inclusão, acessibilidade e neurodiversidade.
+        </p>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Sidebar com filtros */}
+        <div className="lg:col-span-1">
+          <ProfilerWrapper id="GuidesFilterComponent">
+            <GuidesFilter
+              categories={categories || []}
+              tags={tags || []}
+              onFilterChange={handleFilterChange}
+              className="sticky top-24"
+              isLoading={isLoading}
+              error={error}
+            />
+          </ProfilerWrapper>
+        </div>
+        
+        {/* Lista de cartilhas */}
+        <div className="lg:col-span-3">
+          {/* Informações sobre resultados */}
+          <div className="mb-4 flex justify-between items-center">
+            <p className="text-gray-600">
+              {resultsCountText}
+            </p>
+            
+            {/* Seletor de ordenação (a ser implementado) */}
+            <div className="flex items-center">
+              <label htmlFor="sort" className="mr-2 text-sm text-gray-600">
+                Ordenar por:
+              </label>
+              <select
+                id="sort"
+                className="border rounded-md px-2 py-1 text-sm"
+                defaultValue="recent"
+                disabled={isLoading || Boolean(error)}
+              >
+                <option value="recent">Mais recentes</option>
+                <option value="title">Título (A-Z)</option>
+                <option value="popular">Mais populares</option>
+              </select>
+            </div>
           </div>
           
-          {/* Lista de cartilhas */}
-          <div className="lg:col-span-3">
-            {/* Informações sobre resultados */}
-            <div className="mb-4 flex justify-between items-center">
-              <p className="text-gray-600">
-                {resultsCountText}
-              </p>
-              
-              {/* Seletor de ordenação (a ser implementado) */}
-              <div className="flex items-center">
-                <label htmlFor="sort" className="mr-2 text-sm text-gray-600">
-                  Ordenar por:
-                </label>
-                <select
-                  id="sort"
-                  className="border rounded-md px-2 py-1 text-sm"
-                  defaultValue="recent"
-                  disabled={isLoading || Boolean(error)}
-                >
-                  <option value="recent">Mais recentes</option>
-                  <option value="title">Título (A-Z)</option>
-                  <option value="popular">Mais populares</option>
-                </select>
-              </div>
-            </div>
-            
-            {/* Grid de cartilhas com virtualização */}
-            <ProfilerWrapper id="CartilhasVirtualList">
-              <CartilhasVirtualList 
-                guides={guides || []} 
-                isLoading={isLoading}
-                error={error}
-                onRetry={handleRetry}
-                noResultsComponent={
-                  <div className="text-center py-12">
-                    <h3 className="text-xl font-semibold mb-2">Nenhuma cartilha encontrada</h3>
-                    <p className="text-gray-600 mb-4">
-                      Tente ajustar seus filtros ou termos de busca.
-                    </p>
-                    <button
-                      onClick={handleClearFilters}
-                      className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
-                    >
-                      Limpar filtros
-                    </button>
-                  </div>
-                }
-              />
-            </ProfilerWrapper>
-            
-            {/* Paginação */}
-            {!isLoading && guides && guides.length > 0 && totalPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                className="mt-8"
-              />
-            )}
+          {/* Grid de cartilhas com virtualização */}
+          <ProfilerWrapper id="CartilhasVirtualList">
+            <CartilhasVirtualList 
+              guides={guides || []} 
+              isLoading={isLoading}
+              error={error}
+              onRetry={handleRetry}
+              noResultsComponent={
+                <div className="text-center py-12">
+                  <h3 className="text-xl font-semibold mb-2">Nenhuma cartilha encontrada</h3>
+                  <p className="text-gray-600 mb-4">
+                    Tente ajustar seus filtros ou termos de busca.
+                  </p>
+                  <button
+                    onClick={handleClearFilters}
+                    className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
+                  >
+                    Limpar filtros
+                  </button>
+                </div>
+              }
+            />
+          </ProfilerWrapper>
+          
+          {/* Paginação */}
+          {!isLoading && guides && guides.length > 0 && totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              className="mt-8"
+            />
+          )}
+
+          {/* Carregar mais e contagem de resultados */}
+          <div className="mt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-600 mb-4 md:mb-0">
+              {isLoading ? (
+                <span className="flex items-center">
+                  <Loading size="sm" variant="spinner" className="mr-2" />
+                  Carregando cartilhas...
+                </span>
+              ) : error ? (
+                <Error message="Erro ao carregar cartilhas" variant="inline" size="sm" />
+              ) : `Mostrando ${guides ? guides.length : 0} de ${totalItems || 0} cartilhas`}
+            </p>
+            <button
+              className="btn btn-primary"
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={isLoading || Boolean(error) || currentPage >= totalPages}
+            >
+              {isLoading ? (
+                <span className="flex items-center">
+                  <Loading size="sm" variant="spinner" className="mr-2" />
+                  Carregando...
+                </span>
+              ) : 'Carregar mais'}
+            </button>
           </div>
         </div>
       </div>
-    </>
+
+      <div className="mt-8">
+        {renderContent()}
+      </div>
+    </div>
   );
 };
 

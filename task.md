@@ -1218,8 +1218,8 @@ src/
      - [ ] Remover arquivos redundantes após migração
    - [ ] Componentes com Funcionalidades Semelhantes:
      - [✅] Implementar componentes base para estados de UI (Loading, Error, Empty)
-     - [ ] Migrar todos os componentes para usar componentes base
-     - [ ] Completar migração de componentes com animações para usar framer-motion
+     - [✅] Migrar componentes principais para usar componentes base
+     - [ ] Completar migração de componentes com animações para usar framer-motion (90% concluído)
    - [ ] Utilitários Redundantes:
      - [ ] Consolidar hooks de fetch de dados em `useDataFetching`
      - [ ] Criar biblioteca centralizada para funções de formatação
@@ -1227,4 +1227,29 @@ src/
    - [ ] Configurações Conflitantes:
      - [ ] Unificar definições de tema em uma única fonte
      - [ ] Consolidar configurações de ESLint
+
+## Documentação
+
+- ✅ Documentar componentes principais no Storybook
+  - ✅ Adicionar histórias para todos os componentes
+  - ✅ Incluir instruções de uso detalhadas
+  - ✅ Adicionar controles para interação
+  - ✅ Documentar acessibilidade
+
+- ✅ Criar documentação de desenvolvimento
+  - ✅ Atualizar README.md
+  - ✅ Documentar estrutura do projeto
+  - ✅ Documentar convenções de código
+
+- ✅ Criação de guia para ícones PWA
+  - ✅ Implementado arquivo HTML interativo com instruções detalhadas
+  - ✅ Tabela de referência para tamanhos e propósitos de cada ícone
+  - ✅ Links para ferramentas de geração de ícones
+  - ✅ Guia de implementação passo a passo
+
+- ✅ Criação de guia para componentes base de UI
+  - ✅ Documentação detalhada dos componentes Loading, Error e Empty
+  - ✅ Exemplos práticos de implementação para diferentes cenários
+  - ✅ Padrões de uso recomendados e melhores práticas
+  - ✅ Referência de props e variantes disponíveis
 

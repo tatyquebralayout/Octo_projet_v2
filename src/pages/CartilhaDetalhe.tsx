@@ -6,6 +6,7 @@ import { ENDPOINTS } from '../services/api/config';
 import { useNotifications } from '../services/notifications';
 import { NotificationType } from '../services/notifications/types';
 import { formatDate } from '../utils/formatters/dates';
+import { Loading, Error } from '../design-system/components/ui';
 
 const CartilhaDetalhe = () => {
   const { id } = useParams<{ id: string }>();
@@ -87,38 +88,21 @@ const CartilhaDetalhe = () => {
   };
   
   if (isLoading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2 mb-6"></div>
-            <div className="h-64 bg-gray-200 rounded mb-6"></div>
-            <div className="h-4 bg-gray-200 rounded mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded mb-6 w-2/3"></div>
-            <div className="h-10 bg-gray-200 rounded w-1/3"></div>
-          </div>
-        </div>
-      </div>
-    );
+    return <Loading fullPage accessibilityLabel="Carregando cartilha..." />;
   }
   
   if (error || !guide) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-4">Cartilha não encontrada</h1>
-          <p className="text-gray-600 mb-6">
-            Não foi possível encontrar a cartilha solicitada. Ela pode ter sido removida ou o link está incorreto.
-          </p>
-          <button
-            onClick={handleBack}
-            className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
-          >
-            Voltar para Cartilhas
-          </button>
+        <div className="max-w-4xl mx-auto">
+          <Error
+            title="Cartilha não encontrada"
+            message="Não foi possível encontrar a cartilha solicitada. Ela pode ter sido removida ou o link está incorreto."
+            variant="card"
+            size="lg"
+            onRetry={handleBack}
+            retryText="Voltar para a lista de cartilhas"
+          />
         </div>
       </div>
     );
@@ -127,13 +111,14 @@ const CartilhaDetalhe = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        {/* Botão de voltar */}
         <button
           onClick={handleBack}
-          className="flex items-center text-gray-600 hover:text-primary-600 mb-6 transition-colors"
+          className="mb-4 flex items-center text-primary-600 hover:text-primary-700 transition-colors"
         >
-          <span aria-hidden="true" className="mr-1">←</span>
-          Voltar para Cartilhas
+          <svg className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Voltar para a lista de cartilhas
         </button>
         
         {/* Cabeçalho */}
@@ -217,10 +202,7 @@ const CartilhaDetalhe = () => {
             className="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors flex items-center disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isDownloading ? (
-              <>
-                <span className="animate-spin mr-2">⟳</span>
-                Iniciando download...
-              </>
+              <Loading size="sm" variant="spinner" className="ml-2" />
             ) : (
               <>
                 <span className="mr-2">📥</span>
