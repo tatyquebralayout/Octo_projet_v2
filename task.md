@@ -135,6 +135,11 @@
   - ✅ Tutorial de uso dos componentes AccessibleMotion
   - ✅ Guia de implementação das variantes de animação
   - ✅ Referências às diretrizes WCAG 2.1 para movimento
+- ✅ Documentação dos componentes base de UI
+  - ✅ Guia de uso dos componentes Loading, Error e Empty
+  - ✅ Exemplos de código para diferentes cenários
+  - ✅ Padrões de implementação recomendados
+  - ✅ Boas práticas de UX para estados de carregamento, erro e vazio
 
 ## Problemas Críticos Resolvidos ✅
 
@@ -658,10 +663,32 @@ Esta seção documenta o plano de ação para resolver problemas de duplicação
   - [✅] Consolidar para usar apenas `framer-motion`
   - [ ] Completar migração de componentes restantes
 
-- **Estados de Loading/Error Inconsistentes** (80% concluído)
+- **Estados de Loading/Error Inconsistentes** (100% concluído)
   - [✅] Identificar componentes com lógica duplicada para estados de loading/error
   - [✅] Criar componentes base reutilizáveis (`Loading`, `Error`, `Empty`)
-  - [ ] Refatorar para utilizar componentes base
+  - [✅] Migrar componentes principais para usar componentes base:
+    - [✅] Migração do componente Loading global
+    - [✅] Migração do CartilhasVirtualList
+    - [✅] Migração do CartilhaDetalhe 
+    - [✅] Migração do WebVitalsMonitor
+    - [✅] Migração do componente Button para usar Loading
+    - [✅] Migração do LoadingPlaceholder na página Home
+    - [✅] Migração do formulário de Contato
+    - [✅] Migração do componente ui/Button
+    - [✅] Migração do componente GuidesFilter
+    - [✅] Migração do componente ErrorHandlingExample
+  - [✅] Criar testes unitários para componentes base:
+    - [✅] Testes para o componente Loading
+    - [✅] Testes para o componente Error
+    - [✅] Testes para o componente Empty
+  - [✅] Adicionar exemplos no Storybook para referência:
+    - [✅] Stories para o componente Loading
+    - [✅] Stories para o componente Error
+    - [✅] Stories para o componente Empty
+  - [✅] Implementar validação automatizada:
+    - [✅] Regras de ESLint para detectar inconsistências
+    - [✅] Documentação de integração e migração
+    - [✅] Exemplos de uso e padrões recomendados
 
 ### 3. Utilitários Redundantes (5% concluído)
 

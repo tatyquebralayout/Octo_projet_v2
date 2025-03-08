@@ -186,6 +186,88 @@ src/
   - Componente para visualização de métricas em tempo real
   - Sistema de fallback para garantir funcionamento contínuo
 
+## 🎨 Design System
+
+O projeto utiliza um Design System para garantir consistência visual e comportamental em toda a aplicação.
+
+### Componentes Base de UI
+
+Os componentes base de UI padronizam estados comuns de interface, melhorando a experiência do usuário e a produtividade dos desenvolvedores:
+
+#### Loading
+
+O componente `Loading` oferece diferentes variantes para indicar estados de carregamento:
+
+```tsx
+// Básico
+<Loading />
+
+// Com variante e tamanho
+<Loading variant="dots" size="lg" />
+
+// Em tela cheia com overlay
+<Loading fullPage overlay />
+
+// Em botões
+<button disabled={isLoading}>
+  {isLoading ? (
+    <span className="flex items-center">
+      <Loading size="sm" variant="spinner" className="mr-2" />
+      Processando...
+    </span>
+  ) : 'Enviar'}
+</button>
+```
+
+#### Error
+
+O componente `Error` exibe mensagens de erro com opções de recuperação:
+
+```tsx
+// Erro básico
+<Error message="Não foi possível carregar os dados" />
+
+// Com título e botão de retry
+<Error
+  title="Erro de conexão"
+  message="Verifique sua conexão e tente novamente"
+  onRetry={() => fetchData()}
+/>
+
+// Para formulários
+<Error
+  variant="inline"
+  message="Email inválido"
+/>
+```
+
+#### Empty
+
+O componente `Empty` padroniza a exibição de estados vazios ou sem resultados:
+
+```tsx
+// Básico
+<Empty message="Nenhum resultado encontrado" />
+
+// Com ações
+<Empty
+  title="Sua lista de favoritos está vazia"
+  message="Adicione itens aos seus favoritos para vê-los aqui"
+  action={<button className="btn btn-primary">Explorar catálogo</button>}
+/>
+```
+
+### Validação e Consistência
+
+O projeto inclui ferramentas para garantir o uso consistente dos componentes base:
+
+- **Testes automatizados**: Cada componente possui testes unitários abrangentes
+- **Documentação no Storybook**: Exemplos interativos e documentação detalhada
+- **Regras de linting personalizadas**: Detectam implementações inconsistentes
+- **Guias de integração**: Documentação sobre migração e melhores práticas
+
+Para mais detalhes, consulte a documentação completa no Storybook.
+
 ## 🤝 Contribuindo
 
 1. Faça um fork do projeto
