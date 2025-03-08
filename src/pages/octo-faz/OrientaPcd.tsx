@@ -1,8 +1,98 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Scale, Video, Users, Mail, Shield, Wallet, Globe, Star } from 'lucide-react';
+import { useDataFetching } from '../../hooks';
+import { Loading, Error } from '../../design-system/components/ui';
+import { useNotifications } from '../../services/notifications';
+import { NotificationType } from '../../services/notifications/types';
+
+// Interfaces para os dados
+interface Orientacao {
+  id: string;
+  titulo: string;
+  tipo: string;
+  descricao: string;
+  especialista: string;
+}
+
+interface Beneficio {
+  id: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
 
 const OrientaPcd = () => {
+  const { showToast } = useNotifications();
+  
+  // Hook para buscar orientações jurídicas
+  const { 
+    data: orientacoes, 
+    isLoading: orientacoesLoading, 
+    error: orientacoesError,
+    refetch: refetchOrientacoes
+  } = useDataFetching<Orientacao[]>({
+    endpoint: '/api/orientacoes-juridicas',
+    useCache: true,
+    cacheTime: 30 * 60 * 1000, // 30 minutos
+    showErrorNotification: true,
+    errorTitle: 'Erro ao buscar orientações',
+    errorMessage: 'Não foi possível carregar as orientações disponíveis.'
+  });
+  
+  // Renderização condicional para seção de orientações
+  const renderOrientacoes = () => {
+    if (orientacoesLoading) {
+      return <Loading size="lg" className="mx-auto my-12" />;
+    }
+    
+    if (orientacoesError) {
+      return (
+        <Error
+          title="Não foi possível carregar as orientações"
+          message="Ocorreu um erro ao buscar os serviços disponíveis."
+          onRetry={refetchOrientacoes}
+          variant="card"
+          className="my-12"
+        />
+      );
+    }
+    
+    if (!orientacoes || orientacoes.length === 0) {
+      return (
+        <div className="bg-white rounded-xl p-8 shadow-lg text-center">
+          <p className="text-body text-[#972ae6]/70 mb-6">
+            Em breve, disponibilizaremos mais detalhes sobre nossos serviços de orientação.
+          </p>
+          <Link
+            to="/contato"
+            className="btn btn-primary"
+          >
+            Entre em contato para saber mais
+          </Link>
+        </div>
+      );
+    }
+    
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {orientacoes.map((orientacao, index) => (
+          <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all">
+            <h3 className="text-h4 text-[#972ae6] mb-2">{orientacao.titulo}</h3>
+            <p className="text-caption text-gray-500 mb-4">Especialista: {orientacao.especialista}</p>
+            <p className="text-body-small mb-4">{orientacao.descricao}</p>
+            <Link
+              to={`/orientacoes/${orientacao.id}`}
+              className="text-link"
+            >
+              Solicitar orientação
+            </Link>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const features = [
     {
       icon: <Scale className="w-6 h-6" />,
@@ -60,10 +150,10 @@ const OrientaPcd = () => {
         <div className="container mx-auto px-6 h-full relative z-10">
           <div className="flex items-center h-full">
             <div className="max-w-4xl">
-              <h1 className="text-[56px] font-bold text-white mb-6">
+              <h1 className="text-h1 text-white mb-6">
                 Orienta PcD
               </h1>
-              <p className="text-xl text-white/90 max-w-2xl">
+              <p className="text-body-large text-white/90 max-w-2xl">
                 Estão desrespeitando seus direitos e você não sabe o que fazer? Nosso time jurídico pode auxiliar.
               </p>
             </div>
@@ -88,10 +178,10 @@ const OrientaPcd = () => {
                     {feature.icon}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-[#972ae6] mb-4 group-hover:text-[#e8b624] transition-colors">
+                <h3 className="text-h4 text-[#972ae6] mb-4 group-hover:text-[#e8b624] transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-[#972ae6]/70">
+                <p className="text-body text-[#972ae6]/70">
                   {feature.description}
                 </p>
               </div>
@@ -106,17 +196,17 @@ const OrientaPcd = () => {
           <div className="max-w-4xl mx-auto border-2 border-white rounded-3xl p-12">
             <div className="text-center">
               <Wallet className="w-16 h-16 text-white mx-auto mb-8" />
-              <h2 className="text-3xl font-bold text-white mb-8">
+              <h2 className="text-h2 text-white mb-8">
                 Valores Acessíveis
               </h2>
               <div className="space-y-8">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8">
-                  <p className="text-xl text-white/90 mb-4">
+                  <p className="text-body text-white/90 mb-4">
                     O valor da consulta também é social com a parceria da ONG.
                   </p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8">
-                  <p className="text-xl text-white/90">
+                  <p className="text-body text-white/90">
                     Se você puder pagar o valor integral, vem também, porque a sua valorização do trabalho desses profissionais acaba por fazer com que eles possam atender cada vez mais pessoas que estão em real necessidade!
                   </p>
                 </div>
@@ -130,10 +220,10 @@ const OrientaPcd = () => {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-[#972ae6] mb-6">
+            <h2 className="text-h2 text-[#972ae6] mb-6">
               Como Funciona
             </h2>
-            <p className="text-xl text-[#972ae6]/70 max-w-3xl mx-auto">
+            <p className="text-body-large text-[#972ae6]/70 max-w-3xl mx-auto">
               Assim como o Cuida PcD, no ORIENTA PcD ligamos você a um profissional jurídico que possa auxiliar em uma primeira orientação sobre seu caso.
             </p>
           </div>
@@ -151,10 +241,10 @@ const OrientaPcd = () => {
                     {benefit.icon}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-[#972ae6] mb-4">
+                <h3 className="text-h4 text-[#972ae6] mb-4">
                   {benefit.title}
                 </h3>
-                <p className="text-[#972ae6]/70">
+                <p className="text-body text-[#972ae6]/70">
                   {benefit.description}
                 </p>
               </div>
@@ -191,6 +281,22 @@ const OrientaPcd = () => {
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Serviços de Orientação */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-[#972ae6] mb-6">
+              Serviços de Orientação Disponíveis
+            </h2>
+            <p className="text-body-large text-[#972ae6]/70 max-w-3xl mx-auto">
+              Conheça os serviços de orientação jurídica que oferecemos para pessoas com deficiência e neurodivergentes.
+            </p>
+          </div>
+          
+          {renderOrientacoes()}
         </div>
       </section>
     </div>
