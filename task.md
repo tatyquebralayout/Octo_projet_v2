@@ -364,14 +364,17 @@
        - [ ] Implementar busca textual em conteúdo de notícias
        - [ ] Adicionar URLs amigáveis para compartilhamento de filtros
 
-2. **Resolução de Conflitos no Design System** (30% concluído)
-   - **Consolidação de Tokens de Design**: (50% concluído)
+2. **Resolução de Conflitos no Design System** (40% concluído)
+   - **Consolidação de Tokens de Design**: (75% concluído)
      - [x] Identificar tokens duplicados entre `unified-tokens.ts` e `design-tokens.js`
      - [x] Migrar tokens essenciais para `unified-tokens.ts`
-     - [ ] Criar sistema de geração automática de tokens derivados
+     - [x] Criar sistema de geração automática de tokens derivados
+       - [x] Implementado script de compilação de tokens TypeScript para JavaScript
+       - [x] Criada integração automatizada com build process
+       - [x] Configurada geração dinâmica de tokens para Tailwind
      - [ ] Implementar validação de consistência entre tokens
      - [ ] Remover arquivo `design-tokens.js` após migração completa
-   
+
    - **Padronização do Sistema de Animações**: (70% concluído)
      - [x] Remover dependência do react-transition-group
      - [x] Criar variantes acessíveis para animações comuns
@@ -506,16 +509,20 @@ Este plano visa melhorar a consistência, manutenibilidade e qualidade do códig
   - [ ] Implementar checagem automatizada com ESLint
   - [ ] Documentar convenções para novos tipos
 
-### 2. Consolidação do Design System (45% concluído)
+### 2. Consolidação do Design System (55% concluído)
 
-- **Unificação de Tokens** (50% concluído)
+- **Unificação de Tokens** (70% concluído)
   - [✅] Identificar tokens duplicados entre arquivos
   - [✅] Consolidar tokens primários
-  - [ ] Criar estrutura modular para tokens:
-    - [ ] Criar `src/design-system/tokens/colors.ts`
-    - [ ] Criar `src/design-system/tokens/typography.ts`
-    - [ ] Criar `src/design-system/tokens/spacing.ts`
-    - [ ] Criar `src/design-system/tokens/breakpoints.ts`
+  - [✅] Criar estrutura modular para tokens:
+    - [✅] Criar `src/design-system/tokens/colors.ts`
+    - [✅] Criar `src/design-system/tokens/typography.ts`
+    - [✅] Criar `src/design-system/tokens/spacing.ts`
+    - [✅] Criar `src/design-system/tokens/shadows.ts`
+  - [✅] Implementar sistema automatizado de compilação de tokens:
+    - [✅] Criar script de construção TypeScript → JavaScript 
+    - [✅] Integrar com processo de build (dev, build, storybook)
+    - [✅] Configurar geração dinâmica para Tailwind
   - [ ] Implementar exportações centralizadas via arquivo de barril
   - [ ] Remover `design-tokens.js` após migração completa
 
@@ -1233,6 +1240,16 @@ src/
    - [ ] Configurações Conflitantes:
      - [✅] Unificar definições de tema em uma única fonte
      - [✅] Consolidar configurações de ESLint
+   - [ ] Tokens de Design:
+     - [✅] Consolidar todas as definições de cores em `colors.ts`
+     - [✅] Criar arquivo centralizado para tipografia
+     - [✅] Criar arquivo centralizado para espaçamento
+     - [✅] Criar arquivo centralizado para sombras
+     - [✅] Implementar sistema automatizado de compilação de tokens:
+       - [✅] Criar script para compilação TypeScript → JavaScript
+       - [✅] Integrar com build process (dev, build, storybook)
+       - [✅] Configurar geração dinâmica para Tailwind
+     - [ ] Remover arquivos redundantes após migração
 
 ## Documentação
 
