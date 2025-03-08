@@ -163,29 +163,49 @@
     - ✅ Hook useContactForm para formulário de contato
     - ✅ Validação específica para campos de contato
     - ✅ Integração com API de contato
+14. ✅ Sistema de notificações frontend
+    - ✅ Implementação de toasts para feedback imediato de ações
+    - ✅ Centro de notificações persistente com histórico
+    - ✅ Suporte a diferentes tipos (sucesso, erro, info, warning)
+    - ✅ Recursos avançados de acessibilidade (ARIA, pausa no hover)
+    - ✅ Animações suaves com Framer Motion
+    - ✅ APIs para adicionar/remover notificações programaticamente
+    - ✅ Sistema para mock de notificações durante desenvolvimento
+    - ✅ Documentação completa de uso
+    - ✅ Tipagem TypeScript abrangente
+    - ✅ Design adaptado ao sistema visual da OCTO
+    - ✅ Integração preparada para WebSockets/polling futuros
 
 ## Próximas Tarefas Prioritárias para Sprint Atual 🔥
 
 1. Implementar página de Contato.tsx utilizando o sistema de mocks e formulários
    - [x] Criar formulário com validação utilizando o hook useForm
    - [x] Integrar com o mock de API para submissão
-   - [ ] Implementar feedback visual de sucesso/erro
+   - [ ] Implementar feedback visual de sucesso/erro utilizando o sistema de notificações
    - [ ] Implementar UI do formulário de contato
 
 2. Desenvolver página de Cartilhas.tsx com listagem e filtros
    - [ ] Listar cartilhas com paginação e ordenação
    - [ ] Implementar filtros por categoria e tags
    - [ ] Criar visualização detalhada de cada cartilha
+   - [ ] Integrar sistema de notificações para feedback de ações
 
 3. Adicionar página de Notícias com integração aos mocks
-   - Implementar listagem principal com destaque para notícias recentes
-   - Adicionar paginação e filtros por categoria
-   - Desenvolver página de visualização detalhada de cada notícia
+   - [ ] Implementar listagem principal com destaque para notícias recentes
+   - [ ] Adicionar paginação e filtros por categoria
+   - [ ] Desenvolver página de visualização detalhada de cada notícia
+   - [ ] Utilizar notificações para atualizações de conteúdo
 
-4. Melhorar mocks para ambientes de teste e desenvolvimento
-   - Adicionar mais dados de teste para cenários específicos
-   - Implementar persistência temporária para testes de fluxo completo
-   - Refinar simulação de erros para testar todos os cenários
+4. Integrar sistema de notificações com APIs em tempo real
+   - [ ] Implementar conexão de websockets para notificações em tempo real
+   - [ ] Configurar polling para verificação periódica de novas notificações
+   - [ ] Criar componente de notificação para HeaderBar
+   - [ ] Adicionar badge indicador no ícone do perfil
+
+5. Melhorar mocks para ambientes de teste e desenvolvimento
+   - [ ] Adicionar mais dados de teste para cenários específicos
+   - [ ] Implementar persistência temporária para testes de fluxo completo
+   - [ ] Refinar simulação de erros para testar todos os cenários
 
 ## Tarefas Pendentes 🚧
 
@@ -237,6 +257,9 @@
    - [ ] Pipeline de otimização
 
 5. **Acessibilidade**
+   - [x] Sistema de notificações com suporte a leitores de tela
+   - [x] Atributos ARIA para notificações e toasts
+   - [x] Pausas automáticas em hover para deficiências cognitivas
    - [ ] Auditoria WCAG 2.1 AA
    - [ ] Skip links
    - [ ] Landmarks semânticos
