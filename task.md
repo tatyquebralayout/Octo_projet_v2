@@ -224,6 +224,11 @@
    - [ ] Implementar persistência temporária para testes de fluxo completo
    - [ ] Refinar simulação de erros para testar todos os cenários
 
+6. Migração do Design System - Finalização
+   - [ ] Migrar componentes base (Button, Card, Input) para as novas classes
+   - [ ] Atualizar referências de cores para usar tokens padronizados
+   - [ ] Converter tipografia para as novas classes semânticas
+
 ## Tarefas Pendentes 🚧
 
 ### Alta Prioridade
@@ -255,19 +260,40 @@
      - [ ] Visualização detalhada com tipografia padronizada
      - [ ] Filtros por categoria/tag
 
-2. **Melhorar Performance**
+2. **Migração Completa do Design System**
+   - **Alta Prioridade**
+     - [ ] Migrar componentes base (Button, Card, Input) para as novas classes
+     - [ ] Atualizar referências de cores para usar tokens padronizados
+     - [ ] Converter tipografia para as novas classes semânticas
+   - **Média Prioridade**
+     - [ ] Migrar animações para usar as classes padronizadas
+     - [ ] Refatorar layouts de página para usar grid responsivo padronizado
+     - [ ] Atualizar usos de elevação e sombras para classes MD3
+     - [ ] Substituir elementos com usos repetidos de classes por componentes reutilizáveis
+   - **Baixa Prioridade**
+     - [ ] Criar documentação visual completa dos componentes migrados
+     - [ ] Expandir testes para garantir consistência visual
+     - [ ] Refinar transições e interações
+     - [ ] Otimizar performance de renderização dos componentes convertidos
+   - **Tarefas de Validação**
+     - [ ] Auditar todos os componentes para garantir conformidade com o novo sistema
+     - [ ] Verificar responsividade em todos os breakpoints
+     - [ ] Confirmar compatibilidade cross-browser
+     - [ ] Validar acessibilidade das novas implementações
+
+3. **Melhorar Performance**
    - [x] Otimizar carregamento de imagens com width/height e lazy loading
    - [x] Implementar estratégia de cache para assets estáticos
    - [x] Otimizar bundle splitting para reduzir tamanho inicial
    - [x] Implementar métricas de Core Web Vitals
 
-3. **Otimização de Recursos**
+4. **Otimização de Recursos**
    - [ ] Migrar imagens para CDN próprio
    - [ ] Implementar WebP com fallbacks
    - [ ] Sistema de compressão automática
    - [ ] Pipeline de otimização
 
-4. **Acessibilidade**
+5. **Acessibilidade**
    - [x] Sistema de notificações com suporte a leitores de tela
    - [x] Atributos ARIA para notificações e toasts
    - [x] Pausas automáticas em hover para deficiências cognitivas
@@ -277,7 +303,7 @@
    - [ ] Testes com leitores de tela
    - [ ] Tabulação por teclado nas interfaces de autenticação
 
-5. **SEO Avançado**
+6. **SEO Avançado**
    - [ ] Schema.org específico:
      - Serviços (Service)
      - Artigos (Article)
@@ -287,7 +313,7 @@
    - [ ] Tags canônicas
    - [ ] Rich snippets
 
-6. **Performance**
+7. **Performance**
    - [ ] Service worker e cache
    - [ ] Otimização de fontes
    - [ ] Preload estratégico
