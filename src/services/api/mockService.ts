@@ -32,8 +32,6 @@ import {
   Guide,
   News
 } from './types';
-import { errorHandler } from '../../utils/errors';
-import { ErrorType } from '../../utils/errors/types';
 
 // Classes de erro para simular erros da API
 class MockApiError extends Error {
