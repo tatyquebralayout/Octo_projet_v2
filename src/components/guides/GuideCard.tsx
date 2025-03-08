@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../design-system/components/Card/Card';
-import { Guide } from '../../services/api/types';
-import { formatDate } from '../../utils/formatters/dates';
+import { GuideCardType } from '../../types/guides';
+import { formatDate } from '../../utils/formatters';
 
 interface GuideCardProps {
-  guide: Guide;
+  guide: GuideCardType;
   className?: string;
 }
 

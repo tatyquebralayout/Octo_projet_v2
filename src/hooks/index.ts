@@ -21,6 +21,13 @@ export type {
 // Hook de formulário de contato
 export { default as useContactForm } from './useContactForm';
 
+// Hook para data fetching consolidado
+export { 
+  default as useDataFetching,
+  type DataFetchingOptions,
+  type DataFetchingResult
+} from './useDataFetching';
+
 // Hooks de cache
 export { 
   useCache, 

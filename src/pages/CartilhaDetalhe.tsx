@@ -5,7 +5,7 @@ import { Guide } from '../services/api/types';
 import { ENDPOINTS } from '../services/api/config';
 import { useNotifications } from '../services/notifications';
 import { NotificationType } from '../services/notifications/types';
-import { formatDate } from '../utils/formatters/dates';
+import { formatDate } from '../utils/formatters';
 import { Loading, Error } from '../design-system/components/ui';
 
 const CartilhaDetalhe = () => {

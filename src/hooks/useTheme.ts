@@ -1,47 +1,11 @@
-import { useState, useEffect } from 'react';
+/**
+ * Hook para acessar o contexto de tema
+ * 
+ * @deprecated Use o hook do contexto de tema diretamente: import { useTheme } from '../contexts/ThemeContext'
+ */
+import { useTheme as useThemeContext } from '../contexts/ThemeContext';
 
-type Theme = 'light' | 'dark';
+// Reexportar o hook do contexto para manter compatibilidade
+export const useTheme = useThemeContext;
 
-export const useTheme = () => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Verifica se há um tema salvo no localStorage
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) return savedTheme;
-
-    // Verifica a preferência do sistema
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-
-    return 'light';
-  });
-
-  useEffect(() => {
-    // Atualiza o atributo data-theme no elemento html
-    document.documentElement.setAttribute('data-theme', theme);
-    // Salva o tema no localStorage
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  // Observa mudanças na preferência do sistema
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const handleChange = (e: MediaQueryListEvent) => {
-      setTheme(e.matches ? 'dark' : 'light');
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
-  return {
-    theme,
-    toggleTheme,
-    isDark: theme === 'dark'
-  };
-}; 
+export default useTheme; 

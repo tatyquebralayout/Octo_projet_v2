@@ -215,6 +215,181 @@ O sistema foi projetado para ser facilmente extensível. Para adicionar novos re
 
 3. **Personalização de UI**: Os componentes `PrivateRoute` e `PublicRoute` aceitam componentes personalizados de carregamento.
 
+## useDataFetching
+
+O hook `useDataFetching` fornece uma interface unificada para buscar dados de API com gerenciamento de estados, cache e tratamento de erros.
+
+### Características
+
+- Gerenciamento de estados de loading, erro e dados
+- Integração com sistema de cache
+- Tratamento padronizado de erros
+- Suporte a retry automático
+- Integração com sistema de notificações
+- Cancelamento de requisições quando o componente é desmontado
+- Suporte a paginação
+
+### Uso básico
+
+```tsx
+import { useDataFetching } from 'src/hooks';
+
+function UserProfile({ userId }) {
+  const { 
+    data: user, 
+    isLoading, 
+    error, 
+    refetch 
+  } = useDataFetching({
+    endpoint: `/users/${userId}`,
+    // Exibir notificação apenas em erro, não em sucesso
+    showSuccessNotification: false,
+    showErrorNotification: true
+  });
+
+  if (isLoading) return <Loading />;
+  if (error) return <Error message={error.message} onRetry={refetch} />;
+  if (!user) return <Empty message="Usuário não encontrado" />;
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  );
+}
+```
+
+### Com opções avançadas
+
+```tsx
+function ProductList() {
+  const [filter, setFilter] = useState('');
+  
+  const { 
+    data: products,
+    isLoading,
+    error,
+    pagination,
+    refetch
+  } = useDataFetching({
+    endpoint: '/products',
+    method: 'GET',
+    params: { category: filter },
+    
+    // Opções de cache
+    useCache: true,
+    cacheTime: 5 * 60 * 1000, // 5 minutos
+    
+    // Opções de paginação
+    pagination: {
+      enabled: true,
+      page: 1,
+      limit: 10
+    },
+    
+    // Transformação de dados
+    transform: (data) => data.map(item => ({
+      ...item,
+      price: `R$ ${item.price.toFixed(2)}`
+    })),
+    
+    // Callbacks personalizados
+    onSuccess: (data) => console.log('Dados carregados:', data.length),
+    onError: (error) => console.error('Erro ao carregar produtos:', error)
+  });
+
+  // Renderizar com paginação
+  return (
+    <div>
+      {isLoading ? (
+        <Loading />
+      ) : error ? (
+        <Error message={error.message} onRetry={refetch} />
+      ) : !products?.length ? (
+        <Empty message="Nenhum produto encontrado" />
+      ) : (
+        <>
+          <ul>
+            {products.map(product => (
+              <li key={product.id}>{product.name} - {product.price}</li>
+            ))}
+          </ul>
+          
+          {pagination && (
+            <div className="pagination">
+              <button 
+                onClick={pagination.prevPage} 
+                disabled={!pagination.hasPrevPage}
+              >
+                Anterior
+              </button>
+              
+              <span>
+                Página {pagination.page} de {pagination.totalPages}
+              </span>
+              
+              <button 
+                onClick={pagination.nextPage} 
+                disabled={!pagination.hasNextPage}
+              >
+                Próxima
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+```
+
+### Opções
+
+| Opção | Tipo | Padrão | Descrição |
+|-------|------|--------|-----------|
+| `endpoint` | `string` | (obrigatório) | URL do endpoint da API |
+| `method` | `'GET'` \| `'POST'` \| `'PUT'` \| `'DELETE'` \| `'PATCH'` | `'GET'` | Método HTTP |
+| `params` | `object` | `null` | Parâmetros de query (para GET/DELETE) |
+| `body` | `any` | `null` | Corpo da requisição (para POST/PUT/PATCH) |
+| `headers` | `object` | `{}` | Cabeçalhos HTTP adicionais |
+| `autoFetch` | `boolean` | `true` | Se deve buscar dados automaticamente |
+| `useCache` | `boolean` | `false` | Se deve usar o sistema de cache |
+| `cacheTime` | `number` | - | Tempo de expiração do cache em ms |
+| `retry` | `boolean` | `true` | Se deve tentar novamente em caso de erro |
+| `maxRetries` | `number` | `3` | Número máximo de tentativas |
+| `retryDelay` | `number` | `1000` | Delay inicial entre tentativas (ms) |
+| `onSuccess` | `(data) => void` | - | Callback chamado após sucesso |
+| `onError` | `(error) => void` | - | Callback chamado após erro |
+| `showSuccessNotification` | `boolean` | `false` | Exibir notificação de sucesso |
+| `successTitle` | `string` | `'Sucesso'` | Título da notificação de sucesso |
+| `successMessage` | `string` | `'Operação realizada com sucesso'` | Mensagem de sucesso |
+| `showErrorNotification` | `boolean` | `true` | Exibir notificação de erro |
+| `errorTitle` | `string` | `'Erro'` | Título da notificação de erro |
+| `errorMessage` | `string` | `'Ocorreu um erro ao buscar os dados'` | Mensagem de erro |
+| `transform` | `(data) => T` | - | Função para transformar os dados |
+| `initialData` | `T` | `null` | Dados iniciais |
+| `mockData` | `T` | `null` | Dados de simulação para testes |
+| `mockDelay` | `number` | `0` | Delay simulado (ms) |
+| `pagination` | `object` | `{ enabled: false, page: 1, limit: 10 }` | Configuração de paginação |
+
+### Valor de retorno
+
+O hook retorna um objeto com as seguintes propriedades:
+
+| Propriedade | Tipo | Descrição |
+|-------------|------|-----------|
+| `data` | `T \| null` | Dados obtidos ou `null` |
+| `isLoading` | `boolean` | Se está carregando dados |
+| `isRefreshing` | `boolean` | Se está atualizando dados existentes |
+| `error` | `Error \| null` | Objeto de erro ou `null` |
+| `fetchData` | `() => Promise<T \| null>` | Função para buscar dados |
+| `refetch` | `() => Promise<T \| null>` | Função para atualizar dados |
+| `reset` | `() => void` | Função para resetar o estado |
+| `hasError` | `boolean` | Se há um erro |
+| `isSuccess` | `boolean` | Se a operação foi bem-sucedida |
+| `pagination` | `object \| undefined` | Controles de paginação (quando habilitado) |
+
 ---
 
 Para perguntas ou sugestões sobre o sistema de autenticação, consulte a documentação da API ou entre em contato com a equipe de desenvolvimento.

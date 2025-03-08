@@ -1221,11 +1221,11 @@ src/
      - [✅] Migrar componentes principais para usar componentes base
      - [ ] Completar migração de componentes com animações para usar framer-motion (90% concluído)
    - [ ] Utilitários Redundantes:
-     - [ ] Consolidar hooks de fetch de dados em `useDataFetching`
-     - [ ] Criar biblioteca centralizada para funções de formatação
+     - [✅] Consolidar hooks de fetch de dados em `useDataFetching`
+     - [✅] Criar biblioteca centralizada para funções de formatação
      - [ ] Migrar componentes para usar utilitários centralizados
    - [ ] Configurações Conflitantes:
-     - [ ] Unificar definições de tema em uma única fonte
+     - [✅] Unificar definições de tema em uma única fonte
      - [ ] Consolidar configurações de ESLint
 
 ## Documentação

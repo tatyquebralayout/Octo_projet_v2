@@ -17,18 +17,37 @@ Não é necessária instalação adicional, o módulo já está incluído no pro
 
 ## Uso
 
+> **IMPORTANTE**: Sempre importe as funções do arquivo index centralizado, não dos arquivos específicos.
+> Isso garante consistência e facilita refatorações futuras.
+
 ```typescript
-// Importe os utilitários necessários
+// ✅ CORRETO: Importe do módulo centralizado
 import { 
   formatCurrency, 
+  formatDate,
   isValidEmail, 
   sanitizeHTML, 
   prepareDataForAPI 
 } from '@/utils/formatters';
 
-// Exemplos de uso
+// ❌ INCORRETO: Não importe diretamente dos arquivos específicos
+// import { formatDate } from '@/utils/formatters/dates';
+// import { formatCurrency } from '@/utils/formatters/numbers';
+```
+
+### Exemplos de uso
+
+```typescript
+// Formatação de moeda
 const formattedValue = formatCurrency(1234.56); // 'R$ 1.234,56'
+
+// Formatação de data
+const formattedDate = formatDate(new Date(2023, 0, 31)); // '31/01/2023'
+
+// Validação de email
 const emailValidation = isValidEmail('user@example.com'); // { isValid: true }
+
+// Sanitização de HTML
 const cleanHtml = sanitizeHTML('<script>alert("teste")</script>'); // 'alert("teste")'
 
 // Preparando dados para API

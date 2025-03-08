@@ -7,6 +7,8 @@ import Footer from './components/layout/Footer';
 import Loading from './components/Loading';
 import { MenuProvider } from './contexts/MenuContext';
 import { NotificationsProvider } from './services/notifications';
+import { AnimationProvider } from './design-system/contexts/AnimationContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 // Lazy loading dos componentes de página
 const Home = React.lazy(() => import('./pages/Home'));
@@ -33,21 +35,23 @@ const Contato = React.lazy(() => import('./pages/Contato'));
 const Layout = () => (
   <MenuProvider>
     <NotificationsProvider>
-      <div className="min-h-screen flex flex-col">
-        <a 
-          href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
-        >
-          Pular para o conteúdo principal
-        </a>
-        <Header />
-        <main id="main-content" className="flex-grow pt-20" role="main">
-          <Suspense fallback={<Loading />}>
-            <Outlet />
-          </Suspense>
-        </main>
-        <Footer />
-      </div>
+      <AnimationProvider>
+        <div className="min-h-screen flex flex-col">
+          <a 
+            href="#main-content" 
+            className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
+          >
+            Pular para o conteúdo principal
+          </a>
+          <Header />
+          <main id="main-content" className="flex-grow pt-20" role="main">
+            <Suspense fallback={<Loading />}>
+              <Outlet />
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+      </AnimationProvider>
     </NotificationsProvider>
   </MenuProvider>
 );
@@ -85,9 +89,38 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
+    <ThemeProvider>
+      <AnimationProvider>
+        <ErrorBoundary>
+          <RouterProvider router={router} />
+        </ErrorBoundary>
+      </AnimationProvider>
+    </ThemeProvider>
+  );
+}
+
+// Layout principal com elementos comuns e outlet para as rotas
+function MainLayout() {
+  return (
+    <MenuProvider>
+      <NotificationsProvider>
+        <div className="min-h-screen flex flex-col">
+          <a 
+            href="#main-content" 
+            className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
+          >
+            Pular para o conteúdo principal
+          </a>
+          <Header />
+          <main id="main-content" className="flex-grow pt-20" role="main">
+            <Suspense fallback={<Loading />}>
+              <Outlet />
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+      </NotificationsProvider>
+    </MenuProvider>
   );
 }
 
