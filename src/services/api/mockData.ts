@@ -24,7 +24,49 @@ export const randomDelay = async (): Promise<void> => {
 };
 
 // Função para simular probabilidade de erro
-export const shouldSimulateError = (): boolean => {
+export const shouldSimulateError = (endpoint?: string): boolean => {
+  // Em modo de desenvolvimento, verificar se há um controle manual de erros
+  const isDevelopment = import.meta.env.MODE === 'development';
+  
+  if (isDevelopment) {
+    // Permitir sobrescrever comportamento de erros via localStorage
+    const mockControl = localStorage.getItem('octo_mock_control');
+    if (mockControl) {
+      try {
+        const config = JSON.parse(mockControl);
+        
+        // Verificar se há configuração específica para este endpoint
+        if (endpoint && config.endpoints && config.endpoints[endpoint] !== undefined) {
+          return config.endpoints[endpoint].errorRate > Math.random();
+        }
+        
+        // Verificar se há uma taxa global configurada
+        if (config.globalErrorRate !== undefined) {
+          return config.globalErrorRate > Math.random();
+        }
+      } catch (e) {
+        console.warn('Erro ao ler configuração de mock do localStorage', e);
+      }
+    }
+    
+    // Para endpoints de guias, implementamos uma estratégia especial
+    if (endpoint && endpoint.includes('guides')) {
+      // Verificar se já tivemos erros recentes para este endpoint
+      const guidesErrorKey = `mock_guides_error_${endpoint}`;
+      const storedError = localStorage.getItem(guidesErrorKey);
+      
+      if (storedError) {
+        // Já temos um erro persistente, não gerar novo erro
+        // isso evita ciclos de falha constantes
+        return false;
+      }
+      
+      // Taxa reduzida de erro para guides (1%)
+      return Math.random() < 0.01;
+    }
+  }
+  
+  // Comportamento padrão baseado na configuração global
   return Math.random() < (API_ENV.MOCK_ERROR_RATE || 0.05);
 };
 

@@ -22,7 +22,7 @@ import { createHash } from './utils';
  */
 export class CacheManager {
   private config: CacheConfig;
-  private storage: StorageAdapter;
+  private storage!: StorageAdapter;
   private eventListeners: CacheEventListener[] = [];
   private networkStatus: boolean = navigator.onLine;
 
@@ -373,13 +373,16 @@ export class CacheManager {
     } catch (error) {
       console.error(`Erro ao revalidar em segundo plano: ${key}`, error);
       
-      // Emitir evento de erro
-      this.emit({
-        type: CacheEventType.ERROR,
-        key,
-        timestamp: Date.now(),
-        error
-      });
+      // Se não estiver suprimindo erros de background, emitir evento de erro
+      if (!options?.suppressBackgroundErrors) {
+        // Emitir evento de erro
+        this.emit({
+          type: CacheEventType.ERROR,
+          key,
+          timestamp: Date.now(),
+          error
+        });
+      }
     }
   }
 

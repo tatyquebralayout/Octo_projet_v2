@@ -11,7 +11,7 @@ import {
   QueryParams,
   PaginatedResponse
 } from './types';
-import { API_ENV, AUTH_CONFIG } from './config';
+import { API_ENV, AUTH_CONFIG, ENDPOINTS, MOCK_ENDPOINT_MAP } from './config';
 import { mockServices } from './mockService';
 import { logger } from '../../utils/logger';
 import { 
@@ -207,28 +207,149 @@ class ApiService {
       throw new Error('Mock não está habilitado');
     }
     
-    // Encontrar o serviço mock correspondente ao endpoint
-    const mockFn = Object.entries(mockServices).find(([endpoint, fn]) => {
-      return url.includes(endpoint);
-    })?.[1];
+    // Encontrar o serviço mock correspondente ao endpoint a partir do mapeamento
+    const endpointMatch = Object.keys(MOCK_ENDPOINT_MAP).find(key => url.includes(key));
+    const endpointKey = endpointMatch ? (MOCK_ENDPOINT_MAP as Record<string, string>)[endpointMatch] : null;
     
-    if (!mockFn) {
+    // Encontrar a função mock correspondente usando o endpoint encontrado
+    const mockEntry = Object.entries(mockServices).find(([key, fn]) => 
+      key === endpointKey || url.includes(key)
+    );
+    
+    if (!mockEntry) {
       throw errorHandler.createAppError(new Error(`Mock não encontrado para ${method} ${url}`), {
         type: ErrorType.CLIENT,
-        code: 'MOCK_NOT_FOUND'
+        code: 'MOCK_NOT_FOUND',
+        retryable: false // Erro não recuperável
       });
     }
     
+    const [, mockFn] = mockEntry;
+    
+    // Determinar se o endpoint é do tipo que pode ter falhas temporárias
+    const isGuidesEndpoint = url.includes('guides');
+    const isDevelopment = import.meta.env.MODE === 'development';
+    
     try {
-      // Executa a função mock com os dados fornecidos
-      const result = await mockFn(data);
+      // Em ambiente de desenvolvimento, podemos aplicar tratamento especial para endpoints específicos
+      if (isDevelopment && isGuidesEndpoint) {
+        // Para o endpoint de guides, verificamos se há erros persistentes no armazenamento local
+        const guidesErrorKey = `mock_guides_error_${url}`;
+        const storedError = localStorage.getItem(guidesErrorKey);
+        
+        if (storedError) {
+          try {
+            // Se há registro de erro persistente, verificamos se já passou o tempo de penalidade
+            const errorData = JSON.parse(storedError);
+            const now = Date.now();
+            
+            if (now < errorData.expiry) {
+              console.info(`[Mock] Endpoint ${url} em período de penalidade (${Math.round((errorData.expiry - now)/1000)}s restantes). Retornando dados vazios.`);
+              
+              // Ainda está no período de penalidade, retornamos resposta vazia mas bem-sucedida
+              // em vez de continuar lançando erro, o que evita ciclos de revalidação
+              return {
+                data: Array.isArray(data) ? [] : {},
+                success: true,
+                message: 'Dados temporariamente indisponíveis (recuperando de falha)'
+              } as unknown as T;
+            } else {
+              // Período de penalidade expirou, removemos o registro
+              localStorage.removeItem(guidesErrorKey);
+              console.info(`[Mock] Período de penalidade para ${url} expirou. Tentando novamente.`);
+            }
+          } catch (e) {
+            // Se houver erro ao processar dados salvos no localStorage, apenas ignoramos
+            localStorage.removeItem(guidesErrorKey);
+          }
+        }
+      }
+      
+      // Se o método é GET e temos parâmetros, passamos como segundo argumento
+      // para os serviços mock que esperam essa assinatura
+      const params = method === 'GET' && data ? data : undefined;
+      
+      // Executa a função mock com os dados fornecidos, adequando os parâmetros conforme método
+      let result;
+      if (method === 'GET') {
+        // Alguns serviços mock esperam um objeto de parâmetros como segundo argumento
+        result = await (mockFn as Function)(params);
+      } else {
+        // Para métodos POST, PUT, etc. passamos os dados como o argumento principal
+        result = await (mockFn as Function)(data);
+      }
+      
       return result as unknown as T;
     } catch (error) {
-      // Processa o erro usando o errorHandler
-      throw errorHandler.handleError(error, {
-        context: { url, method, mockData: data },
+      // Classificar o erro quanto à sua natureza
+      const isNetworkError = error instanceof Error && error.message.includes('network');
+      const isServerError = error instanceof Error && 
+        (error.message.includes('server') || error.message.includes('Erro ao carregar guias'));
+      const isResourceError = error instanceof Error && error.message.includes('not found');
+      
+      // Classificar recuperabilidade do erro
+      const isRecoverable = isNetworkError || isServerError;
+      const errorType = isServerError ? ErrorType.SERVER : 
+                      isNetworkError ? ErrorType.NETWORK : 
+                      isResourceError ? ErrorType.NOT_FOUND : 
+                      ErrorType.UNKNOWN;
+      
+      // Para erros do tipo "Erro ao carregar guias", implementar backoff em localStorage
+      if (isDevelopment && isGuidesEndpoint && error instanceof Error && 
+          error.message.includes('Erro ao carregar guias')) {
+        
+        const guidesErrorKey = `mock_guides_error_${url}`;
+        
+        // Verificar se já existe um registro de erro
+        const existingError = localStorage.getItem(guidesErrorKey);
+        let attempt = 1;
+        
+        if (existingError) {
+          try {
+            const errorData = JSON.parse(existingError);
+            attempt = errorData.attempt + 1;
+          } catch (e) {
+            // Se houver erro ao processar dados salvos, apenas reiniciamos o contador
+          }
+        }
+        
+        // Implementar backoff exponencial para penalidade
+        const penaltyMs = Math.min(
+          30 * 60 * 1000, // Máximo de 30 minutos
+          Math.pow(2, attempt) * 1000 // 2^n segundos
+        );
+        
+        // Registrar o erro com tempo de expiração
+        localStorage.setItem(guidesErrorKey, JSON.stringify({
+          timestamp: Date.now(),
+          expiry: Date.now() + penaltyMs,
+          attempt: attempt,
+          url: url,
+          message: error.message
+        }));
+        
+        // Registrar o erro no console com mais contexto
+        console.warn(`[Mock] Erro recuperável em ${url}. Backoff: ${penaltyMs/1000}s. Tentativa: ${attempt}`);
+      }
+      
+      // Processa o erro usando o errorHandler com informações enriquecidas
+      const appError = errorHandler.handleError(error, {
+        context: { 
+          url, 
+          method, 
+          mockData: data,
+          isRecoverable,
+          errorType,
+          endpoint: endpointKey
+        },
+        // Usar nível de log apropriado
+        logLevel: isRecoverable ? 'warn' : 'error',
+        // Em ambiente de desenvolvimento, podemos suprimir erros dos logs para endpoints problemáticos
+        suppressForDevelopment: isDevelopment && isGuidesEndpoint,
         rethrow: true
       });
+      
+      throw appError;
     }
   }
   

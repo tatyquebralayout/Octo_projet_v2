@@ -23,18 +23,19 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   className = '',
   priority = false,
 }) => {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      className={`${className}`}
-      loading={priority ? 'eager' : 'lazy'}
-      fetchPriority={priority ? 'high' : 'auto'}
-      decoding="async"
-    />
-  );
+  // Usando atributos personalizados para suportar fetchpriority
+  const imgProps: React.ImgHTMLAttributes<HTMLImageElement> & { [key: string]: any } = {
+    src,
+    alt,
+    width,
+    height,
+    className: `${className}`,
+    loading: priority ? 'eager' : 'lazy',
+    decoding: 'async',
+    fetchpriority: priority ? 'high' : 'auto',
+  };
+
+  return <img {...imgProps} />;
 };
 
 export default OptimizedImage; 

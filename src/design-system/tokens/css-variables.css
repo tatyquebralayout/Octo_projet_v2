@@ -46,19 +46,22 @@
   --line-height-body-large: theme('fontSize.body-large[1].lineHeight');
   
   /* Espaçamento */
-  --spacing-xs: theme('spacing.xs');
-  --spacing-sm: theme('spacing.sm');
-  --spacing-md: theme('spacing.md');
-  --spacing-lg: theme('spacing.lg');
-  --spacing-xl: theme('spacing.xl');
-  --spacing-2xl: theme('spacing.2xl');
-  --spacing-3xl: theme('spacing.3xl');
+  --spacing-xs: theme('spacing.1');  /* menor espaçamento */
+  --spacing-sm: theme('spacing.2');  /* espaçamento pequeno */
+  --spacing-md: theme('spacing.4');  /* espaçamento médio */
+  --spacing-lg: theme('spacing.8');  /* espaçamento grande */
+  --spacing-xl: theme('spacing.12'); /* espaçamento extra grande */
+  --spacing-2xl: theme('spacing.16'); /* espaçamento 2x grande */
+  --spacing-3xl: theme('spacing.20'); /* espaçamento 3x grande */
   
   /* Bordas */
+  --border-radius-none: theme('borderRadius.none');
   --border-radius-sm: theme('borderRadius.sm');
   --border-radius-md: theme('borderRadius.md');
   --border-radius-lg: theme('borderRadius.lg');
-  --border-radius-pill: theme('borderRadius.pill');
+  --border-radius-xl: theme('borderRadius.xl');
+  --border-radius-2xl: theme('borderRadius.2xl');
+  --border-radius-full: theme('borderRadius.full');
   --border-width: 1px;
   --border-width-thick: 2px;
   --border-color: theme('colors.gray.200');

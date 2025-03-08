@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import GuideCard from '../components/guides/GuideCard';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import debounce from 'lodash.debounce';
 import GuidesFilter from '../components/guides/GuidesFilter';
+import CartilhasVirtualList from '../components/guides/CartilhasVirtualList';
 import Pagination from '../components/common/Pagination';
 import useGuides from '../hooks/useGuides';
 import { useNotifications } from '../services/notifications';
 import { NotificationType } from '../services/notifications/types';
+import ProfilerWrapper from '../utils/performance/ProfilerWrapper';
+import '../components/guides/guides.css';
 
 interface FilterState {
   category?: string;
@@ -40,46 +43,93 @@ const Cartilhas = () => {
     error,
     categories,
     tags,
-    hasNextPage,
-    hasPrevPage,
-    goToPage,
-    goToNextPage,
-    goToPrevPage
+    goToPage
   } = useGuides({
     page: currentPage,
-    limit: 9,
+    limit: 12, // Aumentamos o limite para otimizar a paginação com virtualização
     ...filters
   });
   
-  // Exibir erro se houver
+  // Exibir erro se houver (apenas uma vez por erro)
   useEffect(() => {
     if (error) {
+      console.error('Erro ao carregar cartilhas:', error);
       showToast({
         title: 'Erro ao carregar cartilhas',
-        message: error.message,
+        message: error.message || 'Ocorreu um erro ao carregar as cartilhas. Tente novamente mais tarde.',
         type: NotificationType.ERROR,
         autoClose: true
       });
     }
   }, [error, showToast]);
   
-  // Manipular mudança de página
-  const handlePageChange = (page: number) => {
+  // Debounce para aplicação de filtros
+  const debouncedFilterChange = useMemo(
+    () => debounce((newFilters: FilterState) => {
+      setFilters(prev => {
+        // Verificar se os filtros realmente mudaram
+        if (
+          prev.category === newFilters.category &&
+          prev.tag === newFilters.tag &&
+          prev.searchTerm === newFilters.searchTerm
+        ) {
+          return prev; // Não atualizar se não houve mudança
+        }
+        return newFilters;
+      });
+    }, 300), // 300ms de delay para evitar atualizações frequentes
+    []
+  );
+  
+  // Manipular mudança de filtros com debounce
+  const handleFilterChange = useCallback((newFilters: FilterState) => {
+    debouncedFilterChange(newFilters);
+  }, [debouncedFilterChange]);
+  
+  // Manipular limpeza de filtros
+  const handleClearFilters = useCallback(() => {
+    setFilters({
+      category: undefined,
+      tag: undefined,
+      searchTerm: undefined
+    });
+    setCurrentPage(1);
+  }, []);
+  
+  // Manipular mudança de página de forma otimizada
+  const handlePageChange = useCallback((page: number) => {
+    if (page === currentPage) return; // Evitar recargas desnecessárias
+    
     setCurrentPage(page);
-    goToPage(page);
     
     // Rolar para o topo da página
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-  };
-  
-  // Manipular mudança de filtros
-  const handleFilterChange = (newFilters: FilterState) => {
-    setFilters(newFilters);
-  };
+  }, [currentPage]);
 
+  // Sincronizar mudanças de página com o hook useGuides
+  useEffect(() => {
+    if (currentPage > 0) {
+      goToPage(currentPage);
+    }
+  }, [currentPage, goToPage]);
+  
+  // Função para tentar novamente em caso de erro
+  const handleRetry = useCallback(() => {
+    // Forçar recarga de dados
+    goToPage(currentPage);
+  }, [currentPage, goToPage]);
+
+  // Memorizar o texto de contagem de resultados
+  const resultsCountText = useMemo(() => {
+    if (isLoading) return 'Carregando cartilhas...';
+    if (error) return 'Erro ao carregar cartilhas';
+    return `Mostrando ${guides ? guides.length : 0} de ${totalItems || 0} cartilhas`;
+  }, [isLoading, error, guides, totalItems]);
+
+  // Renderização segura para evitar erros
   return (
     <>
       <div className="container mx-auto px-4 py-8">
@@ -93,12 +143,16 @@ const Cartilhas = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar com filtros */}
           <div className="lg:col-span-1">
-            <GuidesFilter
-              categories={categories}
-              tags={tags}
-              onFilterChange={handleFilterChange}
-              className="sticky top-24"
-            />
+            <ProfilerWrapper id="GuidesFilterComponent">
+              <GuidesFilter
+                categories={categories || []}
+                tags={tags || []}
+                onFilterChange={handleFilterChange}
+                className="sticky top-24"
+                isLoading={isLoading}
+                error={error}
+              />
+            </ProfilerWrapper>
           </div>
           
           {/* Lista de cartilhas */}
@@ -106,11 +160,7 @@ const Cartilhas = () => {
             {/* Informações sobre resultados */}
             <div className="mb-4 flex justify-between items-center">
               <p className="text-gray-600">
-                {isLoading ? (
-                  'Carregando cartilhas...'
-                ) : (
-                  `Mostrando ${guides.length} de ${totalItems} cartilhas`
-                )}
+                {resultsCountText}
               </p>
               
               {/* Seletor de ordenação (a ser implementado) */}
@@ -122,6 +172,7 @@ const Cartilhas = () => {
                   id="sort"
                   className="border rounded-md px-2 py-1 text-sm"
                   defaultValue="recent"
+                  disabled={isLoading || Boolean(error)}
                 >
                   <option value="recent">Mais recentes</option>
                   <option value="title">Título (A-Z)</option>
@@ -130,42 +181,32 @@ const Cartilhas = () => {
               </div>
             </div>
             
-            {/* Grid de cartilhas */}
-            {isLoading ? (
-              // Esqueletos de carregamento
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-gray-100 rounded-lg h-80 animate-pulse"
-                  />
-                ))}
-              </div>
-            ) : guides.length > 0 ? (
-              // Lista de cartilhas
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {guides.map((guide) => (
-                  <GuideCard key={guide.id} guide={guide} />
-                ))}
-              </div>
-            ) : (
-              // Mensagem de nenhum resultado
-              <div className="text-center py-12">
-                <h3 className="text-xl font-semibold mb-2">Nenhuma cartilha encontrada</h3>
-                <p className="text-gray-600 mb-4">
-                  Tente ajustar seus filtros ou termos de busca.
-                </p>
-                <button
-                  onClick={() => handleFilterChange({})}
-                  className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
-                >
-                  Limpar filtros
-                </button>
-              </div>
-            )}
+            {/* Grid de cartilhas com virtualização */}
+            <ProfilerWrapper id="CartilhasVirtualList">
+              <CartilhasVirtualList 
+                guides={guides || []} 
+                isLoading={isLoading}
+                error={error}
+                onRetry={handleRetry}
+                noResultsComponent={
+                  <div className="text-center py-12">
+                    <h3 className="text-xl font-semibold mb-2">Nenhuma cartilha encontrada</h3>
+                    <p className="text-gray-600 mb-4">
+                      Tente ajustar seus filtros ou termos de busca.
+                    </p>
+                    <button
+                      onClick={handleClearFilters}
+                      className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
+                    >
+                      Limpar filtros
+                    </button>
+                  </div>
+                }
+              />
+            </ProfilerWrapper>
             
             {/* Paginação */}
-            {!isLoading && guides.length > 0 && (
+            {!isLoading && guides && guides.length > 0 && totalPages > 1 && (
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}

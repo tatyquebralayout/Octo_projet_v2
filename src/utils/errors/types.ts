@@ -25,14 +25,15 @@ export enum ErrorType {
 export interface AppError {
   type: ErrorType;
   message: string;
-  originalError?: Error | ApiError | unknown;
-  code?: string;
+  code: string;
   statusCode?: number;
   timestamp: string;
-  fingerprint?: string;
+  processedAt?: string;
+  fingerprint: string;
+  originalError: unknown;
   context?: Record<string, any>;
   retryable: boolean;
-  isOperational: boolean; // Diferencia erros operacionais (esperados) de bugs/erros programáticos
+  isOperational: boolean;
 }
 
 /**

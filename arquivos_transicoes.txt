@@ -1,0 +1,6 @@
+Arquivos para refinar transições e interações:
+1. src/design-system/utils/animations/index.ts
+2. src/design-system/tokens/unified-tokens.ts
+3. tailwind.config.js
+4. src/styles/theme.css
+5. src/styles/design-system.css

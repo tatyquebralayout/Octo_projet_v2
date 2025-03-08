@@ -198,14 +198,14 @@ const Home = () => {
                 to={program.link}
                 className={`
                   group relative overflow-hidden rounded-xl
-                  transition-all duration-300 ease-out
+                  transition-standard
                   bg-white/10 backdrop-blur-sm
                   md3-elevation-1
                   hover:md3-elevation-2
                   active:md3-elevation-3
                   md3-state-layer-opacity-hover
                   md3-state-layer-opacity-pressed
-                  animate-slide-in
+                  animate-slideIn
                   ${hoveredCard === index ? 'z-10' : 'z-0'}
                 `}
                 style={{

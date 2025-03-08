@@ -1,7 +1,7 @@
 /**
  * Componente para conter e gerenciar todos os toasts
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNotifications } from '../../services/notifications/context';
 import { Toast } from './Toast';
 import { POSITION_STYLES } from '../../services/notifications/config';

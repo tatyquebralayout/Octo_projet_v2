@@ -1,45 +1,76 @@
-type LogLevel = 'info' | 'warn' | 'error';
+/**
+ * Logger centralizado da aplicação
+ * Abstrai a implementação concreta de logging
+ */
 
-class Logger {
-  private static instance: Logger;
-  private isProd = import.meta.env.PROD;
+// Interface do logger
+export interface Logger {
+  info(message: string, ...args: any[]): void;
+  warn(message: string, ...args: any[]): void;
+  error(message: string, ...args: any[]): void;
+  debug(message: string, ...args: any[]): void;
+}
 
-  private constructor() {}
-
-  static getInstance(): Logger {
-    if (!Logger.instance) {
-      Logger.instance = new Logger();
-    }
-    return Logger.instance;
+// Implementação do Logger para desenvolvimento
+class DevLogger implements Logger {
+  info(message: string, ...args: any[]): void {
+    console.info(`[INFO] ${message}`, ...args);
   }
-
-  private log(level: LogLevel, message: string, ...args: any[]) {
-    if (!this.isProd) {
-      console[level](`[OCTO] ${message}`, ...args);
-    }
-
-    // Em produção, enviar para Sentry apenas erros
-    if (this.isProd && level === 'error') {
-      import('@sentry/react').then(Sentry => {
-        Sentry.captureMessage(message, {
-          level: Sentry.Severity.Error,
-          extra: { ...args }
-        });
-      });
-    }
+  
+  warn(message: string, ...args: any[]): void {
+    console.warn(`[WARN] ${message}`, ...args);
   }
-
-  info(message: string, ...args: any[]) {
-    this.log('info', message, ...args);
+  
+  error(message: string, ...args: any[]): void {
+    console.error(`[ERROR] ${message}`, ...args);
   }
-
-  warn(message: string, ...args: any[]) {
-    this.log('warn', message, ...args);
-  }
-
-  error(message: string, ...args: any[]) {
-    this.log('error', message, ...args);
+  
+  debug(message: string, ...args: any[]): void {
+    console.debug(`[DEBUG] ${message}`, ...args);
   }
 }
 
-export const logger = Logger.getInstance();
+// Implementação do Logger para produção
+class ProdLogger implements Logger {
+  info(message: string, ...args: any[]): void {
+    // Em produção, poderíamos integrar com um serviço de logging
+    if (args.length > 0) {
+      console.info(`[INFO] ${message}`, ...args);
+    } else {
+      console.info(`[INFO] ${message}`);
+    }
+  }
+  
+  warn(message: string, ...args: any[]): void {
+    if (args.length > 0) {
+      console.warn(`[WARN] ${message}`, ...args);
+    } else {
+      console.warn(`[WARN] ${message}`);
+    }
+  }
+  
+  error(message: string, ...args: any[]): void {
+    // Em produção, poderíamos enviar erros para um serviço de monitoramento
+    if (args.length > 0) {
+      console.error(`[ERROR] ${message}`, ...args);
+    } else {
+      console.error(`[ERROR] ${message}`);
+    }
+  }
+  
+  debug(message: string, ...args: any[]): void {
+    // Em produção, logs de debug geralmente são suprimidos
+    if (import.meta.env.DEV) {
+      if (args.length > 0) {
+        console.debug(`[DEBUG] ${message}`, ...args);
+      } else {
+        console.debug(`[DEBUG] ${message}`);
+      }
+    }
+  }
+}
+
+// Exportar a instância apropriada com base no ambiente
+export const logger: Logger = import.meta.env.PROD 
+  ? new ProdLogger() 
+  : new DevLogger();

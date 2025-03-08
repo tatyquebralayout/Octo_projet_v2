@@ -21,7 +21,6 @@ export const GuideCard: React.FC<GuideCardProps> = ({ guide, className = '' }) =
     coverImage,
     category,
     tags,
-    author,
     publishedAt,
     pageCount,
     fileSize

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Eye, Brain, Ear, Activity, Users, Flower2 } from 'lucide-react';
+import Button from '../../components/ui/Button';
 
 const DeficienciasOcultas = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -206,22 +207,20 @@ const DeficienciasOcultas = () => {
                 A OCTO está disponível pra essa formação e esse acolhimento. Em breve, aqui mesmo, vamos ter alguns vídeos maneiros sobre o tema! Vem com a gente!
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link
-                  to="/contato"
-                  className="px-8 py-4 bg-white text-[#972ae6] text-lg font-bold rounded-full
-                    hover:bg-[#e8b624] hover:text-white transition-all duration-300
-                    transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
+                <Button
+                  href="/contato"
+                  variant="secondary"
+                  size="lg"
                 >
                   Entre em Contato
-                </Link>
-                <Link
-                  to="/cartilhas"
-                  className="px-8 py-4 bg-white/10 text-white text-lg font-bold rounded-full
-                    hover:bg-white/20 transition-all duration-300
-                    transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
+                </Button>
+                <Button
+                  href="/cartilhas"
+                  variant="outline"
+                  size="lg"
                 >
-                  Acesse Nossas Cartilhas
-                </Link>
+                  Baixe Nossas Cartilhas
+                </Button>
               </div>
               <p className="text-sm text-white/70 mt-8">
                 Quer saber mais? Já já os links aparecem aqui mesmo (estão em andamento, prometemos!)

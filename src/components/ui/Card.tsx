@@ -2,58 +2,52 @@ import React from 'react';
 import { cn } from '../../utils/cn';
 
 export type CardVariant = 'primary' | 'secondary' | 'accent';
-export type CardSize = 'sm' | 'md' | 'lg';
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps {
   children: React.ReactNode;
   variant?: CardVariant;
-  size?: CardSize;
-  elevation?: 1 | 2 | 3;
-  withHoverEffect?: boolean;
+  className?: string;
+  title?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ children, variant = 'primary', size = 'md', elevation = 1, withHoverEffect = false, className = '', ...props }, ref) => {
-    // Classes base usando a classe .card do Design System
-    const baseClasses = cn(
-      'card',
-      {
-        'hover-lift': withHoverEffect,
-      }
-    );
+export const Card: React.FC<CardProps> = ({
+  children,
+  variant = 'primary',
+  className = '',
+  title,
+  footer
+}) => {
+  // Classes base usando a classe .card do Design System
+  const baseClasses = 'card';
 
-    // Classes específicas para cada variante usando as classes do Design System
-    const variantClasses = {
-      primary: variant === 'primary' ? 'card-primary' : '',
-      secondary: variant === 'secondary' ? 'card-secondary' : '',
-      accent: variant === 'accent' ? 'card-accent' : '',
-    }[variant];
+  // Classes específicas para cada variante usando as classes do Design System
+  const variantClasses = {
+    primary: 'card-primary',
+    secondary: 'card-secondary',
+    accent: 'card-accent',
+  }[variant];
 
-    // Classes para elevação usando as classes do Design System
-    const elevationClasses = {
-      1: 'md3-elevation-1',
-      2: 'md3-elevation-2',
-      3: 'md3-elevation-3',
-    }[elevation];
+  // Combinando todas as classes
+  const allClasses = cn(baseClasses, variantClasses, className);
 
-    // Classes para tamanho
-    const sizeClasses = {
-      sm: 'p-3',
-      md: 'p-4',
-      lg: 'p-6',
-    }[size];
-
-    // Combinando todas as classes
-    const allClasses = cn(baseClasses, variantClasses, elevationClasses, sizeClasses, className);
-
-    return (
-      <div ref={ref} className={allClasses} {...props}>
+  return (
+    <div className={allClasses}>
+      {title && (
+        <div className="card-header">
+          {typeof title === 'string' ? <h3 className="text-h3">{title}</h3> : title}
+        </div>
+      )}
+      <div className="card-body">
         {children}
       </div>
-    );
-  }
-);
-
-Card.displayName = 'Card';
+      {footer && (
+        <div className="card-footer">
+          {footer}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Card;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Loading = () => {
   return (
     <div 
@@ -8,7 +6,7 @@ const Loading = () => {
       aria-label="Carregando conteúdo"
     >
       <div 
-        className="animate-spin rounded-full h-16 w-16 border-t-4 border-[#972ae6]"
+        className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary-400"
         aria-hidden="true"
       />
       <span className="sr-only">Carregando...</span>

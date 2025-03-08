@@ -97,4 +97,4 @@ export type {
 export * from './types';
 
 // Serviços
-export * as authService from './auth'; 
+export * as authModules from './auth'; 

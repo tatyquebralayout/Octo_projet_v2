@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/react";
 import App from './App.tsx';
 import { registerServiceWorker } from './utils/pwa';
 import { reportWebVitals } from './utils/webVitals';
+import ProfilerWrapper from './utils/performance/ProfilerWrapper';
 import './index.postcss';
 
 // Inicializa o Sentry para monitoramento
@@ -30,7 +31,9 @@ const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <App />
+    <ProfilerWrapper id="App">
+      <App />
+    </ProfilerWrapper>
   </StrictMode>
 );
 

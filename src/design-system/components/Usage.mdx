@@ -1,0 +1,234 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import { Card } from './Card/Card';
+import Input from './Input/Input';
+import { Mail } from 'lucide-react';
+
+<Meta title="Design System/Components/Guias de Uso" />
+
+# Guias de Uso dos Componentes
+
+Este documento fornece diretrizes e boas práticas para utilizar os componentes do Design System OCTO em suas aplicações.
+
+## Card
+
+O componente `Card` é utilizado para agrupar informações relacionadas e criar hierarquia visual na interface.
+
+### Anatomia do Card
+
+Um card típico contém os seguintes elementos:
+
+1. Container - O elemento principal com bordas arredondadas e elevação opcional
+2. Header (opcional) - Cabeçalho com título ou informação principal
+3. Content - Conteúdo principal do card
+4. Footer (opcional) - Rodapé com ações ou informações adicionais
+
+### Variantes
+
+O Card oferece três variantes principais:
+
+- **Elevated** (padrão): Com elevação e sombra, adequado para elementos destacados
+- **Outlined**: Com borda e sem elevação, ideal para interfaces mais sutis
+- **Filled**: Com cor de fundo sutil, sem elevação
+
+### Tamanhos
+
+- **sm**: Largura máxima de 384px
+- **md**: Largura máxima de 448px
+- **lg**: Largura máxima de 512px
+
+### Espaçamento Interno
+
+- **compact**: Padding mínimo (8px)
+- **normal** (padrão): Padding médio (16px)
+- **spacious**: Padding amplo (24px)
+
+### Exemplos de Implementação
+
+#### Card Básico
+
+```jsx
+<Card>
+  <h3 className="text-h3 mb-2">Título do Card</h3>
+  <p className="text-body">Conteúdo do card...</p>
+</Card>
+```
+
+#### Card com Header e Footer
+
+```jsx
+<Card>
+  <div className="mb-4 pb-2 border-b border-gray-100">
+    <h3 className="text-h3">Título do Card</h3>
+  </div>
+  
+  <p className="text-body mb-4">Conteúdo principal do card com descrição detalhada...</p>
+  
+  <div className="mt-4 pt-2 border-t border-gray-100 flex justify-end">
+    <button className="btn btn-primary">Ação Principal</button>
+  </div>
+</Card>
+```
+
+#### Card Interativo
+
+```jsx
+<Card interactive onClick={() => console.log('Card clicado')}>
+  <h3 className="text-h3 mb-2">Card Clicável</h3>
+  <p className="text-body">Clique neste card para interagir</p>
+</Card>
+```
+
+### Boas Práticas
+
+✅ **Recomendado:**
+- Use cards para agrupar informações relacionadas
+- Mantenha a hierarquia visual consistente (títulos, conteúdo, ações)
+- Para cards clicáveis, use a propriedade `interactive`
+- Siga padrões consistentes para todos os cards em uma mesma interface
+
+❌ **Evitar:**
+- Não sobrecarregue o card com muitas informações ou ações
+- Evite aninhar cards dentro de outros cards
+- Não use variantes diferentes para cards com o mesmo propósito em uma interface
+- Evite criar cards muito pequenos ou muito grandes que não se adequem ao layout
+
+## Input
+
+O componente `Input` é usado para capturar entrada de texto do usuário em formulários.
+
+### Anatomia do Input
+
+Um campo de entrada típico contém:
+
+1. Label - Rótulo que descreve o propósito do campo
+2. Input - O campo de entrada em si
+3. Ícones (opcional) - Ícones à esquerda ou direita do campo
+4. Helper/Error Text - Texto auxiliar ou de erro abaixo do campo
+
+### Propriedades Principais
+
+- **label**: Rótulo do campo
+- **placeholder**: Texto exibido quando o campo está vazio
+- **error**: Mensagem de erro, quando presente
+- **helper**: Texto auxiliar
+- **leftIcon/rightIcon**: Ícones à esquerda ou direita do campo
+- **disabled**: Estado desabilitado
+
+### Exemplos de Implementação
+
+#### Input Básico
+
+```jsx
+<Input
+  label="Nome"
+  placeholder="Digite seu nome completo"
+/>
+```
+
+#### Input com Erro
+
+```jsx
+<Input
+  label="Email"
+  placeholder="exemplo@email.com"
+  error="Email inválido. Verifique o formato."
+  type="email"
+/>
+```
+
+#### Input com Ícone e Texto Auxiliar
+
+```jsx
+import { Mail } from 'lucide-react';
+
+<Input
+  label="Email"
+  placeholder="exemplo@email.com"
+  helper="Usaremos seu email para confirmar sua conta"
+  leftIcon={<Mail size={18} />}
+  type="email"
+/>
+```
+
+### Tipos de Input
+
+O componente suporta todos os tipos padrão HTML:
+- text
+- email
+- password
+- number
+- tel
+- url
+- date
+- etc.
+
+### Boas Práticas
+
+✅ **Recomendado:**
+- Sempre use rótulos claros e descritivos
+- Forneça feedback imediato sobre erros de validação
+- Use textos auxiliares para explicar requisitos complexos
+- Utilize tipos adequados para cada caso (email, tel, password, etc.)
+- Adicione ícones para auxiliar na compreensão do campo
+
+❌ **Evitar:**
+- Não use rótulos ambíguos ou genéricos
+- Evite mensagens de erro vagas; forneça instruções para corrigir o problema
+- Não sobrecarregue o campo com ícones ou formatação excessiva
+- Evite campos sem rótulos (exceto em casos específicos como barras de busca)
+- Não substitua o atributo `type` adequado por validação manual
+
+## Acessibilidade
+
+### Foco e Navegação
+
+Todos os componentes interativos devem ser acessíveis via teclado:
+
+- Use a tecla `Tab` para navegar entre elementos focáveis
+- Use `Enter` para acionar botões ou submeter formulários
+- Em componentes Card interativos, garanta que o foco seja visível
+
+### ARIA e Atributos Semânticos
+
+- Utilize atributos `aria-*` apropriados para melhorar a acessibilidade
+- Garanta que todos os inputs tenham labels associados corretamente
+- Use `aria-describedby` para associar mensagens de erro/helper ao input
+
+```jsx
+<div>
+  <label id="emailLabel" htmlFor="email">Email</label>
+  <input 
+    id="email" 
+    aria-labelledby="emailLabel" 
+    aria-describedby="emailHelper emailError" 
+    type="email" 
+  />
+  <div id="emailHelper">Enviaremos uma confirmação para este email</div>
+  <div id="emailError" role="alert">Formato de email inválido</div>
+</div>
+```
+
+## Responsividade
+
+### Cards Responsivos
+
+```jsx
+// Card que se adapta a diferentes tamanhos de tela
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <Card className="w-full">Conteúdo 1</Card>
+  <Card className="w-full">Conteúdo 2</Card>
+  <Card className="w-full">Conteúdo 3</Card>
+</div>
+```
+
+### Inputs Responsivos
+
+```jsx
+// Input que se adapta ao tamanho da tela
+<div className="w-full md:w-3/4 lg:w-1/2">
+  <Input
+    label="Nome completo"
+    placeholder="Digite seu nome completo"
+  />
+</div>
+``` 

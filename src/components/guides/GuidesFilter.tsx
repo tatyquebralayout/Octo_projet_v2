@@ -1,134 +1,172 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Search } from 'lucide-react';
+import Card from '../common/Card';
+import { ErrorMessage } from '../../utils/errors/components';
+import { ErrorType } from '../../utils/errors/types';
 
+// Propriedades para o componente de filtro
 interface GuidesFilterProps {
   categories: string[];
   tags: string[];
   onFilterChange: (filters: { category?: string; tag?: string; searchTerm?: string }) => void;
   className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
 }
 
-/**
- * Componente para filtrar cartilhas por categoria, tag e termo de pesquisa
- */
-export const GuidesFilter: React.FC<GuidesFilterProps> = ({
-  categories,
-  tags,
-  onFilterChange,
-  className = ''
+const GuidesFilter: React.FC<GuidesFilterProps> = ({ 
+  categories = [], 
+  tags = [], 
+  onFilterChange, 
+  className = '',
+  isLoading = false,
+  error = null
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [selectedTag, setSelectedTag] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  // Estado interno para os filtros
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+  const [selectedTag, setSelectedTag] = useState<string | undefined>(undefined);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
 
-  // Aplicar filtros
-  const applyFilters = () => {
+  // Processar categorias e tags para garantir dados consistentes
+  const processedCategories = useMemo(() => {
+    return categories && categories.length > 0 
+      ? [...new Set(categories)].sort()
+      : [];
+  }, [categories]);
+
+  const processedTags = useMemo(() => {
+    return tags && tags.length > 0 
+      ? [...new Set(tags)].sort()
+      : [];
+  }, [tags]);
+
+  // Efeito para debounce da busca
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+    
+    return () => clearTimeout(timerId);
+  }, [searchTerm]);
+
+  // Aplicar filtros quando qualquer um deles mudar
+  useEffect(() => {
     onFilterChange({
-      category: selectedCategory || undefined,
-      tag: selectedTag || undefined,
-      searchTerm: searchTerm || undefined
+      category: selectedCategory,
+      tag: selectedTag,
+      searchTerm: debouncedSearchTerm || undefined
     });
+  }, [selectedCategory, selectedTag, debouncedSearchTerm, onFilterChange]);
+
+  // Função para limpar todos os filtros
+  const handleClearFilters = () => {
+    setSelectedCategory(undefined);
+    setSelectedTag(undefined);
+    setSearchTerm('');
+    // O onFilterChange será chamado pelo efeito
   };
 
-  // Limpar todos os filtros
-  const clearFilters = () => {
-    setSelectedCategory('');
-    setSelectedTag('');
-    setSearchTerm('');
-    onFilterChange({});
-  };
+  // Placeholder text based on state
+  const searchPlaceholder = useMemo(() => {
+    if (isLoading) return "Carregando cartilhas...";
+    return "Buscar cartilhas...";
+  }, [isLoading]);
 
   return (
-    <div className={`bg-white p-4 rounded-lg shadow-sm ${className}`}>
-      <h3 className="mb-4 text-lg font-bold">Filtrar Cartilhas</h3>
+    <Card variant="secondary" className={`p-4 ${className}`}>
+      <h2 className="text-lg font-bold mb-4">Filtros</h2>
       
-      {/* Campo de busca */}
+      {/* Busca */}
       <div className="mb-4">
-        <label htmlFor="search" className="block mb-1 text-sm font-medium text-gray-700">
-          Pesquisar
+        <label htmlFor="search" className="block text-sm font-medium mb-1">
+          Busca
         </label>
         <div className="relative">
           <input
-            type="text"
             id="search"
-            className="w-full px-3 py-2 border rounded-md focus:ring-primary-500 focus:border-primary-500"
-            placeholder="Buscar por título..."
+            type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder={searchPlaceholder}
+            disabled={isLoading}
+            className="pl-9 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
           />
-          <button 
-            className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
-            onClick={() => {
-              setSearchTerm('');
-              applyFilters();
-            }}
-          >
-            {searchTerm && (
-              <span>×</span>
-            )}
-          </button>
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
         </div>
       </div>
       
-      {/* Seletor de categoria */}
+      {/* Categorias */}
       <div className="mb-4">
-        <label htmlFor="category" className="block mb-1 text-sm font-medium text-gray-700">
+        <label htmlFor="category" className="block text-sm font-medium mb-1">
           Categoria
         </label>
         <select
           id="category"
-          className="w-full px-3 py-2 border rounded-md focus:ring-primary-500 focus:border-primary-500"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          value={selectedCategory || ''}
+          onChange={(e) => setSelectedCategory(e.target.value || undefined)}
+          disabled={isLoading || processedCategories.length === 0}
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
         >
           <option value="">Todas as categorias</option>
-          {categories.map((category) => (
+          {processedCategories.map((category) => (
             <option key={category} value={category}>
               {category}
             </option>
           ))}
         </select>
+        {processedCategories.length === 0 && !isLoading && !error && (
+          <p className="text-sm text-gray-500 mt-1">Nenhuma categoria disponível</p>
+        )}
       </div>
       
       {/* Tags */}
-      <div className="mb-6">
-        <label className="block mb-2 text-sm font-medium text-gray-700">
-          Tags
+      <div className="mb-4">
+        <label htmlFor="tag" className="block text-sm font-medium mb-1">
+          Tag
         </label>
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <button
-              key={tag}
-              className={`px-3 py-1 text-sm rounded-full transition-colors ${
-                selectedTag === tag
-                  ? 'bg-primary-100 text-primary-800 border border-primary-300'
-                  : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
-              }`}
-              onClick={() => setSelectedTag(selectedTag === tag ? '' : tag)}
-            >
+        <select
+          id="tag"
+          value={selectedTag || ''}
+          onChange={(e) => setSelectedTag(e.target.value || undefined)}
+          disabled={isLoading || processedTags.length === 0}
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+        >
+          <option value="">Todas as tags</option>
+          {processedTags.map((tag) => (
+            <option key={tag} value={tag}>
               {tag}
-            </button>
+            </option>
           ))}
-        </div>
+        </select>
+        {processedTags.length === 0 && !isLoading && !error && (
+          <p className="text-sm text-gray-500 mt-1">Nenhuma tag disponível</p>
+        )}
       </div>
       
-      {/* Botões de ação */}
-      <div className="flex gap-2">
-        <button
-          className="px-4 py-2 text-sm font-medium text-white rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          onClick={applyFilters}
-        >
-          Aplicar Filtros
-        </button>
-        
-        <button
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          onClick={clearFilters}
-        >
-          Limpar
-        </button>
-      </div>
-    </div>
+      {/* Botão para limpar filtros */}
+      <button
+        onClick={handleClearFilters}
+        disabled={isLoading || (!selectedCategory && !selectedTag && !searchTerm)}
+        className="w-full py-2 px-4 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      >
+        Limpar filtros
+      </button>
+
+      {/* Mostrar mensagem de erro se houver */}
+      {error && (
+        <div className="mt-4">
+          <ErrorMessage 
+            message="Não foi possível carregar filtros" 
+            type={ErrorType.SERVER}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Você ainda pode fazer buscas, mas os filtros avançados não estão disponíveis.
+          </p>
+        </div>
+      )}
+    </Card>
   );
 };
 
-export default GuidesFilter; 
+export default React.memo(GuidesFilter); 

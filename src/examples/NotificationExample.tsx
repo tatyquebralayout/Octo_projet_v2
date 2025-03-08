@@ -6,6 +6,7 @@ import { useNotifications } from '../services/notifications';
 import { NotificationButton } from '../components/notifications';
 import { NotificationType, NotificationPriority } from '../services/notifications/types';
 import { useMockNotifications } from '../services/notifications/mock';
+import Card from '../components/ui/Card';
 
 export const NotificationExample: React.FC = () => {
   const { 
@@ -78,36 +79,43 @@ export const NotificationExample: React.FC = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Seção de toasts */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Toasts (Notificações Temporárias)</h2>
-          
+        <Card 
+          variant="secondary" 
+          title="Toasts (Notificações Temporárias)"
+        >
           <div className="space-y-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
+              <label htmlFor="toast-title" className="block text-sm font-medium text-gray-700 mb-1">Título</label>
               <input
+                id="toast-title"
                 type="text"
                 value={toastTitle}
                 onChange={(e) => setToastTitle(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="Digite o título da notificação"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+              <label htmlFor="toast-message" className="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
               <textarea
+                id="toast-message"
                 value={toastMessage}
                 onChange={(e) => setToastMessage(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded"
                 rows={3}
+                placeholder="Digite a mensagem da notificação"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+              <label htmlFor="toast-type" className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
               <select
+                id="toast-type"
                 value={toastType}
                 onChange={(e) => setToastType(e.target.value as NotificationType)}
                 className="w-full p-2 border border-gray-300 rounded"
+                aria-label="Selecione o tipo de notificação"
               >
                 <option value={NotificationType.INFO}>Informação</option>
                 <option value={NotificationType.SUCCESS}>Sucesso</option>
@@ -153,12 +161,13 @@ export const NotificationExample: React.FC = () => {
               Toast de Alerta
             </button>
           </div>
-        </div>
+        </Card>
         
         {/* Seção de notificações persistentes */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Notificações Persistentes</h2>
-          
+        <Card 
+          variant="secondary" 
+          title="Alertas (Notificações Persistentes)"
+        >
           <p className="text-gray-600 mb-4">
             As notificações persistentes são armazenadas no centro de notificações e
             podem ser acessadas pelo usuário a qualquer momento.
@@ -179,10 +188,14 @@ export const NotificationExample: React.FC = () => {
               Gerar Notificação Aleatória
             </button>
           </div>
-        </div>
+        </Card>
         
         {/* Seção de mocks */}
-        <div className="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+        <Card 
+          variant="secondary" 
+          title="Configurações de Notificação"
+          className="md:col-span-2"
+        >
           <h2 className="text-lg font-semibold mb-4">Mocks para Desenvolvimento</h2>
           
           <p className="text-gray-600 mb-4">
@@ -205,7 +218,7 @@ export const NotificationExample: React.FC = () => {
               Gerar Notificação Aleatória
             </button>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

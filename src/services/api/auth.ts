@@ -3,7 +3,6 @@
  */
 import axios from 'axios';
 import { 
-  AuthRequest, 
   AuthResponse, 
   ApiResponse, 
   User, 
@@ -11,7 +10,7 @@ import {
 } from './types';
 
 // URL base da API (deve ser configurada via variáveis de ambiente)
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 /**
  * Realiza login do usuário

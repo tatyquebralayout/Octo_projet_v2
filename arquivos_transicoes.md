@@ -1,0 +1,2 @@
+Arquivos identificados para refinar transições e interações no sistema de design:
+\n1. src/design-system/utils/animations/index.ts - Arquivo principal de animações\n2. src/design-system/tokens/unified-tokens.ts - Tokens de design incluindo animações\n3. tailwind.config.js - Configuração Tailwind com transições\n4. src/styles/theme.css - Variáveis CSS para transições\n5. src/styles/design-system.css - Classes CSS que implementam transições

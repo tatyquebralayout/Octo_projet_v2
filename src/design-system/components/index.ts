@@ -1,12 +1,16 @@
+/**
+ * Exportação dos componentes do Design System
+ */
+
 // Componentes básicos
-export { default as Button } from './Button';
-export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
+export { Button } from './Button/Button';
+export { Card } from './Card/Card';
+export { default as Input } from './Input/Input';
 
-export { default as Card } from './Card';
-export type { CardProps, CardVariant, CardSize, CardPadding } from './Card';
-
-export { default as Input } from './Input';
-export type { InputProps } from './Input';
+// Tipos
+export type { ButtonProps } from './Button/Button';
+export type { CardProps, CardVariant, CardSize, CardPadding } from './Card/Card';
+export type { InputProps } from './Input/Input';
 
 // Animações
 export { default as animations } from '../utils/animations';

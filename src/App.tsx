@@ -6,6 +6,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Loading from './components/Loading';
 import { MenuProvider } from './contexts/MenuContext';
+import { NotificationsProvider } from './services/notifications';
 
 // Lazy loading dos componentes de página
 const Home = React.lazy(() => import('./pages/Home'));
@@ -31,21 +32,23 @@ const Contato = React.lazy(() => import('./pages/Contato'));
 // Layout principal
 const Layout = () => (
   <MenuProvider>
-    <div className="min-h-screen flex flex-col">
-      <a 
-        href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
-      >
-        Pular para o conteúdo principal
-      </a>
-      <Header />
-      <main id="main-content" className="flex-grow pt-20" role="main">
-        <Suspense fallback={<Loading />}>
-          <Outlet />
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
+    <NotificationsProvider>
+      <div className="min-h-screen flex flex-col">
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-[#972ae6] focus:outline-none focus:ring-2 focus:ring-[#972ae6]"
+        >
+          Pular para o conteúdo principal
+        </a>
+        <Header />
+        <main id="main-content" className="flex-grow pt-20" role="main">
+          <Suspense fallback={<Loading />}>
+            <Outlet />
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+    </NotificationsProvider>
   </MenuProvider>
 );
 

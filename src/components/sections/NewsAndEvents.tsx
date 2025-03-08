@@ -78,36 +78,32 @@ const NewsAndEvents = () => {
     <section className="py-32 bg-white">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-[56px] font-bold text-[#972ae6] mb-4 leading-tight">
+          <h2 className="text-display text-primary-400 mb-4 leading-tight">
             Últimas Notícias
           </h2>
-          <p className="text-xl text-[#972ae6]/70 max-w-2xl mx-auto mb-8">
+          <p className="text-body-large text-primary-400/70 max-w-2xl mx-auto mb-8">
             Fique por dentro das novidades, eventos e iniciativas da OCTO
           </p>
           <Link 
             to="/noticias"
-            className="inline-block px-8 py-4 rounded-full bg-[#e8b624] text-white text-lg font-bold 
-              hover:bg-[#972ae6] transition-all duration-300 
-              transform hover:-translate-y-1 active:translate-y-0
-              shadow-lg hover:shadow-xl active:shadow-md"
+            className="btn btn-primary"
           >
             Ver todas as notícias
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {news.map((item, index) => (
             <Link
               to={item.link}
               key={index}
               className={`
-                group relative overflow-hidden rounded-xl
-                transition-all duration-300 ease-out
-                bg-white
+                card card-secondary
+                transition-standard
                 md3-elevation-1
                 hover:md3-elevation-2
                 active:md3-elevation-3
-                transform hover:-translate-y-1 active:translate-y-0
+                hover-lift
                 ${hoveredCard === index ? 'z-10' : 'z-0'}
               `}
               onMouseEnter={() => setHoveredCard(index)}
@@ -118,7 +114,7 @@ const NewsAndEvents = () => {
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-standard group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
@@ -131,22 +127,19 @@ const NewsAndEvents = () => {
                 </span>
 
                 {/* Title */}
-                <h3 className="text-h3 text-[#972ae6] mb-3 group-hover:text-[#e8b624] transition-colors">
+                <h3 className="text-h3 text-primary-400 mb-3 group-hover:text-accent-400 transition-standard">
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-body text-[#972ae6]/70 mb-6 line-clamp-3">
+                <p className="text-body text-primary-400/70 mb-6 line-clamp-3">
                   {item.description}
                 </p>
 
                 {/* Action */}
-                <div className="inline-flex items-center px-6 py-2 rounded-full bg-[#e8b624] text-white text-body-small font-bold
-                  group-hover:bg-[#972ae6] transition-all duration-300 
-                  transform group-hover:-translate-y-1 active:translate-y-0
-                  shadow-md group-hover:shadow-lg active:shadow-sm">
+                <div className="btn btn-primary">
                   <span>{item.linkText}</span>
-                  <span className="ml-2 transform transition-transform group-hover:translate-x-1">
+                  <span className="ml-2 transform transition-standard group-hover:translate-x-1">
                     {item.icon}
                   </span>
                 </div>

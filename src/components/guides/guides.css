@@ -1,0 +1,51 @@
+.guide-card-wrapper {
+  padding: 0.75rem;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.guide-card-wrapper > * {
+  height: 100%;
+  width: 100%;
+}
+
+.guides-virtual-container {
+  height: 800px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-grid {
+  box-sizing: border-box;
+  contain: content;
+  will-change: transform;
+}
+
+.guide-skeleton-item {
+  height: 380px;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 768px) {
+  .guides-virtual-container {
+    height: 600px;
+  }
+  
+  .guide-card-wrapper {
+    padding: 0.5rem;
+  }
+} 

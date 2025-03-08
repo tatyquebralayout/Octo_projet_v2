@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { ErrorBoundary as ReactErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { AlertTriangle, AlertCircle, WifiOff, Lock, Search, Clock, X, RefreshCw } from 'lucide-react';
-import { ErrorType, ErrorFallbackProps, ErrorMessageProps, ErrorBoundaryProps, AppError } from './types';
+import { ErrorType, ErrorFallbackProps, ErrorMessageProps, ErrorBoundaryProps } from './types';
 import { errorHandler } from './errorHandler';
 
 // Mapeamento de ícones por tipo de erro
@@ -123,7 +123,7 @@ export function ErrorFallback({
   error, 
   resetErrorBoundary, 
   fallbackUI,
-  showDetails = process.env.NODE_ENV === 'development',
+  showDetails = import.meta.env.MODE === 'development',
   showReset = true,
   className = '' 
 }: ErrorFallbackProps) {
@@ -145,7 +145,7 @@ export function ErrorFallback({
   const IconComponent = ERROR_ICONS[errorType] || AlertCircle;
 
   return (
-    <div role="alert" className={`rounded-lg bg-white shadow-md p-6 ${className}`}>
+    <div role="alert" className={`rounded-lg bg-white md3-elevation-1 p-6 ${className}`}>
       <div className="flex flex-col items-center">
         <div className="w-14 h-14 mb-5 flex items-center justify-center rounded-full bg-red-100">
           <IconComponent className="h-7 w-7 text-red-600" />
@@ -159,7 +159,7 @@ export function ErrorFallback({
           {errorMessage}
         </p>
         
-        {showDetails && process.env.NODE_ENV === 'development' && (
+        {showDetails && import.meta.env.MODE === 'development' && (
           <div className="w-full mb-6">
             <details className="text-sm">
               <summary className="cursor-pointer text-gray-500 hover:text-gray-700 mb-2">

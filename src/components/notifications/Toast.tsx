@@ -15,7 +15,7 @@ interface ToastProps {
 }
 
 export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = true }) => {
-  const { id, title, message, type, autoClose, duration, actions, role, ariaLive } = toast;
+  const { id, title, message, type, autoClose, duration = 5000, actions, role, ariaLive } = toast;
   
   // Referência para o timer de fechamento automático
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -24,7 +24,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = tru
   const [isPaused, setIsPaused] = useState(false);
   
   // Estado para manter o tempo restante quando pausado
-  const [remainingTime, setRemainingTime] = useState(duration);
+  const [remainingTime, setRemainingTime] = useState<number>(duration);
   
   // Estado para controlar a animação de progresso
   const [progress, setProgress] = useState(100);
@@ -112,7 +112,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = tru
   return (
     <AnimatePresence>
       <motion.div
-        className={`relative rounded-lg shadow-lg p-4 mb-3 max-w-sm ${colorClass}`}
+        className={`relative rounded-lg md3-elevation-1 p-4 mb-3 max-w-sm ${colorClass}`}
         initial="initial"
         animate="animate"
         exit="exit"
@@ -125,7 +125,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = tru
       >
         {/* Barra de progresso */}
         {autoClose && (
-          <div className="absolute bottom-0 left-0 h-1 bg-white bg-opacity-30 rounded-b-lg transition-all duration-300 ease-linear"
+          <div className="absolute bottom-0 left-0 h-1 bg-white bg-opacity-30 rounded-b-lg transition-standard"
                style={{ width: `${progress}%` }} />
         )}
         

@@ -108,16 +108,61 @@ class ErrorHandler {
     context?: Record<string, any>;
     silent?: boolean;
     rethrow?: boolean;
+    logLevel?: 'debug' | 'info' | 'warn' | 'error';
+    suppressForDevelopment?: boolean; // Permite suprimir erros em desenvolvimento
   } = {}): AppError {
+    // Verificar ambiente de desenvolvimento se a opção suppressForDevelopment estiver ativada
+    if (options.suppressForDevelopment && import.meta.env.MODE === 'development') {
+      // Em vez de emitir erro, apenas logamos no console sem alardes
+      console.debug('[SUPPRESSED ERROR]', error);
+      
+      // Criamos o erro estruturado mas não reportamos
+      const appError = error instanceof Object && 'type' in error && 'timestamp' in error
+        ? error as AppError
+        : this.createAppError(error, {
+            context: options.context,
+            isOperational: true // Marcamos como operacional para não alarmar
+          });
+          
+      // Rethrow se necessário, mesmo com suppressão
+      if (options.rethrow) {
+        const customError = new Error(appError.message);
+        Object.assign(customError, appError);
+        throw customError;
+      }
+      
+      return appError;
+    }
+    
+    // Extrair informações de contexto que ajudam a classificar o erro
+    let errorContext = options.context || {};
+    const isRecoverable = errorContext.isRecoverable;
+    const errorType = errorContext.errorType;
+    
+    // Enriquecer o erro com informações adicionais
     const appError = error instanceof Object && 'type' in error && 'timestamp' in error
       ? error as AppError
       : this.createAppError(error, {
-          context: options.context
+          context: options.context,
+          type: errorType,
+          retryable: isRecoverable
         });
-
+    
+    // Determinar nível de log com base no tipo de erro ou opção passada
+    let logLevel = options.logLevel || 
+      (appError.isOperational ? 'warn' : 'error');
+    
+    // Adicionar carimbo de tempo de processamento
+    appError.processedAt = new Date().toISOString();
+    
     // Reportar erro para monitoramento e logar
     if (!options.silent) {
-      this.reportError(appError);
+      // Adicionar referência circular para facilitar debug
+      if (errorContext && !errorContext.originalError) {
+        errorContext.originalError = appError.originalError;
+      }
+      
+      this.reportError(appError, logLevel);
     }
 
     // Rethrow se necessário
@@ -133,7 +178,7 @@ class ErrorHandler {
   /**
    * Função para registrar o erro (log e monitoring)
    */
-  private reportError(appError: AppError): void {
+  private reportError(appError: AppError, logLevel: 'debug' | 'info' | 'warn' | 'error' = 'error'): void {
     // Log com base no nível de log configurado
     if (this.config.devLogLevel !== 'none') {
       const logDetails = {
@@ -142,13 +187,26 @@ class ErrorHandler {
         code: appError.code,
         statusCode: appError.statusCode,
         context: appError.context,
-        timestamp: appError.timestamp
+        timestamp: appError.timestamp,
+        retryable: appError.retryable,
+        isOperational: appError.isOperational
       };
 
-      if (appError.isOperational) {
-        logger.warn(`[${appError.type.toUpperCase()}] ${appError.message}`, logDetails);
-      } else {
-        logger.error(`[${appError.type.toUpperCase()}] ${appError.message}`, logDetails, appError.originalError);
+      // Usar o nível de log apropriado
+      switch (logLevel) {
+        case 'debug':
+          logger.debug(`[${appError.type}] ${appError.message}`, logDetails);
+          break;
+        case 'info':
+          logger.info(`[${appError.type}] ${appError.message}`, logDetails);
+          break;
+        case 'warn':
+          logger.warn(`[${appError.type}] ${appError.message}`, logDetails);
+          break;
+        case 'error':
+        default:
+          logger.error(`[${appError.type}] ${appError.message}`, logDetails, appError.originalError);
+          break;
       }
     }
 

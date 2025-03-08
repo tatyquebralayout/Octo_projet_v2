@@ -1,0 +1,233 @@
+import { Meta, ColorPalette, ColorItem, Title, Subtitle } from '@storybook/blocks';
+
+<Meta title="Design System/Tokens/Visão Geral" />
+
+# Tokens de Design OCTO
+
+Os tokens de design são a base do nosso sistema de design, fornecendo consistência visual em toda a aplicação. Eles definem cores, tipografia, espaçamento, elevação, animações e outros valores fundamentais.
+
+## Cores
+
+O sistema de cores usa uma abordagem escalável com valores de 50 a 900 para cada paleta de cores.
+
+### Primária
+
+Nossa cor primária representa a identidade principal da marca OCTO.
+
+<ColorPalette>
+  <ColorItem 
+    title="primary" 
+    colors={{ 
+      '50': '#f2e7fa', 
+      '100': '#e3cff5', 
+      '200': '#cb9fea', 
+      '300': '#b46fe0', 
+      '400': '#972ae6', 
+      '500': '#8423cc', 
+      '600': '#711aa7', 
+      '700': '#591583', 
+      '800': '#42105f', 
+      '900': '#2c0d3f' 
+    }} 
+  />
+</ColorPalette>
+
+### Acento
+
+Nossa cor de acento é usada para ênfase e chamadas à ação secundárias.
+
+<ColorPalette>
+  <ColorItem 
+    title="accent" 
+    colors={{ 
+      '50': '#fef9e6', 
+      '100': '#fcf3cd', 
+      '200': '#f9e59c', 
+      '300': '#f4d86a', 
+      '400': '#e8b624', 
+      '500': '#d9a820', 
+      '600': '#b08014', 
+      '700': '#8f6711', 
+      '800': '#664a0c', 
+      '900': '#443208' 
+    }} 
+  />
+</ColorPalette>
+
+### Estados
+
+Cores semânticas para feedback e estados.
+
+<ColorPalette>
+  <ColorItem 
+    title="success" 
+    colors={{ 
+      light: '#e0f8e9', 
+      main: '#28a745', 
+      dark: '#1e7e34' 
+    }} 
+  />
+  <ColorItem 
+    title="warning" 
+    colors={{ 
+      light: '#fff9e6', 
+      main: '#ffc107', 
+      dark: '#d39e00' 
+    }} 
+  />
+  <ColorItem 
+    title="error" 
+    colors={{ 
+      light: '#fee8e8', 
+      main: '#f0465d', 
+      dark: '#d0334b' 
+    }} 
+  />
+  <ColorItem 
+    title="info" 
+    colors={{ 
+      light: '#e6f4ff', 
+      main: '#17a2b8', 
+      dark: '#117a8b' 
+    }} 
+  />
+</ColorPalette>
+
+## Tipografia
+
+Nosso sistema tipográfico é projetado para criar hierarquia visual clara e consistente.
+
+### Classes de Tipografia
+
+| Classe | Propósito | Tamanho | Peso | Line Height |
+|--------|-----------|---------|------|------------|
+| `text-display` | Títulos de destaque | 2.75rem (44px) | 700 | 1.2 |
+| `text-h1` | Títulos de página | 1.875rem (30px) | 700 | 1.25 |
+| `text-h2` | Títulos de seção | 1.5rem (24px) | 700 | 1.25 |
+| `text-h3` | Subtítulos | 1.25rem (20px) | 700 | 1.25 |
+| `text-h4` | Títulos menores | 1.125rem (18px) | 700 | 1.25 |
+| `text-body-large` | Texto principal destacado | 1.125rem (18px) | 400 | 1.75 |
+| `text-body` | Texto principal | 1rem (16px) | 400 | 1.5 |
+| `text-body-small` | Texto secundário | 0.875rem (14px) | 400 | 1.5 |
+| `text-caption` | Legendas e informações auxiliares | 0.75rem (12px) | 400 | 1.5 |
+
+### Classes Utilitárias
+
+| Classe | Propósito | Exemplo |
+|--------|-----------|---------|
+| `text-emphasis` | Texto enfatizado | <span style={{ fontWeight: 500 }}>Texto em destaque</span> |
+| `text-muted` | Texto secundário com menor destaque | <span style={{ opacity: 0.7 }}>Texto com menor ênfase</span> |
+| `text-link` | Links estilizados | <span style={{ color: '#972ae6', textDecoration: 'underline' }}>Link de exemplo</span> |
+
+## Espaçamento
+
+Nosso sistema de espaçamento segue uma escala consistente e progressiva.
+
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `spacing-xs` | 0.25rem (4px) | Espaçamento mínimo |
+| `spacing-sm` | 0.5rem (8px) | Espaçamento pequeno |
+| `spacing-md` | 1rem (16px) | Espaçamento médio |
+| `spacing-lg` | 1.5rem (24px) | Espaçamento grande |
+| `spacing-xl` | 2rem (32px) | Espaçamento extra grande |
+| `spacing-2xl` | 3rem (48px) | Espaçamento 2x grande |
+| `spacing-3xl` | 4rem (64px) | Espaçamento 3x grande |
+
+## Elevação e Sombras
+
+Utilizamos um sistema de elevação baseado no Material Design 3 para criar profundidade visual.
+
+| Classe | Propósito | Exemplo |
+|--------|-----------|---------|
+| `md3-elevation-1` | Elevação baixa (cards, inputs) | <div style={{ boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)', padding: '12px', background: 'white', borderRadius: '4px' }}>Nível 1</div> |
+| `md3-elevation-2` | Elevação média (dropdowns, dialogs) | <div style={{ boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.06)', padding: '12px', background: 'white', borderRadius: '4px', marginTop: '8px' }}>Nível 2</div> |
+| `md3-elevation-3` | Elevação alta (modais, painéis flutuantes) | <div style={{ boxShadow: '0px 10px 15px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.05)', padding: '12px', background: 'white', borderRadius: '4px', marginTop: '8px' }}>Nível 3</div> |
+
+## Animações
+
+Usamos animações padronizadas para interações consistentes e feedback visual.
+
+| Classe | Propósito | Duração |
+|--------|-----------|---------|
+| `animate-fadeIn` | Animação de aparecimento suave | 200ms |
+| `animate-slideIn` | Animação de entrada deslizante | 200ms |
+| `animate-float` | Flutuação suave para elementos destacados | 3s (infinita) |
+| `animate-pulse` | Pulsação para elementos que requerem atenção | 2s (infinita) |
+| `animate-spin` | Rotação para indicadores de carregamento | 1s (infinita) |
+
+## Transições
+
+| Classe | Duração | Timing Function |
+|--------|---------|-----------------|
+| `transition-standard` | 200ms | ease-in-out |
+| `transition-fast` | 150ms | ease-in-out |
+| `transition-slow` | 300ms | ease-in-out |
+
+## Breakpoints Responsivos
+
+Utilizamos a abordagem mobile-first com breakpoints consistentes.
+
+| Breakpoint | Tamanho | Uso |
+|------------|---------|-----|
+| `sm` | ≥ 640px | Smartphones no modo paisagem |
+| `md` | ≥ 768px | Tablets |
+| `lg` | ≥ 1024px | Laptops pequenos |
+| `xl` | ≥ 1280px | Desktops |
+| `2xl` | ≥ 1536px | Telas grandes |
+
+## Como Usar Os Tokens
+
+### Em Componentes React
+
+```jsx
+// Exemplo de uso de classes padronizadas em componentes
+<div className="card card-secondary p-md">
+  <h3 className="text-h3 mb-sm">Título do Componente</h3>
+  <p className="text-body mb-md">Conteúdo do componente...</p>
+  <button className="btn btn-primary">Ação</button>
+</div>
+```
+
+### Em CSS/SCSS
+
+```css
+.meu-componente {
+  color: var(--color-primary-400);
+  font-size: var(--font-size-body);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md3-1);
+}
+```
+
+## Classes de Componentes Disponíveis
+
+### Cards
+
+| Classe | Propósito |
+|--------|-----------|
+| `card` | Estilo base para cards |
+| `card-primary` | Card com destaque primário |
+| `card-secondary` | Card com estilo secundário |
+| `card-accent` | Card com cor de acento |
+
+### Botões
+
+| Classe | Propósito |
+|--------|-----------|
+| `btn` | Estilo base para botões |
+| `btn-primary` | Botão primário |
+| `btn-secondary` | Botão secundário |
+| `btn-outline` | Botão com borda |
+| `btn-link` | Botão estilizado como link |
+
+### Formulários
+
+| Classe | Propósito |
+|--------|-----------|
+| `form-group` | Container para campos de formulário |
+| `input-field` | Campo de entrada estilizado |
+| `select-field` | Campos de seleção |
+| `checkbox` | Checkboxes estilizados |
+| `radio` | Botões de rádio estilizados |
+| `form-label` | Rótulos para campos de formulário | 

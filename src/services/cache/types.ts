@@ -80,10 +80,20 @@ export interface CacheOptions extends Partial<ExpiryConfig> {
   storage?: StorageType;
   // Se true, busca do cache enquanto atualiza em segundo plano
   staleWhileRevalidate?: boolean;
+  // Se true, erros durante a revalidação em segundo plano não serão lançados
+  suppressBackgroundErrors?: boolean;
   // Versão específica do cache
   version?: number;
   // Tags para agrupamento de itens de cache (para invalidação em grupo)
   tags?: string[];
+  // Opções para configurar backoff exponencial e retentativas
+  retryOptions?: {
+    maxRetries?: number;
+    delayMs?: number;
+    backoffFactor?: number;
+    shouldRetry?: (error: any, attempt: number) => boolean;
+    onRetry?: (error: any, attempt: number) => void;
+  };
 }
 
 // Resultado de uma operação de cache
