@@ -16,6 +16,15 @@ export const API_ENV = {
   
   // Habilitação de mocks por padrão em desenvolvimento
   MOCK_ENABLED: import.meta.env.VITE_ENABLE_MOCKS === 'true' || import.meta.env.MODE === 'development',
+  
+  // Delay simulado para mocks (em ms)
+  MOCK_DELAY: {
+    MIN: 200,  // Mínimo de delay para mocks (ms)
+    MAX: 1000, // Máximo de delay para mocks (ms)
+  },
+  
+  // Probabilidade de erro simulado em ambiente de desenvolvimento
+  MOCK_ERROR_RATE: 0.05, // 5% de chance de erro
 };
 
 // Configuração para storage de tokens
@@ -51,6 +60,8 @@ export const ENDPOINTS = {
     BASE: '/users',
     PROFILE: '/users/profile',
     BY_ID: (id: string) => `/users/${id}`,
+    UPDATE_PROFILE: '/users/profile',
+    CHANGE_PASSWORD: '/users/change-password',
   },
   
   // Conteúdo
@@ -66,5 +77,30 @@ export const ENDPOINTS = {
     GUIDES: '/resources/guides',
     TOOLS: '/resources/tools',
     VIDEOS: '/resources/videos',
+  },
+  
+  // Contato
+  CONTACT: {
+    SUBMIT: '/contact/submit',
+    SUBSCRIBE: '/contact/subscribe',
+  },
+  
+  // Notícias
+  NEWS: {
+    BASE: '/news',
+    FEATURED: '/news/featured',
+    BY_CATEGORY: (category: string) => `/news/category/${category}`,
+    BY_TAG: (tag: string) => `/news/tag/${tag}`,
+    BY_SLUG: (slug: string) => `/news/${slug}`,
+    RELATED: (id: string) => `/news/${id}/related`,
+  },
+  
+  // Cartilhas
+  GUIDES: {
+    BASE: '/guides',
+    FEATURED: '/guides/featured',
+    BY_CATEGORY: (category: string) => `/guides/category/${category}`,
+    BY_ID: (id: string) => `/guides/${id}`,
+    DOWNLOAD: (id: string) => `/guides/${id}/download`,
   },
 }; 

@@ -122,6 +122,14 @@
     - ✅ Funções para transformar dados do formulário para API
     - ✅ Tratamento de erros de API
     - ✅ Tipagem completa com TypeScript
+11. ✅ Sistema de mocks de API para desenvolvimento frontend
+    - ✅ Simulação de endpoints para todas as funcionalidades principais
+    - ✅ Dados realistas para testes com tipagem completa
+    - ✅ Simulação de delays de rede configuráveis
+    - ✅ Tratamento de erros consistente e probabilidade de erro configurável
+    - ✅ Fácil ativação/desativação via variáveis de ambiente
+    - ✅ Endpoints para autenticação, formulário de contato, cartilhas, perfil e notícias
+    - ✅ Documentação detalhada de uso
 
 ## Tarefas Pendentes 🚧
 
