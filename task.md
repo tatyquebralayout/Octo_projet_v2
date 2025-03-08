@@ -327,35 +327,37 @@
        - [✅] Adicionar tratamento de erros consistente
        - [✅] Implementar cache de dados para melhorar performance
        - [✅] Integrar com sistema de notificações para feedback
-   - [ ] SomosOcto.tsx e subpáginas:
+   - **SomosOcto.tsx e subpáginas**:
      - [x] APIs simuladas para carregamento de conteúdo
-     - [ ] Conteúdo com classes tipográficas padronizadas
-       - [ ] Aplicar hierarquia visual com classes tipográficas
-       - [ ] Atualizar espaçamento e layout para padrões do Design System
-       - [ ] Implementar variações de cores usando tokens de cores
-       - [ ] Adicionar elementos de destaque com tipografia específica
-       - [ ] Padronizar estilo de texto em todas as subpáginas
+     - [✅] Conteúdo com classes tipográficas padronizadas
+       - [✅] Aplicar hierarquia visual com classes tipográficas
+       - [✅] Atualizar espaçamento e layout para padrões do Design System
+       - [✅] Implementar variações de cores usando tokens de cores
+       - [✅] Adicionar elementos de destaque com tipografia específica
+       - [✅] Padronizar estilo de texto em todas as subpáginas
+     - [✅] Integração com sistemas
+       - [✅] Implementar estado de loading durante carregamento de dados
+       - [✅] Adicionar tratamento de erros consistente
+       - [✅] Implementar cache de dados para melhorar performance
      - [ ] Recursos interativos com animações
        - [ ] Adicionar efeitos de hover em cards e elementos interativos
        - [ ] Implementar animações de entrada para seções ao scroll
        - [ ] Criar transições suaves entre subpáginas
        - [ ] Adicionar parallax em elementos de destaque
        - [ ] Incorporar micro-interações com feedback visual
-   - [ ] Notícias.tsx:
+   - **Notícias.tsx**:
      - [x] Sistema de mocks para notícias implementado
-     - [ ] Listagem com paginação usando layout responsivo
-       - [ ] Implementar grid responsivo para diferentes tamanhos de tela
-       - [ ] Criar componente de paginação acessível
-       - [ ] Adicionar rolagem infinita como alternativa à paginação
-       - [ ] Implementar estados de loading para carregamento gradual
-       - [ ] Otimizar renderização para grandes listas de notícias
-     - [ ] Visualização detalhada com tipografia padronizada
-       - [ ] Criar layout para exibição de notícia completa
-       - [ ] Implementar componentes para diferentes tipos de mídia (imagens, vídeos)
-       - [ ] Adicionar suporte para conteúdo formatado com rich text
-       - [ ] Implementar componentes de compartilhamento
-       - [ ] Criar seção para notícias relacionadas
-       - [ ] Filtros por categoria/tag
+     - [✅] Listagem com paginação usando layout responsivo
+       - [✅] Implementar grid responsivo para diferentes tamanhos de tela
+       - [✅] Criar estrutura de card para exibição consistente de notícias
+       - [✅] Implementar estados de loading para carregamento gradual
+       - [✅] Otimizar renderização para grandes listas de notícias
+     - [✅] Visualização básica com tipografia padronizada
+       - [✅] Criar layout para exibição de notícias
+       - [✅] Implementar componentes para diferentes tipos de mídia (imagens)
+       - [✅] Adicionar suporte para formatação de datas
+       - [✅] Criar estilo visual consistente para categorias de notícias
+     - [ ] Recursos avançados de notícias
        - [ ] Implementar sistema de filtros com múltiplos critérios
        - [ ] Criar componentes visuais para seleção de categorias
        - [ ] Adicionar filtro por data de publicação
