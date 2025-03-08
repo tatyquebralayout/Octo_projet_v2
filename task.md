@@ -371,7 +371,7 @@
      - [x] Remover dependência do react-transition-group
      - [x] Criar variantes acessíveis para animações comuns
      - [x] Implementar sistema com suporte a prefers-reduced-motion
-     - [ ] Refatorar animações restantes que usam padrões do react-transition-group
+     - [✅] Refatorar animações restantes que usam padrões do react-transition-group
      - [ ] Padronizar definições de curvas de easing em todos os componentes
    
    - **Normalização de Estilos CSS**: (40% concluído)
