@@ -2,9 +2,13 @@
 
 ## Resumo do Progresso Atual
 - Sistema de mocks de API implementado, permitindo desenvolvimento frontend independente do backend
-- 15 grandes entregas concluídas, incluindo sistema de formulários, autenticação, notificações e utilities
+- Mais de 15 grandes entregas concluídas, incluindo sistema de formulários, autenticação, notificações e utilities
+- Recentemente concluída a consolidação da configuração do Storybook para melhorar a documentação de componentes
+- Resolvido problema crítico de incompatibilidade entre versões dos pacotes Storybook
+- ✅ Implementada consolidação do sistema de animações removendo react-transition-group e mantendo apenas framer-motion
+- ✅ Corrigida incompatibilidade nas bibliotecas de teste com React 18
 - Próximos passos: implementação das páginas principais com integração ao sistema de mocks
-- Foco em UI/UX, acessibilidade e melhorias de performance
+- Foco contínuo em UI/UX, acessibilidade e melhorias de performance
 
 ## Melhorias Implementadas ✅
 
@@ -98,6 +102,50 @@
 - ✅ Configuração inicial do Storybook
 - ✅ Atualizados tipos para compatibilidade com Storybook 7+
 - ✅ Implementados stories para componentes básicos (Button)
+- ✅ Consolidação dos arquivos de configuração do Storybook
+  - ✅ Remoção do arquivo redundante preview.js
+  - ✅ Melhoria do arquivo preview.jsx com suporte a temas e acessibilidade
+  - ✅ Atualização do main.js com documentação e otimizações
+- ✅ Correção de compatibilidade entre versões dos pacotes Storybook
+  - ✅ Migração de addons da versão 7.x para 8.6.4
+  - ✅ Sincronização de versões entre todos os pacotes Storybook
+- ✅ Atualização da documentação no README sobre o Storybook
+  - ✅ Adicionada seção específica sobre o Storybook
+  - ✅ Documentados procedimentos para execução e build
+  - ✅ Explicada a consolidação das configurações
+- ✅ Criação de guia para ícones PWA
+  - ✅ Implementado arquivo HTML interativo com instruções detalhadas
+  - ✅ Tabela de referência para tamanhos e propósitos de cada ícone
+  - ✅ Links para ferramentas de geração de ícones
+  - ✅ Guia de implementação passo a passo
+- ✅ Documentação do sistema de animações acessíveis
+  - ✅ Explicação do contexto de acessibilidade para animações
+  - ✅ Tutorial de uso dos componentes AccessibleMotion
+  - ✅ Guia de implementação das variantes de animação
+  - ✅ Referências às diretrizes WCAG 2.1 para movimento
+
+## Problemas Críticos Resolvidos ✅
+
+1. ✅ **Incompatibilidade de Versões do Storybook**: Corrigida a incompatibilidade entre as versões dos pacotes do Storybook que causava erros de build e execução.
+2. ✅ **Duplicação de Arquivos de Configuração**: Eliminada a duplicação de arquivos de configuração do Storybook que causava comportamento imprevisível.
+3. ✅ **Duplicação de Bibliotecas de Animação**: Removida dependência react-transition-group, consolidando todas as animações em framer-motion.
+4. ✅ **Incompatibilidade de Biblioteca de Testes**: Atualizada @testing-library/react de 16.2.0 para 14.2.1 para compatibilidade com React 18.
+5. ✅ **Configuração PWA**: Corrigidas inconsistências na configuração PWA entre diferentes arquivos.
+   - ✅ Adicionada tag `<link rel="manifest">` ao index.html
+   - ✅ Criada estrutura organizada de ícones na pasta /icons
+   - ✅ Padronizados caminhos de ícones no vite.config.ts e no HTML
+   - ✅ Adicionados ícones para diferentes tamanhos e propósitos
+6. ✅ **Problemas com Transições e Animações**: Implementado sistema de animações acessíveis com suporte a prefers-reduced-motion.
+   - ✅ Criação de sistema que respeita preferências de usuário por menos movimento
+   - ✅ Implementação de variantes alternativas para animações com movimento reduzido
+   - ✅ Suporte a configurações persistentes via localStorage
+   - ✅ Compatibilidade com diretrizes WCAG 2.1, critério 2.3.3
+7. ✅ **Monitoramento e Relatório de Erros**: Implementado sistema de monitoramento robusto com Sentry e Web Vitals.
+   - ✅ Verificação da variável VITE_SENTRY_DSN antes de inicializar o Sentry
+   - ✅ Implementação completa de métricas Core Web Vitals 
+   - ✅ Envio de métricas para Google Analytics e Sentry
+   - ✅ Sistema de fallback para monitoramento
+   - ✅ Componente de visualização de métricas para administradores
 
 ## Grandes Entregas Concluídas ✅
 
@@ -108,24 +156,35 @@
 5. ✅ Correções de compatibilidade CSS 
 6. ✅ Correção de conflito de tipos no componente Button
 7. ✅ Atualização da documentação no Storybook
-8. ✅ Implementação de serviço de API com Axios
-   - ✅ Criação de estrutura base para comunicação com backend
-   - ✅ Implementação de interceptors para tokens de autenticação
-   - ✅ Tratamento de erros consistente
-   - ✅ Suporte a mocks para desenvolvimento
-   - ✅ Tipagem TypeScript completa
-   - ✅ Métodos CRUD básicos
-   - ✅ Documentação abrangente
-9. ✅ Sistema de autenticação com React Hooks
-   - ✅ Hook useAuth para gerenciar estado de autenticação
-   - ✅ Hook useLogin para processamento de login
-   - ✅ Hook useRegister para cadastro de usuários
-   - ✅ Hook useLogout para logout da aplicação
-   - ✅ Contexto AuthContext para compartilhamento de estado
-   - ✅ Sistema de armazenamento e gerenciamento de tokens JWT
-   - ✅ Componentes para rotas protegidas e redirecionamento
-   - ✅ Tipagem completa com TypeScript e tratamento de erros
-10. ✅ Sistema de formulários com validação
+8. ✅ Otimização da configuração PWA e estrutura de ícones
+   - ✅ Padronização dos caminhos de ícones entre todos os arquivos
+   - ✅ Estrutura de pastas centralizada para todos os ícones
+   - ✅ Documentação abrangente para manutenção futura
+   - ✅ Verificação de conformidade com padrões PWA
+9. ✅ Sistema de animações acessível
+   - ✅ Implementação de contexto para gerenciar preferências de animação
+   - ✅ Componentes de Motion acessíveis que respeitam preferências do usuário
+   - ✅ Suporte completo a prefers-reduced-motion
+   - ✅ Variantes alternativas para animações essenciais
+   - ✅ Interface para configuração de preferências pelo usuário
+10. ✅ Implementação de serviço de API com Axios
+    - ✅ Criação de estrutura base para comunicação com backend
+    - ✅ Implementação de interceptors para tokens de autenticação
+    - ✅ Tratamento de erros consistente
+    - ✅ Suporte a mocks para desenvolvimento
+    - ✅ Tipagem TypeScript completa
+    - ✅ Métodos CRUD básicos
+    - ✅ Documentação abrangente
+11. ✅ Sistema de autenticação com React Hooks
+    - ✅ Hook useAuth para gerenciar estado de autenticação
+    - ✅ Hook useLogin para processamento de login
+    - ✅ Hook useRegister para cadastro de usuários
+    - ✅ Hook useLogout para logout da aplicação
+    - ✅ Contexto AuthContext para compartilhamento de estado
+    - ✅ Sistema de armazenamento e gerenciamento de tokens JWT
+    - ✅ Componentes para rotas protegidas e redirecionamento
+    - ✅ Tipagem completa com TypeScript e tratamento de erros
+12. ✅ Sistema de formulários com validação
     - ✅ Componente Form configurável com feedback visual (`.form-group`, `.form-label`)
     - ✅ Componentes de campo (`.input-field`, Select, Textarea, Checkbox)
     - ✅ Validação de formulário com mensagens de erro
@@ -133,7 +192,7 @@
     - ✅ Funções para transformar dados do formulário para API
     - ✅ Tratamento de erros de API
     - ✅ Tipagem completa com TypeScript
-11. ✅ Sistema de mocks de API para desenvolvimento frontend
+13. ✅ Sistema de mocks de API para desenvolvimento frontend
     - ✅ Simulação de endpoints para todas as funcionalidades principais
     - ✅ Dados realistas para testes com tipagem completa
     - ✅ Simulação de delays de rede configuráveis
@@ -141,7 +200,7 @@
     - ✅ Fácil ativação/desativação via variáveis de ambiente
     - ✅ Endpoints para autenticação, formulário de contato, cartilhas, perfil e notícias
     - ✅ Documentação detalhada de uso
-12. ✅ Sistema abrangente de tratamento de erros
+14. ✅ Sistema abrangente de tratamento de erros
     - ✅ Captura e formatação de erros de API
     - ✅ Mensagens de erro amigáveis para o usuário com diferentes níveis de detalhe
     - ✅ Logging centralizado para depuração
@@ -151,7 +210,7 @@
     - ✅ Integração com ErrorBoundary do React
     - ✅ Configuração para diferentes ambientes (dev, staging, prod)
     - ✅ Hook useErrorHandling para componentes
-13. ✅ Sistema de hooks para autenticação
+15. ✅ Sistema de hooks para autenticação
     - ✅ Hook useAuthService para integração do serviço de API com o estado global
     - ✅ Implementação de login, logout e registro com tratamento de erros
     - ✅ Verificação automática de expiração de token
@@ -168,7 +227,7 @@
     - ✅ Hook useContactForm para formulário de contato
     - ✅ Validação específica para campos de contato
     - ✅ Integração com API de contato
-14. ✅ Sistema de notificações frontend
+16. ✅ Sistema de notificações frontend
     - ✅ Implementação de toasts para feedback imediato de ações
     - ✅ Centro de notificações persistente com histórico
     - ✅ Suporte a diferentes tipos (`.text-success`, `.text-error`, `.text-info`, `.text-warning`)
@@ -181,7 +240,7 @@
     - ✅ Design adaptado ao sistema visual da OCTO
     - ✅ Integração preparada para WebSockets/polling futuros
 
-15. ✅ Utilitários de formatação e validação de dados
+17. ✅ Utilitários de formatação e validação de dados
     - ✅ Sanitização de dados de entrada para segurança
     - ✅ Formatação de datas, números e valores monetários
     - ✅ Validação de formatos (email, telefone, CPF/CNPJ)
@@ -380,6 +439,53 @@
    - [x] Substituir elementos com usos repetidos de classes por componentes reutilizáveis
    - [x] Criar documentação visual completa dos componentes migrados
 
+7. **Acessibilidade**
+   - [x] Sistema de notificações com suporte a leitores de tela
+   - [x] Atributos ARIA para notificações e toasts
+   - [x] Pausas automáticas em hover para deficiências cognitivas
+   - [x] Sistema de animações acessível com suporte a prefers-reduced-motion
+   - [x] Componente de configuração de preferências de animação
+   - [x] Suporte a personalização da experiência de movimento
+   - [x] Compatibilidade com WCAG 2.1, critério 2.3.3 (Movimento, Piscar, Rolar)
+   - [ ] Auditoria WCAG 2.1 AA
+   - [ ] Skip links
+   - [ ] Landmarks semânticos
+   - [ ] Testes com leitores de tela
+   - [ ] Tabulação por teclado nas interfaces de autenticação
+
+8. **Consolidação do Sistema de Animações**
+   - [✅] Fase 1: Remover dependência react-transition-group
+     - [✅] Removida dependência do package.json
+     - [✅] Instaladas dependências atualizadas
+     - [✅] Resolvidas incompatibilidades com pacotes de teste
+   - [✅] Fase 2: Refatorar animações existentes
+     - [✅] Auditar usos atuais de react-transition-group no código
+     - [✅] Identificar componentes que utilizavam ambas as bibliotecas simultaneamente
+     - [✅] Criar sistema de variantes para framer-motion
+     - [✅] Implementar componente wrapper AccessibleMotion
+     - [✅] Avaliar impacto em performance nos componentes migrados
+   - [✅] Fase 3: Implementar estratégia para todas as animações
+     - [✅] Definir abordagem para respeitar prefers-reduced-motion
+     - [✅] Criar sistema de contexto para animações acessíveis
+     - [✅] Implementar lógica de detecção de preferências do usuário
+     - [✅] Desenvolver variantes alternativas para movimento reduzido
+     - [✅] Adicionar suporte a localStorage para persistência de preferências
+   - [✅] Fase 4: Padronizar uso do Framer Motion
+     - [✅] Criar guia de implementação padronizada
+     - [✅] Documentar abordagens recomendadas para diferentes tipos de animação
+     - [✅] Estabelecer convenções para nomeação e estruturação das animações
+     - [✅] Desenvolver exemplos de implementação para casos comuns
+
+9. **SEO Avançado**
+   - [ ] Schema.org específico:
+     - Serviços (Service)
+     - Artigos (Article)
+     - Eventos (Event)
+     - FAQs (FAQPage)
+   - [ ] Breadcrumbs com markup
+   - [ ] Tags canônicas
+   - [ ] Rich snippets
+
 ## Tarefas Pendentes 🚧
 
 ### Alta Prioridade
@@ -493,20 +599,19 @@
        - [x] Modificar src/styles/design-system.css para adicionar novas classes de hover
        - [x] Criar novos keyframes em src/design-system/utils/animations/index.ts
        - [x] Implementar variantes em src/components/notifications/Toast.tsx como referência
-     - [x] Melhorar transições entre estados de componentes (normal, hover, active, focus)
-       - [x] Refinar transições e interações
-       - [x] Adicionar novas variações em src/styles/design-system.css
-       - [x] Implementar estados intermediários em componentes como Card e Button
-     - [x] Implementar animações de entrada e saída para elementos dinâmicos
-       - [x] Adicionar novos keyframes em src/design-system/utils/animations/index.ts
-       - [x] Criar utilitários em src/design-system/tokens/unified-tokens.ts
-       - [x] Usar Framer Motion para casos mais complexos, seguindo o exemplo em src/components/notifications/Toast.tsx
-       - [x] Adicionar suporte a preferências de usuário para redução de movimento
-         - [x] Modificar src/services/api/types.ts para adicionar reduceMotion à interface UserPreferences
-         - [x] Criar novos hooks para detectar prefers-reduced-motion na pasta src/design-system/utils/hooks/
-         - [x] Implementar lógica condicional em src/design-system/utils/animations/index.ts
-         - [x] Adicionar variáveis condicionais em src/styles/reduced-motion.css
-   - **Tarefas de Validação**
+       - [x] Melhorar transições entre estados de componentes (normal, hover, active, focus)
+         - [x] Refinar transições e interações
+         - [x] Adicionar novas variações em src/styles/design-system.css
+         - [x] Implementar estados intermediários em componentes como Card e Button
+       - [x] Implementar animações de entrada e saída para elementos dinâmicos
+         - [x] Adicionar novos keyframes em src/design-system/utils/animations/index.ts
+         - [x] Criar utilitários em src/design-system/tokens/unified-tokens.ts
+         - [x] Usar Framer Motion para casos mais complexos, seguindo o exemplo em src/components/notifications/Toast.tsx
+         - [x] Adicionar suporte a preferências de usuário para redução de movimento
+           - [x] Modificar src/services/api/types.ts para adicionar reduceMotion à interface UserPreferences
+           - [x] Criar novos hooks para detectar prefers-reduced-motion na pasta src/design-system/utils/hooks/
+           - [x] Implementar lógica condicional em src/design-system/utils/animations/index.ts
+           - [x] Adicionar variáveis condicionais em src/styles/reduced-motion.css
      - [ ] Auditar todos os componentes para garantir conformidade com o novo sistema
        - [ ] Verificar uso consistente de tokens de design em todos os componentes
        - [ ] Confirmar que todas as classes CSS seguem a convenção de nomenclatura estabelecida
@@ -564,11 +669,55 @@
    - [ ] Tags canônicas
    - [ ] Rich snippets
 
-7. **Performance**
-   - [ ] Service worker e cache
-   - [ ] Otimização de fontes
-   - [ ] Preload estratégico
-   - [ ] Core Web Vitals
+7. **Performance e Monitoramento**
+   - [✅] Implementação de configuração PWA básica
+     - [✅] Arquivo manifest.webmanifest configurado corretamente
+     - [✅] Tag link para manifest adicionada ao HTML
+     - [✅] Estrutura de ícones padronizada
+     - [✅] Meta tag theme-color configurada
+   - [✅] Implementação de monitoramento de performance
+     - [✅] Integração com Sentry para rastreamento de erros
+     - [✅] Coleta e análise de métricas Web Vitals
+     - [✅] Envio de dados para Google Analytics
+     - [✅] Componente de visualização de métricas para administradores
+     - [✅] Sistema resiliente com fallback para serviços indisponíveis
+   - [ ] Implementação avançada de PWA
+     - [ ] Estratégias de cache offline personalizadas
+     - [ ] Experiência de instalação aprimorada
+     - [ ] Notificações push
+     - [ ] Sincronização em segundo plano
+   - [ ] Service worker e cache avançado
+     - [ ] Implementar cache de assets estáticos
+     - [ ] Definir estratégias de cache para API
+     - [ ] Configurar sincronização em background
+     - [ ] Implementar mecanismo de atualização automática
+   - [ ] Otimização de recursos
+     - [ ] Lazy loading de componentes não críticos
+     - [ ] Prefetching de rotas comuns
+     - [ ] Otimização de fontes com font-display: swap
+     - [ ] Implementação de Image Optimization API
+   - [ ] Dashboard de performance
+     - [ ] Expansão do componente WebVitalsMonitor
+     - [ ] Histórico de métricas ao longo do tempo
+     - [ ] Alertas para degradação de performance
+     - [ ] Relatórios exportáveis para equipe técnica
+
+8. **Consolidação de Documentação**
+   - [ ] Documentação técnica do sistema de monitoramento
+     - [ ] Guia de implementação para novos componentes
+     - [ ] Instruções para adicionar métricas customizadas
+     - [ ] Exemplos de configuração para diferentes ambientes
+     - [ ] Tutorial de uso do componente WebVitalsMonitor
+   - [ ] Documentação de uso do PWA
+     - [ ] Guia para instalação no dispositivo
+     - [ ] Explicação das funcionalidades offline
+     - [ ] Troubleshooting de problemas comuns
+     - [ ] Melhores práticas para uso do PWA
+   - [ ] Atualização geral da documentação
+     - [ ] Revisão da arquitetura no README
+     - [ ] Atualização das screenshots e exemplos
+     - [ ] Criação de guia rápido para novos desenvolvedores
+     - [ ] Documentação de padrões de código e convenções
 
 ### Médio Prazo
 
@@ -584,7 +733,17 @@
    - [ ] Monitoramento
    - [ ] Deploy automatizado
 
-3. **Documentação**
+3. **Consolidação de Tecnologias**
+   - [ ] Completar migração de react-transition-group para framer-motion
+     - [✅] Fase 1: Remoção da dependência react-transition-group do package.json
+     - [ ] Fase 2: Implementação de exemplos e protótipos usando apenas framer-motion
+     - [ ] Fase 3: Migração gradual de componentes existentes
+     - [ ] Fase 4: Testes finais e validação
+   - [ ] Padronizar biblioteca de gerenciamento de estado
+   - [ ] Consolidar soluções de cache e persistência
+   - [ ] Padronizar abordagem para requisições de API
+
+4. **Documentação**
    - [x] Storybook
    - [x] Documentação de autenticação e API
    - [x] Documentação do sistema de mocks
@@ -658,20 +817,57 @@ src/
 ### Melhorias de Infraestrutura 🔧
 
 1. **Otimização da pasta `/public`**
+   - [✅] Implementada estrutura organizada para ícones PWA
+     - [✅] Criada pasta `/icons` para centralizar todos os ícones
+     - [✅] Padronizados nomes e tamanhos dos ícones
+     - [✅] Criado guia de referência para manutenção futura
+   - [✅] Melhorado arquivo manifest.webmanifest
+     - [✅] Atualizada descrição e cores para consistência
+     - [✅] Padronizados caminhos para ícones
+     - [✅] Adicionado suporte para ícones maskable
    - [ ] Revisar e otimizar `robots.txt` para melhor indexação
    - [ ] Atualizar `sitemap.xml` para incluir novas páginas
    - [ ] Implementar cache agressivo para arquivos estáticos no `.htaccess`
    - [ ] Adicionar mais metadados Open Graph no `index.html`
-   - [ ] Expandir `manifest.webmanifest` com suporte a temas e ícones diversos
 
 2. **Configuração do Storybook**
-   - [ ] Migrar configurações para Storybook 7.x
-   - [ ] Implementar decoradores para tema e internacionalização
-   - [ ] Adicionar controles de acessibilidade nas histórias
+   - [✅] Consolidar arquivos de configuração no diretório `.storybook`
+     - [✅] Remover arquivo duplicado `preview.js`
+     - [✅] Melhorar configuração em `preview.jsx`
+     - [✅] Atualizar e documentar `main.js`
+   - [✅] Corrigir compatibilidade de versões do Storybook
+     - [✅] Atualizar todos os pacotes para versão 8.6.4
+     - [✅] Resolver conflitos de dependências
+   - [✅] Implementar decoradores para tema
+   - [✅] Configurar suporte de acessibilidade via addon-a11y
+   - [✅] Atualizar documentação no README.md
    - [ ] Criar histórias para todos os componentes principais
    - [ ] Integrar testes visuais automatizados no Storybook
 
-3. **Organização de Código**
+3. **Consolidação do Sistema de Animações**
+   - [✅] Fase 1: Remover dependência react-transition-group
+     - [✅] Removida dependência do package.json
+     - [✅] Instaladas dependências atualizadas
+     - [✅] Resolvidas incompatibilidades com pacotes de teste
+   - [✅] Fase 2: Refatorar animações existentes
+     - [✅] Auditar usos atuais de react-transition-group no código
+     - [✅] Identificar componentes que utilizavam ambas as bibliotecas simultaneamente
+     - [✅] Criar sistema de variantes para framer-motion
+     - [✅] Implementar componente wrapper AccessibleMotion
+     - [✅] Avaliar impacto em performance nos componentes migrados
+   - [✅] Fase 3: Implementar estratégia para todas as animações
+     - [✅] Definir abordagem para respeitar prefers-reduced-motion
+     - [✅] Criar sistema de contexto para animações acessíveis
+     - [✅] Implementar lógica de detecção de preferências do usuário
+     - [✅] Desenvolver variantes alternativas para movimento reduzido
+     - [✅] Adicionar suporte a localStorage para persistência de preferências
+   - [✅] Fase 4: Padronizar uso do Framer Motion
+     - [✅] Criar guia de implementação padronizada
+     - [✅] Documentar abordagens recomendadas para diferentes tipos de animação
+     - [✅] Estabelecer convenções para nomeação e estruturação das animações
+     - [✅] Desenvolver exemplos de implementação para casos comuns
+
+4. **Organização de Código**
    - [ ] Reorganizar pastas por domínio ao invés de tipo
    - [ ] Criar arquivos de barril (index.ts) para todas as pastas
    - [ ] Padronizar nomenclatura de arquivos e componentes
@@ -688,6 +884,10 @@ src/
    - [ ] Documentar padrões de uso e exemplos interativos
 
 2. **Acessibilidade e Internacionalização**
+   - [✅] Implementar sistema de animações acessíveis (WCAG 2.1, critério 2.3.3)
+   - [✅] Criar contexto para gerenciamento de preferências de animação
+   - [✅] Desenvolver componentes que respeitem prefers-reduced-motion
+   - [✅] Adicionar interface de usuário para configuração de preferências de movimento
    - [ ] Implementar suporte completo para i18n em todos componentes
    - [ ] Criar contexto de tema com suporte para alto contraste
    - [ ] Adicionar suporte para texto e controles redimensionáveis
@@ -729,7 +929,9 @@ src/
 2. **Importantes**
    - [ ] Corrigir layout quebrado em navegadores móveis específicos
    - [ ] Resolver problemas de contraste em alguns elementos de UI
-   - [ ] Corrigir animações que podem causar problemas em dispositivos antigos
+   - [✅] Corrigir animações que podem causar problemas em dispositivos antigos
+   - [✅] Implementar sistema que respeite prefers-reduced-motion
+   - [✅] Oferecer alternativas para animações com movimento intenso
    - [ ] Resolver warnings no console sobre props não utilizadas
    - [ ] Corrigir problemas de foco em elementos interativos
 

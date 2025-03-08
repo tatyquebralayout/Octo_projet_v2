@@ -15,7 +15,10 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [React Router DOM](https://reactrouter.com/)
+- [Framer Motion](https://www.framer.com/motion/) - Animações acessíveis
 - [Lucide React](https://lucide.dev/)
+- [Sentry](https://sentry.io/) - Monitoramento de erros
+- [Web Vitals](https://web.dev/vitals/) - Métricas de performance
 
 ## 🔧 Instalação
 
@@ -32,6 +35,124 @@ npm install
 # Execute a aplicação
 npm run dev
 ```
+
+## 📚 Storybook
+
+Este projeto utiliza o Storybook para documentação e desenvolvimento de componentes isolados.
+
+```bash
+# Execute o Storybook
+npm run storybook
+
+# Build do Storybook
+npm run build-storybook
+```
+
+### Configuração do Storybook
+
+A configuração do Storybook está centralizada nos seguintes arquivos:
+
+- `/.storybook/main.js` - Configura plugins, webpack e diretórios de histórias
+- `/.storybook/preview.jsx` - Define decoradores, temas e configurações globais
+
+> **Nota:** Em março de 2024, a configuração foi consolidada no arquivo `preview.jsx`, removendo o arquivo `preview.js` redundante para evitar conflitos.
+
+O Storybook suporta temas claro e escuro, que podem ser alternados através da barra de ferramentas. Os componentes são renderizados com as configurações de acessibilidade apropriadas para garantir conformidade com WCAG.
+
+## 🔄 Sistema de Animações Acessíveis
+
+O projeto implementa um sistema de animações completamente acessível que respeita as preferências de usuários por movimento reduzido:
+
+```jsx
+import { AccessibleMotion } from 'src/design-system/components/AccessibleMotion';
+import { fadeVariants } from 'src/design-system/utils/animations/accessible-variants';
+import { useAnimation } from 'src/design-system/contexts/AnimationContext';
+
+function MyComponent() {
+  const { prefersReducedMotion } = useAnimation();
+  
+  // Seleciona automaticamente variantes baseadas na preferência do usuário
+  const variants = prefersReducedMotion ? fadeVariants.reduced : fadeVariants.standard;
+  
+  return (
+    <AccessibleMotion
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      variants={variants}
+      essential={false}
+    >
+      Conteúdo Animado
+    </AccessibleMotion>
+  );
+}
+```
+
+### Características principais:
+
+- **Respeita `prefers-reduced-motion`**: Detecta automaticamente preferências do sistema
+- **Contexto de Animações**: Gerencia preferências e permite configuração pelo usuário
+- **Componentes Acessíveis**: Wrapper para Framer Motion com suporte a acessibilidade
+- **Variantes Alternativas**: Versões reduzidas para cada tipo de animação
+- **Conformidade com WCAG**: Implementa o critério 2.3.3 (Movimento, Piscar, Rolar)
+- **Animações Essenciais**: Preserva animações críticas para a compreensão da interface
+- **Persistência de Preferências**: Salva configurações via localStorage
+
+### Configuração de preferências:
+
+Os usuários podem personalizar suas preferências de animação através do componente `AnimationPreferences`, que permite:
+
+1. Reduzir movimento (simplificar animações)
+2. Desabilitar completamente animações não essenciais
+3. Restaurar às configurações padrão do sistema
+
+## 📊 Sistema de Monitoramento e Métricas
+
+O projeto implementa um sistema abrangente para monitoramento de erros e coleta de métricas de performance:
+
+```tsx
+import { captureError, initializeMonitoring } from 'src/utils/monitoring';
+
+// Inicialização do sistema de monitoramento
+useEffect(() => {
+  initializeMonitoring({
+    enableSentry: true,
+    enableWebVitals: true,
+    enableGoogleAnalytics: true,
+    enableConsoleLogging: process.env.NODE_ENV === 'development'
+  });
+}, []);
+
+// Captura de erros em componentes
+try {
+  // código que pode gerar erros
+} catch (error) {
+  captureError(error, { 
+    component: 'UserProfile', 
+    action: 'loadUserData' 
+  });
+}
+```
+
+### Características principais:
+
+- **Monitoramento Robusto**: Integração com Sentry para rastreamento de erros
+- **Métricas Web Vitals**: Coleta automática de Core Web Vitals (LCP, FID, CLS, FCP, TTFB)
+- **Envio para Google Analytics**: Métricas são enviadas como eventos para análise
+- **Sistema em Camadas**: Continua funcionando mesmo quando um serviço falha
+- **Componente de Visualização**: Exibe métricas de performance para administradores
+- **Monitoramento Seguro**: Verifica variáveis de ambiente antes de inicializar serviços
+- **Configuração Flexível**: Permite habilitar/desabilitar diferentes aspectos do monitoramento
+
+### Métricas coletadas:
+
+1. **Largest Contentful Paint (LCP)**: Mede o tempo de carregamento da maior imagem/texto
+2. **First Input Delay (FID)**: Mede o tempo até que a página responda à primeira interação
+3. **Cumulative Layout Shift (CLS)**: Mede a estabilidade visual durante o carregamento
+4. **First Contentful Paint (FCP)**: Mede quando o primeiro conteúdo é renderizado
+5. **Time to First Byte (TTFB)**: Mede a responsividade do servidor
+
+O componente `WebVitalsMonitor` permite visualizar estas métricas em tempo real, classificando-as de acordo com as recomendações do Google (Bom, Precisa Melhorar, Ruim).
 
 ## 📁 Estrutura do Projeto
 
@@ -54,6 +175,16 @@ src/
 - **Recursos Educacionais**: Cartilhas e materiais sobre deficiências ocultas
 - **Comunidade**: Espaço para compartilhamento de experiências e networking
 - **Blog e Notícias**: Conteúdo atualizado sobre inclusão e acessibilidade
+- **Acessibilidade Integrada**: 
+  - Sistema de animações que respeita preferências por movimento reduzido
+  - Suporte completo a `prefers-reduced-motion`
+  - Configurações personalizáveis pelo usuário
+  - Compatibilidade com WCAG 2.1 AA
+- **Monitoramento de Performance**:
+  - Coleta e análise de Core Web Vitals
+  - Integração com Sentry para rastreamento de erros
+  - Componente para visualização de métricas em tempo real
+  - Sistema de fallback para garantir funcionamento contínuo
 
 ## 🤝 Contribuindo
 
