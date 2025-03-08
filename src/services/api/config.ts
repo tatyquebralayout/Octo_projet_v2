@@ -93,6 +93,15 @@ export const ENDPOINTS = {
   CONTACT: {
     SEND: '/contact/send',
   },
+  // Novos endpoints para CapacitaPcd
+  VAGAS: {
+    BASE: '/api/vagas',
+    DETAILS: (id: string) => `/api/vagas/${id}`,
+  },
+  RECURSOS_EDUCACIONAIS: {
+    BASE: '/api/recursos-educacionais',
+    DETAILS: (id: string) => `/api/recursos-educacionais/${id}`,
+  }
 };
 
 // Mapeamento de endpoints para serviços mock
@@ -106,4 +115,6 @@ export const MOCK_ENDPOINT_MAP = {
   '/content/news': 'news',
   '/content/newsletter': 'newsletter',
   '/contact/': 'contact',
+  '/api/vagas': 'vagas',
+  '/api/recursos-educacionais': 'recursos',
 }; 

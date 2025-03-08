@@ -15,10 +15,9 @@ import {
   MOCK_CONTACT_RESPONSE,
   createPaginatedResponse,
   createApiResponse,
-  randomDelay,
-  shouldSimulateError
+  randomDelay
 } from './mockData';
-import { ENDPOINTS } from './config';
+import { ENDPOINTS, API_ENV } from './config';
 import { 
   ApiResponse, 
   AuthRequest, 
@@ -33,6 +32,8 @@ import {
   Guide,
   News
 } from './types';
+import { errorHandler } from '../../utils/errors';
+import { ErrorType } from '../../utils/errors/types';
 
 // Classes de erro para simular erros da API
 class MockApiError extends Error {
@@ -664,6 +665,215 @@ export const newsMockService = {
   }
 };
 
+// Serviço de mock para vagas de emprego
+export const vagasMockService = {
+  getAll: async (params?: QueryParams): Promise<ApiResponse<PaginatedResponse<any>>> => {
+    await randomDelay();
+
+    // Simular erro aleatório
+    if (shouldSimulateError()) {
+      throw new MockApiError('Erro ao carregar vagas', 500, 'SERVER_ERROR');
+    }
+
+    const mockVagas = [
+      {
+        id: 'vaga-001',
+        titulo: 'Desenvolvedor Frontend',
+        empresa: 'OCTO Tecnologia',
+        descricao: 'Desenvolvimento de interfaces acessíveis e inclusivas para pessoas com deficiência.',
+        link: 'https://exemplo.com/vaga-001'
+      },
+      {
+        id: 'vaga-002',
+        titulo: 'UX Designer',
+        empresa: 'Inclusiva Digital',
+        descricao: 'Design de experiências centradas no usuário com foco em acessibilidade.',
+        link: 'https://exemplo.com/vaga-002'
+      },
+      {
+        id: 'vaga-003',
+        titulo: 'Analista de Marketing',
+        empresa: 'Empresa Acessível',
+        descricao: 'Desenvolvimento de estratégias de marketing inclusivas.',
+        link: 'https://exemplo.com/vaga-003'
+      },
+      {
+        id: 'vaga-004',
+        titulo: 'Assistente Administrativo',
+        empresa: 'Corporação Diversidade',
+        descricao: 'Suporte administrativo em ambiente inclusivo e acessível.',
+        link: 'https://exemplo.com/vaga-004'
+      },
+      {
+        id: 'vaga-005',
+        titulo: 'Analista de Recursos Humanos',
+        empresa: 'RH Inclusivo',
+        descricao: 'Recrutamento e seleção com foco em diversidade e inclusão.',
+        link: 'https://exemplo.com/vaga-005'
+      }
+    ];
+
+    const page = params?.page ? Number(params.page) : 1;
+    const limit = params?.limit ? Number(params.limit) : 10;
+
+    // Aplicar filtros se houver
+    let filteredVagas = [...mockVagas];
+    
+    if (params?.empresa) {
+      filteredVagas = filteredVagas.filter(vaga => 
+        vaga.empresa.toLowerCase().includes(params.empresa!.toString().toLowerCase())
+      );
+    }
+
+    if (params?.titulo) {
+      filteredVagas = filteredVagas.filter(vaga => 
+        vaga.titulo.toLowerCase().includes(params.titulo!.toString().toLowerCase())
+      );
+    }
+
+    return createApiResponse(
+      createPaginatedResponse(filteredVagas, page, limit),
+      'Vagas carregadas com sucesso'
+    );
+  },
+
+  getById: async (id: string): Promise<ApiResponse<any>> => {
+    await randomDelay();
+
+    // Simular erro aleatório
+    if (shouldSimulateError()) {
+      throw new MockApiError('Erro ao carregar vaga', 500, 'SERVER_ERROR');
+    }
+
+    const mockVagas = [
+      {
+        id: 'vaga-001',
+        titulo: 'Desenvolvedor Frontend',
+        empresa: 'OCTO Tecnologia',
+        descricao: 'Desenvolvimento de interfaces acessíveis e inclusivas para pessoas com deficiência.',
+        link: 'https://exemplo.com/vaga-001',
+        requisitos: [
+          'Experiência com HTML, CSS e JavaScript',
+          'Conhecimento de acessibilidade web (WCAG)',
+          'Experiência com React ou Vue'
+        ],
+        beneficios: [
+          'Plano de saúde',
+          'Vale alimentação',
+          'Trabalho remoto'
+        ],
+        salario: 'R$ 5.000 a R$ 7.000',
+        regime: 'CLT',
+        local: 'Remoto'
+      },
+      // ... outras vagas detalhadas
+    ];
+
+    const vaga = mockVagas.find(v => v.id === id);
+
+    if (!vaga) {
+      throw new MockApiError('Vaga não encontrada', 404, 'VAGA_NOT_FOUND');
+    }
+
+    return createApiResponse(vaga, 'Vaga carregada com sucesso');
+  }
+};
+
+// Serviço de mock para recursos educacionais
+export const recursosMockService = {
+  getAll: async (params?: QueryParams): Promise<ApiResponse<PaginatedResponse<any>>> => {
+    await randomDelay();
+
+    // Simular erro aleatório
+    if (shouldSimulateError()) {
+      throw new MockApiError('Erro ao carregar recursos educacionais', 500, 'SERVER_ERROR');
+    }
+
+    const mockRecursos = [
+      {
+        id: 'rec-001',
+        icon: 'video',
+        title: 'Como se Preparar para Entrevistas',
+        description: 'Aprenda técnicas e dicas para se destacar em processos seletivos.',
+        link: 'https://exemplo.com/rec-001',
+        soon: false
+      },
+      {
+        id: 'rec-002',
+        icon: 'book',
+        title: 'Construção de Currículo',
+        description: 'Guia passo a passo para criar um currículo profissional impactante.',
+        link: 'https://exemplo.com/rec-002',
+        soon: false
+      },
+      {
+        id: 'rec-003',
+        icon: 'target',
+        title: 'Comunicando Necessidades',
+        description: 'Como abordar suas necessidades de acessibilidade no ambiente de trabalho.',
+        link: 'https://exemplo.com/rec-003',
+        soon: true
+      },
+      {
+        id: 'rec-004',
+        icon: 'users',
+        title: 'Networking para PcD',
+        description: 'Estratégias para expandir sua rede profissional e encontrar oportunidades.',
+        link: 'https://exemplo.com/rec-004',
+        soon: true
+      },
+      {
+        id: 'rec-005',
+        icon: 'briefcase',
+        title: 'Direitos Trabalhistas para PcD',
+        description: 'Conheça seus direitos e como garantir que sejam respeitados no ambiente de trabalho.',
+        link: 'https://exemplo.com/rec-005',
+        soon: false
+      }
+    ];
+
+    const page = params?.page ? Number(params.page) : 1;
+    const limit = params?.limit ? Number(params.limit) : 10;
+
+    return createApiResponse(
+      createPaginatedResponse(mockRecursos, page, limit),
+      'Recursos educacionais carregados com sucesso'
+    );
+  },
+
+  getById: async (id: string): Promise<ApiResponse<any>> => {
+    await randomDelay();
+
+    // Simular erro aleatório
+    if (shouldSimulateError()) {
+      throw new MockApiError('Erro ao carregar recurso educacional', 500, 'SERVER_ERROR');
+    }
+
+    const mockRecursos = [
+      {
+        id: 'rec-001',
+        icon: 'video',
+        title: 'Como se Preparar para Entrevistas',
+        description: 'Aprenda técnicas e dicas para se destacar em processos seletivos.',
+        link: 'https://exemplo.com/rec-001',
+        soon: false,
+        conteudo: 'Conteúdo detalhado sobre como se preparar para entrevistas...',
+        autor: 'Maria Silva',
+        dataCriacao: '2023-10-15'
+      },
+      // ... outros recursos detalhados
+    ];
+
+    const recurso = mockRecursos.find(r => r.id === id);
+
+    if (!recurso) {
+      throw new MockApiError('Recurso não encontrado', 404, 'RECURSO_NOT_FOUND');
+    }
+
+    return createApiResponse(recurso, 'Recurso carregado com sucesso');
+  }
+};
+
 // Mapeamento de endpoints para serviços mock
 // Criando constantes para endpoints com funções
 const GUIDE_DOWNLOAD_ENDPOINT = '/guides/:id/download';
@@ -678,39 +888,30 @@ export const mockServices = {
   [ENDPOINTS.AUTH.LOGOUT]: authMockService.logout,
   [ENDPOINTS.AUTH.REFRESH]: authMockService.refresh,
   [ENDPOINTS.AUTH.REGISTER]: authMockService.register,
-  [ENDPOINTS.USERS.CHANGE_PASSWORD as string]: authMockService.changePassword,
   
   // Usuários
   [ENDPOINTS.USERS.PROFILE]: usersMockService.getProfile,
-  [ENDPOINTS.USERS.UPDATE_PROFILE as string]: usersMockService.update,
-  [ENDPOINTS.USERS.BASE]: usersMockService.getAll,
   
   // Conteúdo
   [ENDPOINTS.CONTENT.ARTICLES]: contentMockService.getArticles,
-  [ENDPOINTS.CONTENT.COURSES]: contentMockService.getCourses,
-  [ENDPOINTS.CONTENT.NEWSLETTERS]: contentMockService.getNewsletters,
   
   // Recursos
   [ENDPOINTS.RESOURCES.GUIDES]: resourcesMockService.getGuides,
   [ENDPOINTS.RESOURCES.TOOLS]: resourcesMockService.getTools,
   [ENDPOINTS.RESOURCES.VIDEOS]: resourcesMockService.getVideos,
   
-  // Contato
-  [ENDPOINTS.CONTACT.SUBMIT as string]: contactMockService.submitForm,
-  [ENDPOINTS.CONTACT.SUBSCRIBE as string]: contactMockService.subscribe,
-  
   // Cartilhas
-  [ENDPOINTS.GUIDES.BASE as string]: guidesMockService.getAllGuides,
-  [ENDPOINTS.GUIDES.FEATURED as string]: guidesMockService.getFeaturedGuides,
   [GUIDE_DOWNLOAD_ENDPOINT]: guidesMockService.downloadGuide,
   
   // Notícias
-  [ENDPOINTS.NEWS.BASE as string]: newsMockService.getAllNews,
-  [ENDPOINTS.NEWS.FEATURED as string]: newsMockService.getFeaturedNews,
   [NEWS_BY_SLUG_ENDPOINT]: newsMockService.getNewsBySlug,
   [NEWS_BY_CATEGORY_ENDPOINT]: newsMockService.getNewsByCategory,
   [NEWS_BY_TAG_ENDPOINT]: newsMockService.getNewsByTag,
   [NEWS_RELATED_ENDPOINT]: newsMockService.getRelatedNews,
+
+  // Vagas e Recursos Educacionais (para CapacitaPcd)
+  [ENDPOINTS.VAGAS.BASE]: vagasMockService.getAll,
+  [ENDPOINTS.RECURSOS_EDUCACIONAIS.BASE]: recursosMockService.getAll,
 };
 
 // Função para simular probabilidade de erro
