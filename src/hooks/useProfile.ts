@@ -2,7 +2,7 @@
  * Hook para gerenciar o perfil do usuário
  */
 import { useState, useCallback } from 'react';
-import { useAuth } from '../store/auth';
+import { useAuth } from '../contexts/AuthContext';
 import { authService } from '../services/api';
 import { ProfileUpdateRequest, UserProfile } from '../services/api/types';
 
@@ -10,7 +10,7 @@ import { ProfileUpdateRequest, UserProfile } from '../services/api/types';
  * Hook que fornece funcionalidades para gerenciar o perfil do usuário
  */
 export const useProfile = () => {
-  const auth = useAuth();
+  const { authState } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export const useProfile = () => {
    */
   const loadProfile = useCallback(async () => {
     // Se não estiver autenticado, não faz nada
-    if (!auth.isAuthenticated) {
+    if (!authState.isAuthenticated) {
       setProfile(null);
       return null;
     }
@@ -44,14 +44,14 @@ export const useProfile = () => {
     } finally {
       setLoading(false);
     }
-  }, [auth.isAuthenticated]);
+  }, [authState.isAuthenticated]);
 
   /**
    * Atualiza os dados do perfil do usuário
    */
   const updateProfile = useCallback(async (data: ProfileUpdateRequest) => {
     // Se não estiver autenticado, não faz nada
-    if (!auth.isAuthenticated) {
+    if (!authState.isAuthenticated) {
       setError('Usuário não autenticado');
       return false;
     }
@@ -75,7 +75,7 @@ export const useProfile = () => {
     } finally {
       setLoading(false);
     }
-  }, [auth.isAuthenticated]);
+  }, [authState.isAuthenticated]);
 
   return {
     profile,
