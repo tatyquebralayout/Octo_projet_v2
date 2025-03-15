@@ -10,6 +10,7 @@ import {
 } from '../utils/errors';
 import { useErrorHandling } from '../hooks/useErrorHandling';
 import { apiService } from '../services/api/apiService';
+import { Loading, Error as ErrorComponent } from '../design-system/components/ui';
 
 // Componente que propositalmente causa erro
 function BuggyComponent() {
@@ -144,23 +145,33 @@ export default function ErrorHandlingExample() {
       
       {/* Exibir erro atual */}
       {isError && (
-        <ErrorAlert 
-          message={errorMessage} 
-          type={errorType} 
-          onClose={clearError}
-          className="mb-6"
-        />
+        <div className="mb-6">
+          <ErrorComponent 
+            title="Erro na operação"
+            message={errorMessage} 
+            variant="card"
+          />
+          {/* Botão separado para fechar o erro */}
+          <button 
+            onClick={clearError}
+            className="mt-2 text-sm text-gray-500 hover:text-gray-700"
+          >
+            Fechar
+          </button>
+        </div>
       )}
       
       {/* Bloco para erros retryables */}
       {isError && errorType === ErrorType.SERVER && (
-        <RetryableError
-          message="Esta operação falhou mas pode ser tentada novamente."
-          type={ErrorType.SERVER}
-          isRetrying={isRetrying}
-          onRetry={handleRetryableOperation}
-          className="mb-6"
-        />
+        <div className="mb-6">
+          <ErrorComponent
+            title="Erro recuperável"
+            message="Esta operação falhou mas pode ser tentada novamente."
+            variant="card"
+            retryText={isRetrying ? "Tentando novamente..." : "Tentar novamente"}
+            onRetry={handleRetryableOperation}
+          />
+        </div>
       )}
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -175,7 +186,12 @@ export default function ErrorHandlingExample() {
             disabled={isLoading}
             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
           >
-            {isLoading ? 'Carregando...' : 'Executar Operação'}
+            {isLoading ? (
+              <span className="flex items-center">
+                <Loading size="sm" variant="spinner" className="mr-2" color="currentColor" />
+                Carregando...
+              </span>
+            ) : 'Executar Operação'}
           </button>
         </div>
         
@@ -190,7 +206,17 @@ export default function ErrorHandlingExample() {
             disabled={isLoading}
             className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
           >
-            {isRetrying ? 'Tentando novamente...' : isLoading ? 'Carregando...' : 'Executar com Retry'}
+            {isRetrying ? (
+              <span className="flex items-center">
+                <Loading size="sm" variant="spinner" className="mr-2" color="currentColor" />
+                Tentando novamente...
+              </span>
+            ) : isLoading ? (
+              <span className="flex items-center">
+                <Loading size="sm" variant="spinner" className="mr-2" color="currentColor" />
+                Carregando...
+              </span>
+            ) : 'Executar com Retry'}
           </button>
         </div>
       </div>
@@ -207,7 +233,12 @@ export default function ErrorHandlingExample() {
             disabled={isLoading}
             className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
           >
-            {isLoading ? 'Carregando...' : 'Chamar API'}
+            {isLoading ? (
+              <span className="flex items-center">
+                <Loading size="sm" variant="spinner" className="mr-2" color="currentColor" />
+                Carregando...
+              </span>
+            ) : 'Chamar API'}
           </button>
         </div>
         

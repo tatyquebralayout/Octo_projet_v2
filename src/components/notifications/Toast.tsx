@@ -2,10 +2,13 @@
  * Componente Toast para exibir notificações temporárias
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { ToastNotification } from '../../services/notifications/types';
 import { getClassForNotificationType, getIconForNotificationType } from '../../services/notifications/utils';
 import { ANIMATION_DURATION } from '../../services/notifications/config';
+import AccessibleMotion from '../../design-system/components/AccessibleMotion';
+import { toastVariants } from '../../design-system/utils/animations/accessible-variants';
+import { useAnimation } from '../../design-system/contexts/AnimationContext';
 
 interface ToastProps {
   toast: ToastNotification;
@@ -28,6 +31,9 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = tru
   
   // Estado para controlar a animação de progresso
   const [progress, setProgress] = useState(100);
+  
+  // Obter configurações de animação do contexto
+  const { prefersReducedMotion } = useAnimation();
   
   // Função para iniciar o timer de fechamento automático
   const startCloseTimer = () => {
@@ -102,31 +108,35 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = tru
   // Obter o ícone para o tipo de notificação
   const icon = getIconForNotificationType(type);
   
-  // Variantes para animação de entrada e saída
-  const variants = {
-    initial: { opacity: 0, y: -50, scale: 0.8 },
-    animate: { opacity: 1, y: 0, scale: 1 },
-    exit: { opacity: 0, scale: 0.8, transition: { duration: ANIMATION_DURATION.EXIT / 1000 } }
-  };
+  // Selecionar variantes apropriadas com base na preferência do usuário
+  const variants = prefersReducedMotion 
+    ? toastVariants.reduced 
+    : toastVariants.standard;
   
   return (
     <AnimatePresence>
-      <motion.div
+      <AccessibleMotion
         className={`relative rounded-lg md3-elevation-1 p-4 mb-3 max-w-sm ${colorClass}`}
-        initial="initial"
-        animate="animate"
+        initial="hidden"
+        animate="visible"
         exit="exit"
         variants={variants}
-        transition={{ duration: ANIMATION_DURATION.ENTER / 1000 }}
+        reducedMotionVariants={toastVariants.reduced}
+        // Toast é considerado essencial pois fornece feedback importante ao usuário
+        essential={true}
+        as="div"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         role={role}
-        aria-live={ariaLive}
+        aria-live={ariaLive || "polite"}
       >
         {/* Barra de progresso */}
         {autoClose && (
-          <div className="absolute bottom-0 left-0 h-1 bg-white bg-opacity-30 rounded-b-lg transition-standard"
-               style={{ width: `${progress}%` }} />
+          <div 
+            className="absolute bottom-0 left-0 h-1 bg-white bg-opacity-30 rounded-b-lg transition-standard"
+            style={{ width: `${progress}%` }} 
+            aria-hidden="true"
+          />
         )}
         
         <div className="flex items-start">
@@ -165,6 +175,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = tru
                         ? 'bg-white bg-opacity-20 hover:bg-opacity-30' 
                         : 'text-white text-opacity-80 hover:text-opacity-100'
                     }`}
+                    data-animation-essential="true"
                   >
                     {action.label}
                   </button>
@@ -178,11 +189,12 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose, pauseOnHover = tru
             onClick={() => onClose(id)}
             className="ml-3 flex-shrink-0 text-sm opacity-70 hover:opacity-100 transition-opacity"
             aria-label="Fechar notificação"
+            data-animation-essential="true"
           >
             ×
           </button>
         </div>
-      </motion.div>
+      </AccessibleMotion>
     </AnimatePresence>
   );
 }; 

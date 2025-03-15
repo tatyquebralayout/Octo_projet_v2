@@ -2,20 +2,7 @@ import { useState, useMemo } from 'react';
 import { useApiPaginatedCache } from './useApiCache';
 import { ENDPOINTS } from '../services/api/config';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-
-// Tipo minimalista para uma cartilha na listagem
-export interface GuideListItem {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  tags: string[];
-  coverImage: string;
-  publishedAt: string;
-  fileSize?: string;
-  pageCount?: number;
-  downloadUrl?: string;
-}
+import { GuideListItem } from '../types/guides';
 
 interface UseGuidesParams {
   page?: number;

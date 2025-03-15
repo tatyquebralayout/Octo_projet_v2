@@ -1,8 +1,8 @@
 export const ROUTES = {
   HOME: '/',
+  QUEM_SOMOS: '/somos-octo',
   SOMOS_OCTO: {
     BASE: '/somos-octo',
-    QUEM_SOMOS: '/somos-octo/quem-somos',
     DEFICIENCIAS: '/somos-octo/deficiencias-ocultas',
     NEURODIVERGENCIAS: '/somos-octo/neurodivergencias',
     DIVERSIDADE: '/somos-octo/diversidade',

@@ -19,7 +19,13 @@
   .animate-float,
   .animate-pulse,
   .animate-spin,
-  .animate-bounce {
+  .animate-bounce,
+  .animate-fadeIn,
+  .animate-slideIn,
+  .animate-scaleIn,
+  .animate-flipIn,
+  .animate-slideInLeft,
+  .animate-slideInRight {
     animation: none !important;
   }
   
@@ -27,11 +33,18 @@
   .hover-lift,
   .hover-grow,
   .hover-float,
-  .hover-bounce {
+  .hover-bounce,
+  .hover-scale {
     transition: none !important;
-    &:hover {
-      transform: none !important;
-    }
+    transform: none !important;
+  }
+  
+  .hover-lift:hover,
+  .hover-grow:hover,
+  .hover-float:hover,
+  .hover-bounce:hover,
+  .hover-scale:hover {
+    transform: none !important;
   }
   
   /* Manter apenas transições essenciais para feedback de interação */
@@ -39,6 +52,17 @@
     transition-property: color, background-color, border-color;
     transition-duration: 0.1s !important;
     transition-timing-function: ease-in-out !important;
+  }
+  
+  /* Ajustes para animações Framer Motion */
+  .framer-motion-reduced {
+    transition-duration: 0.1s !important;
+  }
+  
+  /* Ajustes para animações essenciais (necessárias para compreensão da UI) */
+  [data-animation-essential="true"] {
+    transition-duration: 0.1s !important;
+    animation-duration: 0.1s !important;
   }
 }
 
@@ -56,7 +80,13 @@
   .animate-float,
   .animate-pulse,
   .animate-spin,
-  .animate-bounce {
+  .animate-bounce,
+  .animate-fadeIn,
+  .animate-slideIn,
+  .animate-scaleIn,
+  .animate-flipIn,
+  .animate-slideInLeft,
+  .animate-slideInRight {
     animation: none !important;
   }
   
@@ -64,15 +94,49 @@
   .hover-lift,
   .hover-grow,
   .hover-float,
-  .hover-bounce {
+  .hover-bounce,
+  .hover-scale {
     transition: none !important;
-    &:hover {
-      transform: none !important;
-    }
+    transform: none !important;
+  }
+  
+  .hover-lift:hover,
+  .hover-grow:hover,
+  .hover-float:hover,
+  .hover-bounce:hover,
+  .hover-scale:hover {
+    transform: none !important;
   }
   
   /* Manter apenas transições essenciais para feedback de interação */
   .transition-colors {
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.1s !important;
+    transition-timing-function: ease-in-out !important;
+  }
+  
+  /* Ajustes para animações Framer Motion */
+  .framer-motion-reduced {
+    transition-duration: 0.1s !important;
+  }
+  
+  /* Ajustes para animações essenciais (necessárias para compreensão da UI) */
+  [data-animation-essential="true"] {
+    transition-duration: 0.1s !important;
+    animation-duration: 0.1s !important;
+  }
+}
+
+/* Quando as animações estão completamente desativadas */
+[data-animations-disabled="true"] {
+  * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  /* Exceto para feedback de interação essencial */
+  [data-animation-essential="true"] {
     transition-property: color, background-color, border-color;
     transition-duration: 0.1s !important;
     transition-timing-function: ease-in-out !important;

@@ -3,6 +3,10 @@
  * Contém interfaces para requisições, respostas e erros
  */
 
+// Importar e exportar a interface Guide do arquivo centralizado
+import type { Guide } from '../../types/guides';
+export type { Guide };
+
 // Interface para token de autenticação
 export interface AuthToken {
   accessToken: string;
@@ -119,23 +123,6 @@ export interface ContactFormData {
 export interface ContactFormResponse {
   ticketId: string;
   estimatedResponseTime: string;
-}
-
-// Interface para cartilha/guia
-export interface Guide {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  tags: string[];
-  coverImage: string;
-  downloadUrl: string;
-  fileSize?: string;
-  pageCount?: number;
-  author?: string;
-  publishedAt: string;
-  lastUpdated?: string;
-  featuredContent?: boolean;
 }
 
 // Interface para notícia

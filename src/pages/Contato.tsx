@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContactForm } from '../hooks/useContactForm';
 import { useNotifications } from '../services/notifications/context';
+import { Loading } from '../design-system/components/ui';
 
 const Contato = () => {
   // Utiliza o hook de formulário de contato
@@ -176,7 +177,12 @@ const Contato = () => {
               disabled={isSubmitting}
               className="btn btn-primary"
             >
-              {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
+              {isSubmitting ? (
+                <span className="flex items-center">
+                  <Loading size="sm" variant="spinner" className="mr-2" color="currentColor" />
+                  Enviando...
+                </span>
+              ) : 'Enviar mensagem'}
             </button>
             <button
               type="button"

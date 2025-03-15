@@ -12,7 +12,7 @@ export const footerConfig = {
       title: 'Somos OCTO',
       id: 'menu-somos-octo',
       items: [
-        { to: '/somos-octo/quem-somos', label: 'Quem somos?' },
+        { to: '/somos-octo', label: 'Quem somos?' },
         { to: '/somos-octo/deficiencias-ocultas', label: 'Deficiências Ocultas' },
         { to: '/somos-octo/neurodivergencias', label: 'Neurodivergências' },
         { to: '/somos-octo/diversidade', label: 'Diversidade' }

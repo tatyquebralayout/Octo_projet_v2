@@ -13,7 +13,6 @@ export const menuItems: MenuItem[] = [
     name: 'Somos OCTO',
     href: '/somos-octo',
     submenu: [
-      { name: 'Quem somos?', href: '/somos-octo/quem-somos' },
       { name: 'Deficiências Ocultas', href: '/somos-octo/deficiencias-ocultas' },
       { name: 'Neurodivergências', href: '/somos-octo/neurodivergencias' },
       { name: 'Diversidade', href: '/somos-octo/diversidade' },

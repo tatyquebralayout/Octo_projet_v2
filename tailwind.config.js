@@ -9,14 +9,15 @@ export default {
     extend: {
       colors: {
         // Usando os tokens de cores do design system unificado
-        primary: tokens.colors.primary,
-        secondary: tokens.colors.secondary,
-        accent: tokens.colors.accent,
-        gray: tokens.colors.gray,
-        success: tokens.colors.state.success,
-        warning: tokens.colors.state.warning,
-        error: tokens.colors.state.error,
-        info: tokens.colors.state.info,
+        primary: tokens.colors.colorPalette.primary,
+        secondary: tokens.colors.colorPalette.secondary,
+        accent: tokens.colors.colorPalette.accent,
+        gray: tokens.colors.colorPalette.gray,
+        // Cores semânticas
+        success: tokens.colors.semanticColors.success,
+        warning: tokens.colors.semanticColors.warning,
+        error: tokens.colors.semanticColors.error,
+        info: tokens.colors.semanticColors.info,
       },
       fontFamily: {
         sans: [tokens.typography.fontFamily.base],

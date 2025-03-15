@@ -27,7 +27,6 @@ const lazyLoad = (importFn: () => Promise<any>) => {
 
 // Lazy loading dos componentes de página
 const Home = lazyLoad(() => import('./pages/Home'));
-const SomosOcto = lazyLoad(() => import('./pages/SomosOcto'));
 const QuemSomos = lazyLoad(() => import('./pages/somos-octo/QuemSomos'));
 const DeficienciasOcultas = lazyLoad(() => import('./pages/somos-octo/DeficienciasOcultas'));
 const Neurodivergencias = lazyLoad(() => import('./pages/somos-octo/Neurodivergencias'));
@@ -79,8 +78,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: "somos-octo", element: <SomosOcto /> },
-      { path: "somos-octo/quem-somos", element: <QuemSomos /> },
+      { path: "somos-octo", element: <QuemSomos /> },
       { path: "somos-octo/deficiencias-ocultas", element: <DeficienciasOcultas /> },
       { path: "somos-octo/neurodivergencias", element: <Neurodivergencias /> },
       { path: "somos-octo/diversidade", element: <Diversidade /> },
